@@ -1,8 +1,5 @@
 import GraphAnimation from "./GraphAnimation";
-
-const MARKETPLACE_URL =
-  "https://marketplace.visualstudio.com/items?itemName=thraenbe.cograph";
-const GITHUB_URL = "https://github.com/thraenbe/cograph";
+import { MARKETPLACE_URL, LANGUAGES } from "@/lib/site";
 
 export default function Hero() {
   return (
@@ -42,10 +39,10 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left — Text content */}
           <div className="flex flex-col gap-8">
-            {/* Badge */}
+            {/* Positioning tag */}
             <div className="inline-flex w-fit items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/8 text-xs text-primary-light font-mono">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Free VS Code Extension
+              Read your codebase like a metro map
             </div>
 
             {/* Headline */}
@@ -68,13 +65,13 @@ export default function Hero() {
                 </span>
               </h1>
               <p className="text-base lg:text-lg text-white/55 leading-relaxed max-w-lg">
-                Cograph renders your project as a live call graph inside VS
-                Code — updating in real-time as AI agents rewrite your
-                codebase. Making the invisible visible.
+                CoGraph turns your codebase into a living knowledge graph — so
+                you can read it like a metro map, even as AI rewrites it
+                underneath you. The free VS Code extension is your way in.
               </p>
             </div>
 
-            {/* CTAs */}
+            {/* CTAs — primary: try the prototype, secondary: see the vision */}
             <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href={MARKETPLACE_URL}
@@ -126,29 +123,33 @@ export default function Hero() {
                     opacity="0.5"
                   />
                 </svg>
-                Install for VS Code
+                Try the prototype
               </a>
               <a
-                href={GITHUB_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#vision"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md border border-white/12 text-white/75 font-medium text-sm hover:border-white/25 hover:text-white transition-colors"
               >
+                See the vision
                 <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
                   aria-hidden="true"
                 >
-                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  <path
+                    d="M8 3V13M8 13L4 9M8 13L12 9"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
                 </svg>
-                View on GitHub
               </a>
             </div>
 
             {/* Social proof */}
-            <div className="flex items-center gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2">
               <div className="flex items-center gap-1.5 text-xs text-white/35">
                 <svg
                   width="14"
@@ -162,10 +163,10 @@ export default function Hero() {
                     fill="rgba(234,179,8,0.7)"
                   />
                 </svg>
-                <span>Python · TypeScript · JavaScript</span>
+                <span>{LANGUAGES.join(" · ")}</span>
               </div>
               <span className="text-white/15">|</span>
-              <span className="text-xs text-white/35">Free to install</span>
+              <span className="text-xs text-white/35">Free VS Code extension</span>
             </div>
           </div>
 

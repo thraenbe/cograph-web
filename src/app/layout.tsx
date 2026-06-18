@@ -4,24 +4,35 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Cograph — Real-Time Call Graph Visualization for VS Code",
+  title: "CoGraph — Read your codebase like a metro map",
   description:
-    "As AI agents change your code, Cograph reflects it instantly. Real-time, graph-based call graph visualization for Python, TypeScript, and JavaScript. Free VS Code extension.",
+    "CoGraph turns your codebase into a living knowledge graph — so you can read it like a metro map, even as AI rewrites it underneath you. Start free with our VS Code extension: real-time call-graph visualization for Python, TypeScript, JavaScript, Java, and C++.",
   keywords: [
-    "VS Code extension",
+    "code understanding",
+    "knowledge graph",
     "call graph",
     "code visualization",
     "AI coding",
+    "AI agents",
+    "VS Code extension",
     "Python",
     "TypeScript",
     "JavaScript",
+    "Java",
+    "C++",
     "developer tools",
   ],
   openGraph: {
-    title: "Cograph — Real-Time Intelligence for AI-Driven Development",
+    title: "CoGraph — Read your codebase like a metro map",
     description:
-      "Making the invisible visible — as AI agents change your code, Cograph reflects it instantly.",
+      "A living knowledge graph of your codebase, even as AI rewrites it. The free VS Code extension is your way in.",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CoGraph — Read your codebase like a metro map",
+    description:
+      "A living knowledge graph of your codebase, even as AI rewrites it. Start free with the VS Code extension.",
   },
 };
 

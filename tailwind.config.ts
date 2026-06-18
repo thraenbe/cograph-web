@@ -23,6 +23,7 @@ const config: Config = {
           pink: "#ec4899",
           yellow: "#eab308",
           indigo: "#6366f1",
+          teal: "#2dd4bf", // "changed by AI" line
         },
       },
       fontFamily: {

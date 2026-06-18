@@ -2,7 +2,7 @@ const steps = [
   {
     number: "01",
     color: "#3b6ef8",
-    title: "Open any Python, TypeScript, or JavaScript project",
+    title: "Open any Python, TypeScript, JavaScript, Java or C++ project",
     desc: "No configuration files. No setup wizards. Just open your project folder in VS Code like you always do.",
     detail: null,
   },
@@ -115,7 +115,8 @@ export default function HowItWorks() {
               { name: "Python", color: "#3b6ef8" },
               { name: "TypeScript", color: "#22c55e" },
               { name: "JavaScript", color: "#eab308" },
-              { name: "More coming", color: "rgba(255,255,255,0.2)", dimmed: true },
+              { name: "Java", color: "#f97316" },
+              { name: "C++", color: "#ec4899" },
             ].map((lang) => (
               <div
                 key={lang.name}

@@ -9,6 +9,7 @@ const useCases = [
       </svg>
     ),
     audience: "Solo developers",
+    stage: "01",
     headline: "Ship faster, break less",
     desc: "When you're the entire team, architectural clarity isn't a nice-to-have — it's the difference between a fast iteration loop and debugging for hours. Cograph keeps your mental model current without effort.",
     bullets: [
@@ -28,6 +29,7 @@ const useCases = [
       </svg>
     ),
     audience: "Engineering teams",
+    stage: "02",
     headline: "Code review that sees the whole picture",
     desc: "PR reviews catch logic bugs. Cograph catches architecture bugs. Share graph snapshots in reviews to communicate intent, not just code.",
     bullets: [
@@ -47,6 +49,7 @@ const useCases = [
       </svg>
     ),
     audience: "Tech leads & managers",
+    stage: "03",
     headline: "Architectural oversight, not micromanagement",
     desc: "Get a bird's-eye view of how your codebase is evolving — especially in high-velocity AI-driven sprints — without interrupting engineers or reading every line of code.",
     bullets: [
@@ -59,7 +62,7 @@ const useCases = [
 
 export default function UseCases() {
   return (
-    <section className="relative py-24">
+    <section id="audiences" className="relative py-24">
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{
@@ -74,7 +77,7 @@ export default function UseCases() {
           <div className="flex items-center gap-2">
             <span className="w-6 h-px bg-primary" />
             <span className="text-xs font-mono uppercase tracking-widest text-primary">
-              Use Cases
+              Who it&apos;s for
             </span>
           </div>
           <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
@@ -99,6 +102,29 @@ export default function UseCases() {
                   background: `linear-gradient(90deg, transparent, ${uc.color}50, transparent)`,
                 }}
               />
+
+              {/* Where they sit in the product arc */}
+              <a
+                href="#roadmap"
+                className="absolute top-6 right-6 inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-wider text-white/30 hover:text-white/60 transition-colors"
+              >
+                Stage {uc.stage}
+                <svg
+                  width="11"
+                  height="11"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 9L9 3M9 3H4M9 3V8"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
 
               <div className="flex items-start gap-4">
                 {/* Icon */}
