@@ -1,6 +1,6 @@
 export default function Problem() {
   return (
-    <section className="relative py-24 border-t border-white/[0.06]">
+    <section id="shift" className="relative py-24 border-t border-white/[0.06]">
       {/* Subtle top gradient from hero */}
       <div
         className="absolute top-0 left-0 right-0 h-px"
@@ -12,31 +12,34 @@ export default function Problem() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left — problem statement */}
+          {/* Left — the structural shift */}
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-2">
               <span className="w-6 h-px bg-primary" />
               <span className="text-xs font-mono uppercase tracking-widest text-primary">
-                The Problem
+                The Shift
               </span>
             </div>
             <h2 className="text-3xl lg:text-4xl font-semibold leading-tight tracking-tight">
-              AI writes the code.
+              The bottleneck moved.
               <br />
-              <span className="text-white/50">Can you understand it?</span>
+              <span className="text-white/50">
+                From writing code to understanding it.
+              </span>
             </h2>
             <div className="flex flex-col gap-4 text-white/55 text-base leading-relaxed">
               <p>
-                Copilot, Cursor, Claude — AI coding agents are shipping
-                features at unprecedented speed. But every new function,
-                every refactor, every generated file makes the call graph
-                harder to hold in your head.
+                For decades the hard part of software was writing it. AI changed
+                that. Copilot, Cursor, Claude — agents now ship features at a
+                speed no human team can match. The constraint has structurally
+                shifted: the scarce resource isn&apos;t writing code anymore,
+                it&apos;s <span className="text-white/80">understanding</span> it.
               </p>
               <p>
-                The mental model you had an hour ago is already out of date.
-                Code review catches bugs, not architecture drift. And
-                onboarding a new engineer into an AI-accelerated codebase?
-                Good luck.
+                Every new function, every refactor, every generated file makes
+                the system harder to hold in your head. The mental model you had
+                an hour ago is already out of date — and code review catches
+                bugs, not architecture drift.
               </p>
             </div>
           </div>
@@ -98,6 +101,12 @@ export default function Problem() {
             </div>
           </div>
         </div>
+
+        {/* Hand-off into the vision */}
+        <p className="mt-16 max-w-3xl text-lg lg:text-xl leading-relaxed text-white/70">
+          The faster AI writes, the more there is to understand.{" "}
+          <span className="text-white">The tooling has to change shape.</span>
+        </p>
       </div>
     </section>
   );

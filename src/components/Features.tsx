@@ -51,7 +51,7 @@ const features = [
       </svg>
     ),
     title: "OOP Class Overlay",
-    desc: "Toggle class boundaries over the graph. Methods group visually by their parent class — perfect for object-oriented Python and TypeScript codebases.",
+    desc: "Toggle class boundaries over the graph. Methods group visually by their parent class — perfect for object-oriented codebases across all five languages.",
     badge: null,
   },
   {
@@ -85,9 +85,16 @@ const features = [
   },
 ];
 
+const proofChips = [
+  { label: "Real-time updates", color: "#22c55e" },
+  { label: "5 languages", color: "#3b6ef8" },
+  { label: "Open source · MIT", color: "#eab308" },
+  { label: "Live in VS Code", color: "#ec4899" },
+];
+
 export default function Features() {
   return (
-    <section id="features" className="relative py-24 bg-bg-2">
+    <section id="product" className="relative py-24">
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{
@@ -98,18 +105,47 @@ export default function Features() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         {/* Header */}
-        <div className="flex flex-col gap-4 mb-14">
+        <div className="flex flex-col gap-5 mb-12">
           <div className="flex items-center gap-2">
             <span className="w-6 h-px bg-primary" />
             <span className="text-xs font-mono uppercase tracking-widest text-primary">
-              Features
+              Product · Shipped today
             </span>
           </div>
           <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
-            Everything you need to see
+            What we&apos;ve shipped so far.
             <br />
-            <span className="text-white/45">how your code actually works</span>
+            <span className="text-white/45">
+              A real, growing VS Code extension.
+            </span>
           </h2>
+          <p className="text-base text-white/55 leading-relaxed max-w-2xl">
+            The call-graph extension is the first instantiation of the vision —
+            a working prototype in active use, not the finished platform. It
+            already draws the first line on the map: every function and the
+            calls between them, live as the code changes.
+          </p>
+
+          {/* Proof chips */}
+          <div className="flex flex-wrap gap-2.5 pt-1">
+            {proofChips.map((chip) => (
+              <span
+                key={chip.label}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono"
+                style={{
+                  background: `${chip.color}12`,
+                  border: `1px solid ${chip.color}30`,
+                  color: chip.color,
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ backgroundColor: chip.color }}
+                />
+                {chip.label}
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Feature grid — 3 top + 2 bottom */}

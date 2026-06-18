@@ -1,16 +1,21 @@
+import { MARKETPLACE_URL, CONTACT_URL } from "@/lib/site";
+
+// NOTE: No prices anywhere by founder constraint. Plans are described
+// qualitatively only — status words ("Available now" / "Coming soon"), never
+// figures.
+
 const freeTier = {
   name: "Free",
-  price: "$0",
-  sub: "Forever free",
+  status: "Available now",
+  sub: "Full visualization. No account, no config.",
   color: "#3b6ef8",
-  cta: "Install for VS Code",
-  ctaHref:
-    "https://marketplace.visualstudio.com/items?itemName=thraenbe.cograph",
+  cta: "Try the prototype",
+  ctaHref: MARKETPLACE_URL,
   features: [
-    "Full call graph visualization",
-    "Python, TypeScript & JavaScript",
+    "Full call-graph visualization",
+    "All five languages — Python, TypeScript, JavaScript, Java, C++",
     "OOP class overlay",
-    "Folder structure coloring",
+    "Folder-structure coloring",
     "Git commit diff view",
     "Pan, zoom & node search",
     "Real-time graph updates",
@@ -19,15 +24,15 @@ const freeTier = {
 
 const premiumTier = {
   name: "Premium",
-  price: "Coming soon",
-  sub: "Notify me",
+  status: "Coming soon",
+  sub: "Join the waitlist for early access.",
   color: "#eab308",
   cta: "Get notified",
-  ctaHref: "https://github.com/thraenbe/cograph",
+  ctaHref: CONTACT_URL,
   features: [
     "Everything in Free",
-    "Graph Intelligence (AI insights)",
-    "Natural language graph queries",
+    "Graph Intelligence — AI insights",
+    "Natural-language graph queries",
     "Multi-agent activity tracking",
     "Team collaboration & sharing",
     "API access for CI/CD pipelines",
@@ -37,7 +42,7 @@ const premiumTier = {
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="relative py-24 bg-bg-2">
+    <section id="plans" className="relative py-24">
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{
@@ -52,18 +57,20 @@ export default function Pricing() {
           <div className="flex items-center justify-center gap-2">
             <span className="w-6 h-px bg-primary" />
             <span className="text-xs font-mono uppercase tracking-widest text-primary">
-              Pricing
+              Plans
             </span>
             <span className="w-6 h-px bg-primary" />
           </div>
           <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
-            Start for free.
+            Free today.
             <br />
-            <span className="text-white/45">No config, no accounts.</span>
+            <span className="text-white/45">
+              Paid team and enterprise plans on the way.
+            </span>
           </h2>
           <p className="text-white/40 text-base max-w-md mx-auto">
-            Core graph visualization is free forever. Premium features are
-            coming — join the waitlist to be notified.
+            The core graph visualization is free and live now. Premium and team
+            features are in the works — join the waitlist to be first in.
           </p>
         </div>
 
@@ -71,6 +78,59 @@ export default function Pricing() {
         <div className="grid md:grid-cols-2 gap-6">
           <TierCard tier={freeTier} featured={true} />
           <TierCard tier={premiumTier} featured={false} />
+        </div>
+
+        {/* Teams & enterprise — named, no prices */}
+        <div
+          className="mt-6 rounded-xl p-6 lg:p-7 border border-white/[0.07] flex flex-col sm:flex-row sm:items-center justify-between gap-5"
+          style={{ background: "rgba(13,13,26,0.5)" }}
+        >
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-node-orange" />
+              <span className="text-xs font-mono uppercase tracking-widest text-white/45">
+                Teams & Enterprise
+              </span>
+              <span
+                className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full"
+                style={{
+                  background: "rgba(249,115,22,0.12)",
+                  border: "1px solid rgba(249,115,22,0.3)",
+                  color: "#f97316",
+                }}
+              >
+                Coming soon
+              </span>
+            </div>
+            <p className="text-sm text-white/55 leading-relaxed max-w-xl">
+              Architecture oversight across multi-team, multi-repo codebases —
+              with self-host, SSO and CI/CD integration. Want early access or to
+              shape the roadmap?
+            </p>
+          </div>
+          <a
+            href={CONTACT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-shrink-0 items-center justify-center gap-2 px-5 py-3 rounded-md border border-white/12 text-white/80 font-medium text-sm hover:border-white/25 hover:text-white transition-colors"
+          >
+            Talk to us
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M2.5 7H11.5M8 3.5L11.5 7L8 10.5"
+                stroke="currentColor"
+                strokeWidth="1.3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </section>
@@ -106,31 +166,27 @@ function TierCard({
       />
 
       {/* Tier header */}
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3">
+        <span
+          className="text-xs font-mono uppercase tracking-widest"
+          style={{ color: tier.color }}
+        >
+          {tier.name}
+        </span>
+        {/* Status word replaces any price */}
+        <div className="flex items-center gap-2.5">
           <span
-            className="text-xs font-mono uppercase tracking-widest"
-            style={{ color: tier.color }}
-          >
-            {tier.name}
+            className="w-2.5 h-2.5 rounded-full"
+            style={{
+              backgroundColor: tier.color,
+              boxShadow: `0 0 12px ${tier.color}`,
+            }}
+          />
+          <span className="text-2xl font-semibold tracking-tight text-white/90">
+            {tier.status}
           </span>
-          {featured && (
-            <span
-              className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full"
-              style={{
-                background: "rgba(59,110,248,0.15)",
-                border: "1px solid rgba(59,110,248,0.3)",
-                color: "#3b6ef8",
-              }}
-            >
-              Available now
-            </span>
-          )}
         </div>
-        <div className="flex items-baseline gap-2">
-          <span className="text-3xl font-bold text-white/90">{tier.price}</span>
-        </div>
-        <span className="text-sm text-white/35">{tier.sub}</span>
+        <span className="text-sm text-white/40">{tier.sub}</span>
       </div>
 
       {/* Divider */}
@@ -148,13 +204,7 @@ function TierCard({
               className="mt-0.5 flex-shrink-0"
               aria-hidden="true"
             >
-              <circle
-                cx="8"
-                cy="8"
-                r="7"
-                fill={tier.color}
-                opacity={i === 0 && !featured ? "0.15" : "0.15"}
-              />
+              <circle cx="8" cy="8" r="7" fill={tier.color} opacity="0.15" />
               <path
                 d="M5 8L7 10L11 6"
                 stroke={tier.color}

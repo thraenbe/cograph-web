@@ -1,5 +1,12 @@
-const MARKETPLACE_URL =
-  "https://marketplace.visualstudio.com/items?itemName=thraenbe.cograph";
+import { MARKETPLACE_URL } from "@/lib/site";
+
+const NAV_LINKS = [
+  { label: "Vision", href: "#vision" },
+  { label: "Product", href: "#product" },
+  { label: "Roadmap", href: "#roadmap" },
+  { label: "Market", href: "#market" },
+  { label: "Team", href: "#team" },
+];
 
 export default function Navbar() {
   return (
@@ -63,25 +70,16 @@ export default function Navbar() {
       </a>
 
       {/* Nav links (desktop) */}
-      <div className="hidden md:flex items-center gap-8">
-        <a
-          href="#features"
-          className="text-sm text-white/50 hover:text-white/90 transition-colors"
-        >
-          Features
-        </a>
-        <a
-          href="#how-it-works"
-          className="text-sm text-white/50 hover:text-white/90 transition-colors"
-        >
-          How it works
-        </a>
-        <a
-          href="#pricing"
-          className="text-sm text-white/50 hover:text-white/90 transition-colors"
-        >
-          Pricing
-        </a>
+      <div className="hidden md:flex items-center gap-6 lg:gap-8">
+        {NAV_LINKS.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            className="text-sm text-white/50 hover:text-white/90 transition-colors"
+          >
+            {link.label}
+          </a>
+        ))}
       </div>
 
       {/* CTA */}
@@ -106,7 +104,7 @@ export default function Navbar() {
             strokeLinejoin="round"
           />
         </svg>
-        Install for VS Code
+        Try the prototype
       </a>
     </nav>
   );

@@ -1,6 +1,4 @@
-const MARKETPLACE_URL =
-  "https://marketplace.visualstudio.com/items?itemName=thraenbe.cograph";
-const GITHUB_URL = "https://github.com/thraenbe/cograph";
+import { MARKETPLACE_URL, GITHUB_URL, CONTACT_URL } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -60,8 +58,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs text-white/30 max-w-xs leading-relaxed">
-              Real-time call graph visualization for AI-driven development.
-              Making the invisible visible.
+              CoGraph — the situational-awareness layer for AI-driven
+              development. Read your codebase like a metro map.
             </p>
             <p className="text-xs text-white/20 font-mono">MIT License</p>
           </div>
@@ -98,6 +96,23 @@ export default function Footer() {
                   </svg>
                   GitHub
                 </a>
+                <a
+                  href={CONTACT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-white/40 hover:text-white/75 transition-colors flex items-center gap-1.5"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                  LinkedIn
+                </a>
               </div>
             </div>
 
@@ -106,24 +121,21 @@ export default function Footer() {
                 Navigate
               </span>
               <div className="flex flex-col gap-2">
-                <a
-                  href="#features"
-                  className="text-sm text-white/40 hover:text-white/75 transition-colors"
-                >
-                  Features
-                </a>
-                <a
-                  href="#how-it-works"
-                  className="text-sm text-white/40 hover:text-white/75 transition-colors"
-                >
-                  How it works
-                </a>
-                <a
-                  href="#pricing"
-                  className="text-sm text-white/40 hover:text-white/75 transition-colors"
-                >
-                  Pricing
-                </a>
+                {[
+                  { label: "Vision", href: "#vision" },
+                  { label: "Product", href: "#product" },
+                  { label: "Roadmap", href: "#roadmap" },
+                  { label: "Market", href: "#market" },
+                  { label: "Team", href: "#team" },
+                ].map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-sm text-white/40 hover:text-white/75 transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -132,10 +144,10 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-white/20">
-            © {new Date().getFullYear()} Cograph. Open source under MIT License.
+            © {new Date().getFullYear()} CoGraph. Open source under MIT License.
           </p>
           <p className="text-xs text-white/15 font-mono">
-            Real-Time Intelligence for AI-Driven Development
+            Read your codebase like a metro map
           </p>
         </div>
       </div>
