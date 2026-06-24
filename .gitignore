@@ -29,3 +29,6 @@ next-env.d.ts
 
 # CoGraph extension output
 .cograph/
+
+# TypeScript incremental build info
+*.tsbuildinfo
