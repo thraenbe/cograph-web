@@ -1,4 +1,4 @@
-import { DEMO_URL } from "@/lib/site";
+import { MARKETPLACE_URL } from "@/lib/site";
 
 const NAV_LINKS = [
   { label: "Vision", href: "#vision" },
@@ -84,7 +84,7 @@ export default function Navbar() {
 
       {/* CTA */}
       <a
-        href={DEMO_URL}
+        href={MARKETPLACE_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors"
@@ -104,7 +104,7 @@ export default function Navbar() {
             strokeLinejoin="round"
           />
         </svg>
-        Try the demo
+        Try VS-Code Extension
       </a>
     </nav>
   );

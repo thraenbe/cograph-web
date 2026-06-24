@@ -1,4 +1,4 @@
-import { DEMO_URL, CONTACT_URL } from "@/lib/site";
+import { MARKETPLACE_URL, CONTACT_URL } from "@/lib/site";
 
 // NOTE: No prices anywhere by founder constraint. Plans are described
 // qualitatively only — status words ("Available now" / "Coming soon"), never
@@ -9,8 +9,8 @@ const freeTier = {
   status: "Available now",
   sub: "Full visualization. No account, no config.",
   color: "#3b6ef8",
-  cta: "Try the demo",
-  ctaHref: DEMO_URL,
+  cta: "Try VS-Code Extension",
+  ctaHref: MARKETPLACE_URL,
   features: [
     "Full call-graph visualization",
     "All five languages — Python, TypeScript, JavaScript, Java, C++",

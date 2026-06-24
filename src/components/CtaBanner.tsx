@@ -1,4 +1,4 @@
-import { DEMO_URL, GITHUB_URL, CONTACT_URL, LANGUAGES } from "@/lib/site";
+import { MARKETPLACE_URL, GITHUB_URL, CONTACT_URL, LANGUAGES } from "@/lib/site";
 
 export default function CtaBanner() {
   return (
@@ -64,7 +64,7 @@ export default function CtaBanner() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
           <a
-            href={DEMO_URL}
+            href={MARKETPLACE_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-shimmer inline-flex items-center gap-3 px-7 py-4 rounded-lg text-white font-medium text-base shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-shadow"
@@ -81,7 +81,7 @@ export default function CtaBanner() {
               <rect x="2.5" y="11" width="6.5" height="6.5" rx="1" fill="currentColor" opacity="0.7" />
               <rect x="11" y="11" width="6.5" height="6.5" rx="1" fill="currentColor" opacity="0.5" />
             </svg>
-            Try the demo
+            Try VS-Code Extension
           </a>
           <a
             href={CONTACT_URL}
