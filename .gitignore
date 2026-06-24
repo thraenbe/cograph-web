@@ -26,3 +26,6 @@ yarn-error.log*
 
 # TypeScript
 next-env.d.ts
+
+# CoGraph extension output
+.cograph/

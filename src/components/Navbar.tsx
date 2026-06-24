@@ -1,4 +1,4 @@
-import { MARKETPLACE_URL } from "@/lib/site";
+import { DEMO_URL } from "@/lib/site";
 
 const NAV_LINKS = [
   { label: "Vision", href: "#vision" },
@@ -84,7 +84,7 @@ export default function Navbar() {
 
       {/* CTA */}
       <a
-        href={MARKETPLACE_URL}
+        href={DEMO_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary-dark transition-colors"
@@ -104,7 +104,7 @@ export default function Navbar() {
             strokeLinejoin="round"
           />
         </svg>
-        Try the prototype
+        Try the demo
       </a>
     </nav>
   );

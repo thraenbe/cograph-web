@@ -1,4 +1,4 @@
-import { MARKETPLACE_URL, GITHUB_URL, CONTACT_URL, LANGUAGES } from "@/lib/site";
+import { DEMO_URL, GITHUB_URL, CONTACT_URL, LANGUAGES } from "@/lib/site";
 
 export default function CtaBanner() {
   return (
@@ -50,21 +50,21 @@ export default function CtaBanner() {
         {/* Headline */}
         <div className="flex flex-col gap-4">
           <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
-            Try the prototype.
+            Try the demo.
             <br />
             <span className="text-white/45">Then tell us what&apos;s missing.</span>
           </h2>
           <p className="text-white/45 text-lg leading-relaxed max-w-lg mx-auto">
-            Install in seconds and visualize your first call graph before your
-            coffee&apos;s done. We&apos;re early — and we want users and
-            perspective, not just installs.
+            Open the demo and visualize your first call graph in seconds.
+            We&apos;re early, and we want users and perspective, not just
+            visitors.
           </p>
         </div>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3">
           <a
-            href={MARKETPLACE_URL}
+            href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-shimmer inline-flex items-center gap-3 px-7 py-4 rounded-lg text-white font-medium text-base shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-shadow"
@@ -81,7 +81,7 @@ export default function CtaBanner() {
               <rect x="2.5" y="11" width="6.5" height="6.5" rx="1" fill="currentColor" opacity="0.7" />
               <rect x="11" y="11" width="6.5" height="6.5" rx="1" fill="currentColor" opacity="0.5" />
             </svg>
-            Try the prototype — free
+            Try the demo
           </a>
           <a
             href={CONTACT_URL}
