@@ -1,6 +1,6 @@
 import GraphAnimation from "./GraphAnimation";
 import JoinWaitlist from "./JoinWaitlist";
-import { DEMO_URL, LANGUAGES } from "@/lib/site";
+import { MARKETPLACE_URL, LANGUAGES } from "@/lib/site";
 
 export default function Hero() {
   return (
@@ -70,7 +70,7 @@ export default function Hero() {
             {/* CTAs — primary: try the prototype, secondary: see the vision */}
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href={DEMO_URL}
+                href={MARKETPLACE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-shimmer inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-white font-medium text-sm shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow"
@@ -119,7 +119,7 @@ export default function Hero() {
                     opacity="0.5"
                   />
                 </svg>
-                Try the demo
+                Try VS-Code Extension
               </a>
               <JoinWaitlist className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md border border-white/12 text-white/75 font-medium text-sm hover:border-white/25 hover:text-white transition-colors" />
             </div>
