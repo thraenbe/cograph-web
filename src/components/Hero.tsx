@@ -1,5 +1,6 @@
 import GraphAnimation from "./GraphAnimation";
-import { MARKETPLACE_URL, LANGUAGES } from "@/lib/site";
+import JoinWaitlist from "./JoinWaitlist";
+import { DEMO_URL, LANGUAGES } from "@/lib/site";
 
 export default function Hero() {
   return (
@@ -39,42 +40,37 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left — Text content */}
           <div className="flex flex-col gap-8">
-            {/* Positioning tag */}
-            <div className="inline-flex w-fit items-center gap-2 px-3 py-1.5 rounded-full border border-primary/30 bg-primary/8 text-xs text-primary-light font-mono">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Read your codebase like a metro map
-            </div>
-
             {/* Headline */}
-            <div className="flex flex-col gap-4">
-              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-semibold leading-[1.1] tracking-tight">
-                The AI writes
-                <br />
-                the code.
+            <div className="flex flex-col gap-5">
+              <h1 className="text-4xl lg:text-5xl font-semibold leading-[1.12] tracking-tight">
+                Lost in your AI generated codebase?
                 <br />
                 <span
                   style={{
                     background:
-                      "linear-gradient(105deg, #3b6ef8 0%, #6b91ff 50%, #ec4899 100%)",
+                      "linear-gradient(105deg, #3b6ef8 0%, #6b91ff 35%, #ec4899 70%, #2dd4bf 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
                   }}
                 >
-                  You need to understand it.
+                  Try CoGraph to get back into the driver&apos;s seat.
                 </span>
               </h1>
               <p className="text-base lg:text-lg text-white/55 leading-relaxed max-w-lg">
-                CoGraph turns your codebase into a living knowledge graph — so
-                you can read it like a metro map, even as AI rewrites it
-                underneath you. The free VS Code extension is your way in.
+                The AI writes the code. You need to understand it. CoGraph turns
+                your codebase into a living knowledge graph, so you can see how
+                every piece connects, even as AI rewrites it underneath you.{" "}
+                <span className="text-white/80">
+                  Try the demo and join the waitlist.
+                </span>
               </p>
             </div>
 
             {/* CTAs — primary: try the prototype, secondary: see the vision */}
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href={MARKETPLACE_URL}
+                href={DEMO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-shimmer inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md text-white font-medium text-sm shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow"
@@ -123,29 +119,9 @@ export default function Hero() {
                     opacity="0.5"
                   />
                 </svg>
-                Try the prototype
+                Try the demo
               </a>
-              <a
-                href="#vision"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md border border-white/12 text-white/75 font-medium text-sm hover:border-white/25 hover:text-white transition-colors"
-              >
-                See the vision
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M8 3V13M8 13L4 9M8 13L12 9"
-                    stroke="currentColor"
-                    strokeWidth="1.4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
+              <JoinWaitlist className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md border border-white/12 text-white/75 font-medium text-sm hover:border-white/25 hover:text-white transition-colors" />
             </div>
 
             {/* Social proof */}
@@ -201,6 +177,7 @@ export default function Hero() {
                 <GraphAnimation />
               </div>
             </div>
+
           </div>
         </div>
       </div>

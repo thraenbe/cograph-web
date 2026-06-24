@@ -5,6 +5,9 @@
 export const MARKETPLACE_URL =
   "https://marketplace.visualstudio.com/items?itemName=thraenbe.cograph";
 
+// Hosted, in-browser demo — the low-friction "try it" path (no install).
+export const DEMO_URL = "https://cograph-review.lovable.app/";
+
 export const GITHUB_URL = "https://github.com/thraenbe/cograph";
 
 // Human contact / "join the journey" channel. Founder chose LinkedIn (Magnus)
