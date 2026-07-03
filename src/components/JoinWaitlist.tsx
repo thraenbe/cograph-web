@@ -15,6 +15,8 @@ export default function JoinWaitlist({
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  // Honeypot — bots fill this; humans never see it.
+  const [botcheck, setBotcheck] = useState("");
 
   // Lock background scroll + close on Escape while the modal is open.
   useEffect(() => {
@@ -42,18 +44,53 @@ export default function JoinWaitlist({
     }, 200);
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    const trimmed = email.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
     if (!valid) {
       setError("Please enter a valid email address.");
       return;
     }
+
+    // Web3Forms: signups are emailed to the founder inbox on file. The access
+    // key is a public routing token — the destination address lives on
+    // Web3Forms' servers, never in this repo. Set it in .env.local (local) or
+    // your host's env (prod) as NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY.
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey) {
+      setError("Waitlist isn’t configured yet. Please try again later.");
+      return;
+    }
+
     setError("");
     setStatus("loading");
-    // TODO(founder): wire to a real waitlist endpoint / form service. For now
-    // this is a stub — the submission is intentionally not persisted anywhere.
-    setTimeout(() => setStatus("success"), 850);
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          email: trimmed,
+          subject: "New CoGraph waitlist signup",
+          from_name: "CoGraph waitlist",
+          botcheck, // honeypot — real users leave this empty
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setStatus("success");
+      } else {
+        setStatus("idle");
+        setError("Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("idle");
+      setError("Network error — please try again.");
+    }
   }
 
   return (
@@ -190,6 +227,17 @@ export default function JoinWaitlist({
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                  {/* Honeypot — visually hidden, off from a11y/tab order */}
+                  <input
+                    type="checkbox"
+                    name="botcheck"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    checked={!!botcheck}
+                    onChange={(e) => setBotcheck(e.target.checked ? "1" : "")}
+                    style={{ position: "absolute", left: "-9999px", opacity: 0 }}
+                  />
                   <input
                     type="email"
                     value={email}
