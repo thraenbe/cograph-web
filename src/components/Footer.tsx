@@ -58,8 +58,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-xs text-white/30 max-w-xs leading-relaxed">
-              CoGraph — the situational-awareness layer for AI-driven
-              development. Read your codebase like a metro map.
+              CoGraph — read your codebase like a metro map.
             </p>
             <p className="text-xs text-white/20 font-mono">MIT License</p>
           </div>
@@ -70,7 +69,7 @@ export default function Footer() {
               <span className="text-[10px] text-white/25 uppercase tracking-widest font-mono">
                 Links
               </span>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-row flex-wrap gap-x-5 gap-y-2">
                 <a
                   href={MARKETPLACE_URL}
                   target="_blank"
@@ -115,36 +114,13 @@ export default function Footer() {
                 </a>
               </div>
             </div>
-
-            <div className="flex flex-col gap-3">
-              <span className="text-[10px] text-white/25 uppercase tracking-widest font-mono">
-                Navigate
-              </span>
-              <div className="flex flex-col gap-2">
-                {[
-                  { label: "Vision", href: "#vision" },
-                  { label: "Product", href: "#product" },
-                  { label: "Roadmap", href: "#roadmap" },
-                  { label: "Market", href: "#market" },
-                  { label: "Team", href: "#team" },
-                ].map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="text-sm text-white/40 hover:text-white/75 transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
 
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/20">
-            © {new Date().getFullYear()} CoGraph. Open source under MIT License.
+          <p className="text-xs text-white/20 font-mono">
+            MIT License · © {new Date().getFullYear()} CoGraph.
           </p>
           <p className="text-xs text-white/15 font-mono">
             Read your codebase like a metro map

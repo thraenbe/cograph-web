@@ -1,12 +1,6 @@
 import { DEMO_URL } from "@/lib/site";
 
-const NAV_LINKS = [
-  { label: "Vision", href: "#vision" },
-  { label: "Product", href: "#product" },
-  { label: "Roadmap", href: "#roadmap" },
-  { label: "Market", href: "#market" },
-  { label: "Team", href: "#team" },
-];
+const NAV_LINKS = [{ label: "Team", href: "#team" }];
 
 export default function Navbar() {
   return (
