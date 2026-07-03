@@ -52,17 +52,14 @@ export default function Demo() {
 
         {/* Body */}
         <p className="text-base lg:text-lg text-white/55 leading-relaxed max-w-xl">
-          What you can use today is the free VS Code extension — the call graph,
-          live in your editor. This demo is an early, interactive preview of
-          CoGraph Review: how we think reviewing AI-generated changes should
-          feel. It&apos;s a concept to click through, not the finished feature.
-          Take it as a direction, not a download.
+          A working VS Code prototype you can install today — plus an early demo
+          of how reviewing pull requests could look with CoGraph Review.
         </p>
 
-        {/* CTAs */}
+        {/* CTAs — mirror the hero: primary = extension, secondary = review demo */}
         <div className="flex flex-col sm:flex-row items-center gap-3 pt-1">
           <a
-            href={DEMO_URL}
+            href={MARKETPLACE_URL}
             target="_blank"
             rel="noopener"
             className="btn-shimmer inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-md text-white font-medium text-sm shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-shadow"
@@ -73,15 +70,15 @@ export default function Demo() {
               <rect x="2.5" y="11" width="6.5" height="6.5" rx="1" fill="currentColor" opacity="0.7" />
               <rect x="11" y="11" width="6.5" height="6.5" rx="1" fill="currentColor" opacity="0.5" />
             </svg>
-            Try the demo
+            Try VS-Code Extension
           </a>
           <a
-            href={MARKETPLACE_URL}
+            href={DEMO_URL}
             target="_blank"
             rel="noopener"
             className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-md border border-white/12 text-white/75 font-medium text-sm hover:border-white/25 hover:text-white transition-colors"
           >
-            Install the extension
+            Try CoGraph Review
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path
                 d="M2.5 8H13M9.5 4.5L13 8L9.5 11.5"
