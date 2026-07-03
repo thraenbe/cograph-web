@@ -36,9 +36,21 @@ export const LANGUAGES = [
 
 // ─── Founders ──────────────────────────────────────────────────────────────
 // TODO(founder): confirm bios + roles, add headshots, and fill the remaining
-// profile links (Magnus GitHub, Bela LinkedIn). Bios below stick to what the
-// handover supplied — no invented details.
-export const FOUNDERS = [
+// profile links (Magnus GitHub). Bios below stick to what the handover
+// supplied — no invented details.
+// Typed (not `as const`) so optional links stay `string | null` — otherwise a
+// non-null literal makes `person.linkedin || person.github` narrow to `never`.
+type Founder = {
+  name: string;
+  role: string;
+  focus: string;
+  initials: string;
+  bio: string;
+  linkedin: string | null;
+  github: string | null;
+};
+
+export const FOUNDERS: Founder[] = [
   {
     name: "Magnus Hornstein",
     role: "Co-founder",
@@ -57,4 +69,4 @@ export const FOUNDERS = [
     linkedin: "https://www.linkedin.com/in/bela-thraen-474854316/",
     github: "https://github.com/thraenbe",
   },
-] as const;
+];
