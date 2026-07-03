@@ -54,7 +54,7 @@ export const FOUNDERS = [
     focus: "Engineering & Product",
     initials: "BT",
     bio: "Computer Science master's at the University of Tübingen. Originated CoGraph after a data-science internship at Bosch.",
-    linkedin: null, // TODO(founder): add Bela LinkedIn
+    linkedin: "https://www.linkedin.com/in/bela-thraen-474854316/",
     github: "https://github.com/thraenbe",
   },
 ] as const;
