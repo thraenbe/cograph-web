@@ -10,6 +10,15 @@ export const DEMO_URL = "https://cograph-review.lovable.app/";
 
 export const GITHUB_URL = "https://github.com/thraenbe/cograph";
 
+// Web3Forms access key for the waitlist. This is a PUBLIC routing token — it is
+// embedded in the client bundle and shipped to every visitor, so it is not a
+// secret. It routes signups to the founder inbox configured in the Web3Forms
+// dashboard; that destination email lives on Web3Forms' servers, never here.
+// An env var (NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY) overrides it for rotation.
+export const WEB3FORMS_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ||
+  "c81ea59e-2e5d-4606-9edd-aff8bbbd386c";
+
 // Human contact / "join the journey" channel. Founder chose LinkedIn (Magnus)
 // over a mailto for the waitlist, enterprise contact, and follow-the-journey
 // asks. Reused everywhere a non-install CTA needs a person to reach.

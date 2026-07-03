@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { WEB3FORMS_ACCESS_KEY } from "@/lib/site";
 
 type Status = "idle" | "loading" | "success";
 
@@ -54,15 +55,8 @@ export default function JoinWaitlist({
     }
 
     // Web3Forms: signups are emailed to the founder inbox on file. The access
-    // key is a public routing token — the destination address lives on
-    // Web3Forms' servers, never in this repo. Set it in .env.local (local) or
-    // your host's env (prod) as NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY.
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-    if (!accessKey) {
-      setError("Waitlist isn’t configured yet. Please try again later.");
-      return;
-    }
-
+    // key (from site config, env-overridable) is a public routing token — the
+    // destination address lives on Web3Forms' servers, never in this repo.
     setError("");
     setStatus("loading");
     try {
@@ -73,7 +67,7 @@ export default function JoinWaitlist({
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: accessKey,
+          access_key: WEB3FORMS_ACCESS_KEY,
           email: trimmed,
           subject: "New CoGraph waitlist signup",
           from_name: "CoGraph waitlist",
