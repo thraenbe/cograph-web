@@ -40,6 +40,58 @@ export default function Hero() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left — Text content */}
           <div className="flex flex-col gap-8">
+            {/* Logo */}
+            <div className="flex items-center gap-2.5">
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="3.5" fill="#3b6ef8" />
+                <circle cx="4" cy="7" r="2.5" fill="#f97316" />
+                <circle cx="20" cy="7" r="2.5" fill="#22c55e" />
+                <circle cx="4" cy="17" r="2.5" fill="#ec4899" />
+                <circle cx="20" cy="17" r="2.5" fill="#eab308" />
+                <line
+                  x1="6.2"
+                  y1="8.4"
+                  x2="9.5"
+                  y2="10.8"
+                  stroke="rgba(255,255,255,0.25)"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="17.8"
+                  y1="8.4"
+                  x2="14.5"
+                  y2="10.8"
+                  stroke="rgba(255,255,255,0.25)"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="6.2"
+                  y1="15.6"
+                  x2="9.5"
+                  y2="13.2"
+                  stroke="rgba(255,255,255,0.25)"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="17.8"
+                  y1="15.6"
+                  x2="14.5"
+                  y2="13.2"
+                  stroke="rgba(255,255,255,0.25)"
+                  strokeWidth="1"
+                />
+              </svg>
+              <span className="text-white/90 font-semibold tracking-[0.12em] text-base uppercase">
+                Cograph
+              </span>
+            </div>
+
             {/* Headline */}
             <div className="flex flex-col gap-5">
               <h1 className="text-4xl lg:text-5xl font-semibold leading-[1.12] tracking-tight">
