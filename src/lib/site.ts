@@ -50,6 +50,17 @@ type Founder = {
   github: string | null;
 };
 
+// ─── Legal (Impressum) ─────────────────────────────────────────────────────
+// CoGraph is not yet a registered company — the site is run by the two
+// founders as private individuals, so the imprint lists them directly.
+export const IMPRINT = {
+  names: ["Magnus Hornstein", "Bela Thrän"],
+  street: "Autenriethstraße 12",
+  city: "72072 Tübingen",
+  country: "Germany",
+  email: "hornstein.magnus@gmail.com",
+};
+
 export const FOUNDERS: Founder[] = [
   {
     name: "Magnus Hornstein",
