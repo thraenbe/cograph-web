@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MARKETPLACE_URL, GITHUB_URL, CONTACT_URL } from "@/lib/site";
 
 export default function Footer() {
@@ -122,9 +123,17 @@ export default function Footer() {
           <p className="text-xs text-white/20 font-mono">
             MIT License · © {new Date().getFullYear()} CoGraph.
           </p>
-          <p className="text-xs text-white/15 font-mono">
-            Read your codebase like a metro map
-          </p>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/impressum"
+              className="text-xs text-white/25 hover:text-white/60 transition-colors font-mono"
+            >
+              Impressum
+            </Link>
+            <p className="text-xs text-white/15 font-mono">
+              Read your codebase like a metro map
+            </p>
+          </div>
         </div>
       </div>
     </footer>
