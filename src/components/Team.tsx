@@ -33,20 +33,19 @@ export default function Team() {
           {FOUNDERS.map((person) => (
             <div
               key={person.name}
-              className="relative flex flex-col rounded-lg overflow-hidden border border-edge bg-ground"
+              className="relative flex flex-col gap-5 rounded-lg p-7 border border-edge bg-ground"
             >
-              {/* Photo — full card width, framed square so the crop holds at any size */}
-              <div className="relative w-full aspect-square bg-card">
-                <Image
-                  src={person.photo}
-                  alt={person.name}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 480px"
-                  className="object-cover"
-                />
-              </div>
-
-              <div className="flex flex-col gap-5 p-7">
+              <div className="flex items-center gap-5">
+                {/* Sized to stay within the crop's native resolution — no upscaling softness */}
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden flex-shrink-0 border border-edge bg-card">
+                  <Image
+                    src={person.photo}
+                    alt={person.name}
+                    fill
+                    sizes="(max-width: 640px) 96px, 112px"
+                    className="object-cover"
+                  />
+                </div>
                 <div className="flex flex-col gap-1">
                   <h3 className="font-display font-semibold text-ink text-xl leading-tight">
                     {person.name}
@@ -57,12 +56,13 @@ export default function Team() {
                     <span className="text-ink-muted">{person.focus}</span>
                   </span>
                 </div>
+              </div>
 
-                <p className="text-sm text-ink-muted copy">{person.bio}</p>
+              <p className="text-sm text-ink-muted copy">{person.bio}</p>
 
-                {/* Social links — only render the ones that exist */}
-                {(person.linkedin || person.github) && (
-                  <div className="flex items-center gap-3 pt-1">
+              {/* Social links — only render the ones that exist */}
+              {(person.linkedin || person.github) && (
+                <div className="flex items-center gap-3 pt-1">
                   {person.linkedin && (
                     <a
                       href={person.linkedin}
@@ -101,9 +101,8 @@ export default function Team() {
                       </svg>
                     </a>
                   )}
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
