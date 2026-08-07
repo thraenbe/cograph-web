@@ -1,7 +1,8 @@
+import Image from "next/image";
 import { FOUNDERS } from "@/lib/site";
 
-// FLAG(founder): bios, roles and avatars below are drafts built only from the
-// handover — confirm/replace wording and add real headshots before launch.
+// FLAG(founder): bios and roles below are drafts built only from the
+// handover — confirm/replace wording before launch.
 // Profile links come from src/lib/site.ts (Magnus GitHub + Bela LinkedIn TODO).
 
 export default function Team() {
@@ -35,12 +36,14 @@ export default function Team() {
               className="relative flex flex-col gap-5 rounded-lg p-7 border border-edge bg-ground"
             >
               <div className="flex items-center gap-4">
-                {/* Initials avatar (placeholder for a real headshot) */}
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center font-mono font-medium text-signal text-base flex-shrink-0 border border-edge bg-card"
-                  aria-hidden="true"
-                >
-                  {person.initials}
+                <div className="relative w-14 h-14 rounded-full overflow-hidden flex-shrink-0 border border-edge bg-card">
+                  <Image
+                    src={person.photo}
+                    alt={person.name}
+                    fill
+                    sizes="56px"
+                    className="object-cover"
+                  />
                 </div>
                 <div className="flex flex-col gap-1">
                   <h3 className="font-display font-semibold text-ink text-lg leading-tight">

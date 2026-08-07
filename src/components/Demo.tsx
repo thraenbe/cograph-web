@@ -23,12 +23,7 @@ export default function Demo() {
         <div className="flex flex-col items-center gap-6 max-w-2xl">
           {/* Eyebrow */}
           <div className="flex items-center gap-3">
-            <span className="label text-[10px] text-signal">
-              Preview · CoGraph Review
-            </span>
-            <span className="label inline-flex items-center rounded-full border border-edge px-2.5 py-1 text-[10px] text-ink-dim">
-              Early preview
-            </span>
+            <span className="label text-[10px] text-signal">Preview</span>
           </div>
 
           {/* Headline */}

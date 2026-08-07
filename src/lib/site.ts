@@ -45,6 +45,7 @@ type Founder = {
   role: string;
   focus: string;
   initials: string;
+  photo: string;
   bio: string;
   linkedin: string | null;
   github: string | null;
@@ -67,6 +68,7 @@ export const FOUNDERS: Founder[] = [
     role: "Co-founder",
     focus: "Business & Strategy",
     initials: "MH",
+    photo: "/team/magnus.jpg",
     bio: "Finishing an ML master's at the University of Tübingen. Pairs technical depth with a strategy-consulting background to steer product and go-to-market.",
     linkedin: "https://www.linkedin.com/in/magnus-hornstein/",
     github: null, // TODO(founder): add Magnus GitHub if desired
@@ -76,6 +78,7 @@ export const FOUNDERS: Founder[] = [
     role: "Co-founder",
     focus: "Engineering & Product",
     initials: "BT",
+    photo: "/team/bela.jpg",
     bio: "Computer Science master's at the University of Tübingen. Originated CoGraph after a data-science internship at Bosch.",
     linkedin: "https://www.linkedin.com/in/bela-thraen-474854316/",
     github: "https://github.com/thraenbe",
