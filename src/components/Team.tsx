@@ -4,37 +4,24 @@ import { FOUNDERS } from "@/lib/site";
 // handover — confirm/replace wording and add real headshots before launch.
 // Profile links come from src/lib/site.ts (Magnus GitHub + Bela LinkedIn TODO).
 
-const avatarGradients = [
-  "linear-gradient(135deg, #3b6ef8 0%, #2dd4bf 100%)",
-  "linear-gradient(135deg, #ec4899 0%, #f97316 100%)",
-];
-
 export default function Team() {
   return (
-    <section id="team" className="relative py-24 bg-bg-2">
-      <div
-        className="absolute top-0 left-0 right-0 h-px"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)",
-        }}
-      />
+    <section id="team" className="relative py-24 bg-card">
+      <div className="absolute top-0 left-0 right-0 section-divider" />
 
       <div className="max-w-5xl mx-auto px-6 lg:px-10">
         {/* Header */}
         <div className="flex flex-col gap-4 mb-12">
-          <div className="flex items-center gap-2">
-            <span className="w-6 h-px bg-primary" />
-            <span className="text-xs font-mono uppercase tracking-widest text-primary">
-              Team
-            </span>
+          <div className="flex items-center gap-3">
+            <span className="w-8 h-0.5 bg-signal" />
+            <span className="label text-[10px] text-signal">Team</span>
           </div>
-          <h2 className="text-3xl lg:text-4xl font-semibold tracking-tight">
+          <h2 className="font-display font-bold text-3xl lg:text-4xl tracking-display text-ink">
             Built by two founders
             <br />
-            <span className="text-white/45">who needed this themselves.</span>
+            <span className="text-ink-dim">who needed this themselves.</span>
           </h2>
-          <p className="text-base text-white/55 leading-relaxed max-w-2xl">
+          <p className="text-base text-ink-muted copy max-w-2xl">
             From Tübingen. CoGraph started as the tool we wished we had while
             trying to read code we hadn&apos;t written by hand.
           </p>
@@ -42,36 +29,32 @@ export default function Team() {
 
         {/* Founder cards */}
         <div className="grid sm:grid-cols-2 gap-6">
-          {FOUNDERS.map((person, i) => (
+          {FOUNDERS.map((person) => (
             <div
               key={person.name}
-              className="relative flex flex-col gap-5 rounded-xl p-7 border border-white/[0.07]"
-              style={{ background: "rgba(13,13,26,0.5)" }}
+              className="relative flex flex-col gap-5 rounded-lg p-7 border border-edge bg-ground"
             >
               <div className="flex items-center gap-4">
                 {/* Initials avatar (placeholder for a real headshot) */}
                 <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center font-mono font-semibold text-white text-lg flex-shrink-0"
-                  style={{ background: avatarGradients[i % avatarGradients.length] }}
+                  className="w-14 h-14 rounded-full flex items-center justify-center font-mono font-medium text-signal text-base flex-shrink-0 border border-edge bg-card"
                   aria-hidden="true"
                 >
                   {person.initials}
                 </div>
-                <div className="flex flex-col gap-0.5">
-                  <h3 className="font-semibold text-white/90 text-lg">
+                <div className="flex flex-col gap-1">
+                  <h3 className="font-display font-semibold text-ink text-lg leading-tight">
                     {person.name}
                   </h3>
-                  <span className="text-sm text-white/45">
+                  <span className="text-sm text-ink-dim">
                     {person.role}
-                    <span className="text-white/25"> · </span>
-                    <span className="text-white/55">{person.focus}</span>
+                    <span className="text-edge"> · </span>
+                    <span className="text-ink-muted">{person.focus}</span>
                   </span>
                 </div>
               </div>
 
-              <p className="text-sm text-white/55 leading-relaxed">
-                {person.bio}
-              </p>
+              <p className="text-sm text-ink-muted copy">{person.bio}</p>
 
               {/* Social links — only render the ones that exist */}
               {(person.linkedin || person.github) && (
@@ -82,7 +65,7 @@ export default function Team() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${person.name} on LinkedIn`}
-                      className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/[0.08] text-white/45 hover:text-white hover:border-white/20 transition-colors"
+                      className="w-9 h-9 rounded-md flex items-center justify-center border border-edge text-ink-dim hover:text-signal hover:border-signal/40 transition-colors"
                     >
                       <svg
                         width="16"
@@ -101,7 +84,7 @@ export default function Team() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${person.name} on GitHub`}
-                      className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/[0.08] text-white/45 hover:text-white hover:border-white/20 transition-colors"
+                      className="w-9 h-9 rounded-md flex items-center justify-center border border-edge text-ink-dim hover:text-signal hover:border-signal/40 transition-colors"
                     >
                       <svg
                         width="16"

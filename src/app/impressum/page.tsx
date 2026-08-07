@@ -9,22 +9,22 @@ export const metadata: Metadata = {
 
 export default function Impressum() {
   return (
-    <main className="min-h-screen bg-bg">
+    <main className="min-h-screen bg-ground">
       <div className="max-w-3xl mx-auto px-6 lg:px-10 py-24">
         <Link
           href="/"
-          className="text-xs font-mono uppercase tracking-widest text-primary hover:text-white/75 transition-colors"
+          className="label text-[10px] text-signal hover:text-ink transition-colors"
         >
           ← CoGraph
         </Link>
 
-        <h1 className="mt-6 text-3xl lg:text-4xl font-semibold tracking-tight">
+        <h1 className="mt-6 font-display font-bold text-3xl lg:text-4xl tracking-display text-ink">
           Impressum
         </h1>
 
-        <div className="mt-10 flex flex-col gap-8 text-sm text-white/60 leading-relaxed">
+        <div className="mt-10 flex flex-col gap-8 text-sm text-ink-muted copy">
           <section>
-            <h2 className="text-xs font-mono uppercase tracking-widest text-white/30 mb-3">
+            <h2 className="label text-[10px] text-ink-dim mb-3">
               Angaben gemäß § 5 DDG
             </h2>
             <p>
@@ -34,21 +34,21 @@ export default function Impressum() {
               <br />
               {IMPRINT.city}, {IMPRINT.country}
             </p>
-            <p className="mt-3 text-white/40">
+            <p className="mt-3 text-ink-dim">
               CoGraph is not yet a registered company. This website is
               operated by the individuals named above.
             </p>
           </section>
 
           <section>
-            <h2 className="text-xs font-mono uppercase tracking-widest text-white/30 mb-3">
+            <h2 className="label text-[10px] text-ink-dim mb-3">
               Kontakt
             </h2>
             <p>
               E-Mail:{" "}
               <a
                 href={`mailto:${IMPRINT.email}`}
-                className="text-white/75 hover:text-white transition-colors"
+                className="text-ink-soft hover:text-signal transition-colors"
               >
                 {IMPRINT.email}
               </a>
@@ -56,7 +56,7 @@ export default function Impressum() {
           </section>
 
           <section>
-            <h2 className="text-xs font-mono uppercase tracking-widest text-white/30 mb-3">
+            <h2 className="label text-[10px] text-ink-dim mb-3">
               Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV
             </h2>
             <p>

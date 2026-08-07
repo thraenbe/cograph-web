@@ -1,81 +1,58 @@
 import Link from "next/link";
+import Logo from "./Logo";
 import { MARKETPLACE_URL, GITHUB_URL, CONTACT_URL } from "@/lib/site";
+
+// A small piece of the graph motif — footers are one of the places the
+// grammar is meant to appear (06 · Where it goes). 45°/90° only, filled
+// leaves, hollow interchanges, one hue per route.
+function FooterMotif() {
+  return (
+    <svg
+      width="100"
+      height="30"
+      viewBox="0 0 100 30"
+      fill="none"
+      aria-hidden="true"
+      className="opacity-70"
+    >
+      <path d="M6 24H34" stroke="#37d39b" strokeWidth="2.3" strokeLinecap="round" />
+      <path d="M34 24H76" stroke="#ffb454" strokeWidth="2.3" strokeLinecap="round" />
+      <path d="M34 24 52 6" stroke="#4f8cff" strokeWidth="2.3" strokeLinecap="round" />
+      <path d="M76 24 94 6" stroke="#ff6b9a" strokeWidth="2.3" strokeLinecap="round" />
+      <circle cx="6" cy="24" r="3.5" fill="#e8eef5" />
+      <circle cx="52" cy="6" r="3.5" fill="#e8eef5" />
+      <circle cx="94" cy="6" r="3.5" fill="#e8eef5" />
+      <circle cx="34" cy="24" r="4.5" fill="#0b0f14" stroke="#e8eef5" strokeWidth="2.3" />
+      <circle cx="76" cy="24" r="4.5" fill="#0b0f14" stroke="#e8eef5" strokeWidth="2.3" />
+    </svg>
+  );
+}
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/[0.06] py-12">
+    <footer className="relative border-t border-edge py-12">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           {/* Left — logo + tagline */}
           <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2.5">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <circle cx="12" cy="12" r="3.5" fill="#3b6ef8" />
-                <circle cx="4" cy="7" r="2.5" fill="#f97316" opacity="0.7" />
-                <circle cx="20" cy="7" r="2.5" fill="#22c55e" opacity="0.7" />
-                <circle cx="4" cy="17" r="2.5" fill="#ec4899" opacity="0.7" />
-                <circle cx="20" cy="17" r="2.5" fill="#eab308" opacity="0.7" />
-                <line
-                  x1="6.2"
-                  y1="8.4"
-                  x2="9.5"
-                  y2="10.8"
-                  stroke="rgba(255,255,255,0.2)"
-                  strokeWidth="1"
-                />
-                <line
-                  x1="17.8"
-                  y1="8.4"
-                  x2="14.5"
-                  y2="10.8"
-                  stroke="rgba(255,255,255,0.2)"
-                  strokeWidth="1"
-                />
-                <line
-                  x1="6.2"
-                  y1="15.6"
-                  x2="9.5"
-                  y2="13.2"
-                  stroke="rgba(255,255,255,0.2)"
-                  strokeWidth="1"
-                />
-                <line
-                  x1="17.8"
-                  y1="15.6"
-                  x2="14.5"
-                  y2="13.2"
-                  stroke="rgba(255,255,255,0.2)"
-                  strokeWidth="1"
-                />
-              </svg>
-              <span className="text-white/75 font-semibold tracking-[0.12em] text-sm uppercase">
-                Cograph
-              </span>
-            </div>
-            <p className="text-xs text-white/30 max-w-xs leading-relaxed">
+            <Logo size={24} />
+            <p className="text-xs text-ink-dim max-w-xs copy">
               CoGraph — read your codebase like a metro map.
             </p>
-            <p className="text-xs text-white/20 font-mono">MIT License</p>
+            <p className="font-mono text-xs text-ink-dim">MIT License</p>
+            <FooterMotif />
           </div>
 
           {/* Right — links */}
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-10">
             <div className="flex flex-col gap-3">
-              <span className="text-[10px] text-white/25 uppercase tracking-widest font-mono">
-                Links
-              </span>
+              <span className="label text-[10px] text-ink-dim">Links</span>
               <div className="flex flex-row flex-wrap gap-x-5 gap-y-2">
                 <a
                   href={MARKETPLACE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-white/40 hover:text-white/75 transition-colors"
+                  className="text-sm text-ink-muted hover:text-signal transition-colors"
                 >
                   VS Code Marketplace
                 </a>
@@ -83,7 +60,7 @@ export default function Footer() {
                   href={GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-white/40 hover:text-white/75 transition-colors flex items-center gap-1.5"
+                  className="text-sm text-ink-muted hover:text-signal transition-colors flex items-center gap-1.5"
                 >
                   <svg
                     width="13"
@@ -100,7 +77,7 @@ export default function Footer() {
                   href={CONTACT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-white/40 hover:text-white/75 transition-colors flex items-center gap-1.5"
+                  className="text-sm text-ink-muted hover:text-signal transition-colors flex items-center gap-1.5"
                 >
                   <svg
                     width="13"
@@ -119,18 +96,18 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-white/20 font-mono">
+        <div className="mt-10 pt-6 border-t border-edge flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="font-mono text-xs text-ink-dim">
             MIT License · © {new Date().getFullYear()} CoGraph.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <Link
               href="/impressum"
-              className="text-xs text-white/25 hover:text-white/60 transition-colors font-mono"
+              className="font-mono text-xs text-ink-dim hover:text-signal transition-colors"
             >
               Impressum
             </Link>
-            <p className="text-xs text-white/15 font-mono">
+            <p className="font-mono text-xs text-ink-dim/70">
               Read your codebase like a metro map
             </p>
           </div>

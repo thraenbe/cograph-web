@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-bg">
+    <main className="min-h-screen bg-ground">
       {/* 1 — Hero: company vision + dual CTA (unchanged) */}
       <Hero />
       {/* 2 — Demo: an early preview of CoGraph Review */}

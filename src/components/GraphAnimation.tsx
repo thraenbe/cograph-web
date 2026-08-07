@@ -1,163 +1,126 @@
-const nodes = [
-  { id: "main",      x: 278, y: 195, label: "main",       color: "#3b6ef8", float: "node-float-1", hub: true  },
-  { id: "init",      x:  90, y: 128, label: "init",       color: "#eab308", float: "node-float-2", hub: false },
-  { id: "config",    x: 172, y:  62, label: "config",     color: "#22c55e", float: "node-float-3", hub: false },
-  { id: "render",    x: 418, y:  98, label: "render",     color: "#f97316", float: "node-float-4", hub: false },
-  { id: "fetchData", x: 490, y: 192, label: "fetchData",  color: "#3b6ef8", float: "node-float-5", hub: false },
-  { id: "parseAST",  x: 440, y: 308, label: "parseAST",   color: "#ec4899", float: "node-float-6", hub: false },
-  { id: "process",   x: 198, y: 285, label: "process",    color: "#22c55e", float: "node-float-1", hub: false },
-  { id: "validate",  x:  88, y: 278, label: "validate",   color: "#f97316", float: "node-float-2", hub: false },
-  { id: "transform", x: 328, y: 360, label: "transform",  color: "#eab308", float: "node-float-3", hub: false },
-  { id: "cache",     x: 502, y: 308, label: "cache",      color: "#6366f1", float: "node-float-4", hub: false },
-  { id: "resolve",   x: 368, y: 198, label: "resolve",    color: "#f97316", float: "node-float-5", hub: false },
-  { id: "output",    x: 190, y: 368, label: "output",     color: "#ec4899", float: "node-float-6", hub: false },
+// 06 · The graph motif — drawn to the six rules.
+//
+//  01  45° and 90° only. Every segment below moves on the transit grid.
+//  02  Two node sizes: filled leaf, hollow interchange. Nothing else.
+//  03  Edge weight = node radius ÷ 1.5.
+//  04  Colour means a line, not a mood. One hue held for a whole route.
+//  05  Labels in mono, horizontal, never rotated.
+//  06  Nine nodes maximum — this is a diagram of an idea, not a repo dump.
+
+const LEAF_R = 9;
+const INTERCHANGE_R = 11;
+const EDGE_W = LEAF_R / 1.5;
+
+// Four routes, each holding one hue from end to end. Mixing all four is
+// permitted here because this is a full-system diagram.
+const routes = [
+  { id: "in-editor", color: "#37d39b", d: "M120 80 240 200 360 320", delay: "0s" },
+  { id: "bidirectional", color: "#4f8cff", d: "M240 200 420 200 540 200", delay: "1.6s" },
+  { id: "auto-derived", color: "#ffb454", d: "M300 80 420 200 540 320", delay: "0.8s" },
+  { id: "live", color: "#ff6b9a", d: "M240 80 240 200 240 320", delay: "2.4s" },
 ];
 
-const edges = [
-  { from: "init",      to: "main",       dir: "forward" },
-  { from: "config",    to: "main",       dir: "forward" },
-  { from: "main",      to: "render",     dir: "forward" },
-  { from: "main",      to: "process",    dir: "reverse" },
-  { from: "main",      to: "validate",   dir: "slow"    },
-  { from: "render",    to: "fetchData",  dir: "forward" },
-  { from: "fetchData", to: "resolve",    dir: "reverse" },
-  { from: "fetchData", to: "cache",      dir: "forward" },
-  { from: "resolve",   to: "parseAST",   dir: "slow"    },
-  { from: "process",   to: "transform",  dir: "forward" },
-  { from: "transform", to: "output",     dir: "reverse" },
-  { from: "validate",  to: "output",     dir: "slow"    },
+type Node = {
+  id: string;
+  x: number;
+  y: number;
+  label: string;
+  interchange?: boolean;
+  // Where the label sits relative to the node — chosen so no label ever
+  // crosses a route.
+  place: "above" | "below" | "left" | "right" | "below-left";
+};
+
+const nodes: Node[] = [
+  { id: "main", x: 240, y: 200, label: "main", interchange: true, place: "left" },
+  { id: "resolve", x: 420, y: 200, label: "resolve", interchange: true, place: "below-left" },
+  { id: "config", x: 120, y: 80, label: "config", place: "above" },
+  { id: "parseAST", x: 240, y: 80, label: "parseAST", place: "above" },
+  { id: "render", x: 300, y: 80, label: "render", place: "right" },
+  { id: "output", x: 240, y: 320, label: "output", place: "below" },
+  { id: "process", x: 360, y: 320, label: "process", place: "below" },
+  { id: "fetchData", x: 540, y: 200, label: "fetchData", place: "below" },
+  { id: "cache", x: 540, y: 320, label: "cache", place: "below" },
 ];
 
-function getNode(id: string) {
-  return nodes.find((n) => n.id === id)!;
+function labelPosition(node: Node) {
+  const r = node.interchange ? INTERCHANGE_R : LEAF_R;
+  switch (node.place) {
+    case "above":
+      return { x: node.x, y: node.y - r - 12, anchor: "middle" as const };
+    case "left":
+      return { x: node.x - r - 12, y: node.y + 4, anchor: "end" as const };
+    case "right":
+      return { x: node.x + r + 12, y: node.y + 4, anchor: "start" as const };
+    case "below-left":
+      return { x: node.x - 14, y: node.y + r + 15, anchor: "end" as const };
+    default:
+      return { x: node.x, y: node.y + r + 20, anchor: "middle" as const };
+  }
 }
-
-// Per-node animation delay offsets so they don't all pulse in sync
-const auraDelays = [0, 0.8, 1.6, 0.4, 1.2, 2.0, 0.6, 1.4, 0.2, 1.0, 1.8, 0.3];
 
 export default function GraphAnimation() {
   return (
     <div className="relative w-full">
       <svg
-        viewBox="0 0 590 430"
+        viewBox="0 0 640 400"
         className="w-full h-full"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        <defs>
-          <radialGradient id="graphBg" cx="48%" cy="48%" r="52%">
-            <stop offset="0%" stopColor="#3b6ef8" stopOpacity="0.09" />
-            <stop offset="100%" stopColor="#080810" stopOpacity="0" />
-          </radialGradient>
-
-          {/* Glow filters */}
-          <filter id="glow-blue"   x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b" />
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="glow-orange" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b" />
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="glow-green"  x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b" />
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="glow-pink"   x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b" />
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="glow-indigo" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b" />
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="glow-hub"    x="-120%" y="-120%" width="340%" height="340%">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b" />
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-
-        {/* Background radial glow */}
-        <rect width="590" height="430" fill="url(#graphBg)" />
-
-        {/* ── Edges ──────────────────────────────────────────── */}
-        {edges.map((edge, i) => {
-          const f = getNode(edge.from);
-          const t = getNode(edge.to);
-          const cls =
-            edge.dir === "forward" ? "edge-forward" :
-            edge.dir === "reverse" ? "edge-reverse" : "edge-slow";
-          return (
-            <line
-              key={i}
-              x1={f.x} y1={f.y}
-              x2={t.x} y2={t.y}
-              stroke="rgba(255,255,255,0.18)"
-              strokeWidth="1.2"
-              className={cls}
+        {/* Routes — solid base, with a short segment travelling along each one */}
+        {routes.map((route) => (
+          <g key={route.id}>
+            <path
+              d={route.d}
+              fill="none"
+              stroke={route.color}
+              strokeWidth={EDGE_W}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              opacity={0.32}
             />
-          );
-        })}
+            <path
+              className="route-pulse"
+              d={route.d}
+              pathLength={100}
+              fill="none"
+              stroke={route.color}
+              strokeWidth={EDGE_W}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ animationDelay: route.delay }}
+            />
+          </g>
+        ))}
 
-        {/* ── Nodes ──────────────────────────────────────────── */}
-        {nodes.map((node, idx) => {
-          const r     = node.hub ? 12 : 9;
-          const auraR = node.hub ? 24 : 17;
-          const delay = auraDelays[idx] ?? 0;
-
-          const glowId =
-            node.hub                      ? "glow-hub"    :
-            node.color === "#3b6ef8"      ? "glow-blue"   :
-            node.color === "#f97316"      ? "glow-orange" :
-            node.color === "#22c55e"      ? "glow-green"  :
-            node.color === "#ec4899"      ? "glow-pink"   :
-            node.color === "#6366f1"      ? "glow-indigo" :
-            "glow-blue";
-
+        {/* Nodes — filled leaf, hollow interchange */}
+        {nodes.map((node) => {
+          const pos = labelPosition(node);
           return (
-            /*
-             * Outer <g>: SVG attribute-based positioning — stays at (x,y).
-             * Inner <g>: CSS float animation — translates ±4px around (0,0).
-             * Keeping them separate avoids the CSS-overrides-SVG-transform bug.
-             */
-            <g key={node.id} transform={`translate(${node.x}, ${node.y})`}>
-              <g className={node.float}>
-                {/* Pulsing aura ring */}
+            <g key={node.id}>
+              {node.interchange ? (
                 <circle
-                  r={auraR}
-                  fill={node.color}
-                  opacity={0}
-                  style={{
-                    animation: `${node.hub ? "hubPulse" : "auraPulse"} ${node.hub ? "3.5s" : "3s"} ease-in-out infinite`,
-                    animationDelay: `${delay}s`,
-                    transformBox: "fill-box",
-                    transformOrigin: "center",
-                  }}
+                  cx={node.x}
+                  cy={node.y}
+                  r={INTERCHANGE_R}
+                  fill="#0b0f14"
+                  stroke="#e8eef5"
+                  strokeWidth={EDGE_W * 0.75}
                 />
-                {/* Glowing core circle */}
-                <circle
-                  r={r}
-                  fill={node.color}
-                  filter={`url(#${glowId})`}
-                />
-                {/* Inner highlight */}
-                <circle
-                  r={r * 0.55}
-                  fill="white"
-                  opacity={0.22}
-                />
-                {/* Label */}
-                <text
-                  x={0}
-                  y={r + 14}
-                  textAnchor="middle"
-                  fill="rgba(255,255,255,0.5)"
-                  fontSize="9.5"
-                  fontFamily="var(--font-geist-mono), ui-monospace, monospace"
-                >
-                  {node.label}
-                </text>
-              </g>
+              ) : (
+                <circle cx={node.x} cy={node.y} r={LEAF_R} fill="#e8eef5" />
+              )}
+              <text
+                x={pos.x}
+                y={pos.y}
+                textAnchor={pos.anchor}
+                fill="#9fb0c3"
+                fontSize="13"
+                fontFamily="var(--font-mono), ui-monospace, monospace"
+              >
+                {node.label}
+              </text>
             </g>
           );
         })}

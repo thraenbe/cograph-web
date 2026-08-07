@@ -1,7 +1,28 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+// 05 · Typography — three families, three jobs, no overlap.
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const sans = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "CoGraph — Read your codebase like a metro map",
@@ -44,9 +65,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
-      <body className="font-sans bg-bg text-white antialiased">{children}</body>
+      <body className="font-sans bg-ground text-ink-soft antialiased">
+        {children}
+      </body>
     </html>
   );
 }

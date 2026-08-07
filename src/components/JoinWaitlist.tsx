@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LogoMark } from "./Logo";
 import { WEB3FORMS_ACCESS_KEY } from "@/lib/site";
 
 type Status = "idle" | "loading" | "success";
@@ -111,23 +112,19 @@ export default function JoinWaitlist({
           onClick={close}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-ground/80 backdrop-blur-sm" />
 
           {/* Card */}
           <div
-            className="fade-in-up relative w-full max-w-md rounded-2xl border border-white/10 p-8 shadow-2xl"
-            style={{
-              background:
-                "linear-gradient(160deg, rgba(19,19,38,0.98) 0%, rgba(8,8,16,0.98) 100%)",
-            }}
+            className="fade-in-up relative w-full max-w-md rounded-lg border border-edge bg-card p-8 shadow-2xl shadow-black/40"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Soft top glow */}
             <div
-              className="absolute inset-x-0 top-0 h-32 pointer-events-none rounded-t-2xl"
+              className="absolute inset-x-0 top-0 h-32 pointer-events-none rounded-t-lg"
               style={{
                 background:
-                  "radial-gradient(ellipse 70% 100% at 50% 0%, rgba(59,110,248,0.18) 0%, transparent 70%)",
+                  "radial-gradient(ellipse 70% 100% at 50% 0%, rgba(55,211,155,0.12) 0%, transparent 70%)",
               }}
             />
 
@@ -136,7 +133,7 @@ export default function JoinWaitlist({
               type="button"
               onClick={close}
               aria-label="Close"
-              className="absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center text-white/40 hover:text-white/80 hover:bg-white/5 transition-colors"
+              className="absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center text-ink-dim hover:text-ink hover:bg-edge/60 transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path
@@ -150,35 +147,29 @@ export default function JoinWaitlist({
 
             {status === "success" ? (
               <div className="relative flex flex-col items-center text-center gap-4 py-2">
-                <div
-                  className="w-16 h-16 rounded-full flex items-center justify-center"
-                  style={{
-                    background: "rgba(34,197,94,0.12)",
-                    border: "1px solid rgba(34,197,94,0.4)",
-                  }}
-                >
+                <div className="w-16 h-16 rounded-full flex items-center justify-center border border-signal/40 bg-signal/10">
                   <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
                     <path
                       d="M8 15.5L13 20.5L22 10"
-                      stroke="#22c55e"
+                      stroke="#37d39b"
                       strokeWidth="2.2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-semibold tracking-tight">
+                <h3 className="font-display font-bold text-2xl tracking-display text-ink">
                   You&apos;re on the list.
                 </h3>
-                <p className="text-sm text-white/55 leading-relaxed">
+                <p className="text-sm text-ink-muted copy">
                   We&apos;ll email{" "}
-                  <span className="text-white/85">{email.trim()}</span> the
+                  <span className="text-ink-soft font-medium">{email.trim()}</span> the
                   moment your spot opens. Thanks for being early.
                 </p>
                 <button
                   type="button"
                   onClick={close}
-                  className="mt-2 px-6 py-2.5 rounded-md border border-white/12 text-white/75 text-sm font-medium hover:border-white/25 hover:text-white transition-colors"
+                  className="mt-2 px-6 py-2.5 rounded-md border border-edge text-ink-muted text-sm font-medium hover:border-ink-dim hover:text-ink transition-colors"
                 >
                   Done
                 </button>
@@ -186,34 +177,18 @@ export default function JoinWaitlist({
             ) : (
               <div className="relative flex flex-col gap-5">
                 {/* Brand mark */}
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{
-                    background: "rgba(59,110,248,0.12)",
-                    border: "1px solid rgba(59,110,248,0.3)",
-                  }}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="3.5" fill="#3b6ef8" />
-                    <circle cx="4" cy="7" r="2.5" fill="#f97316" />
-                    <circle cx="20" cy="7" r="2.5" fill="#22c55e" />
-                    <circle cx="4" cy="17" r="2.5" fill="#ec4899" />
-                    <circle cx="20" cy="17" r="2.5" fill="#eab308" />
-                    <line x1="6.2" y1="8.4" x2="9.5" y2="10.8" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-                    <line x1="17.8" y1="8.4" x2="14.5" y2="10.8" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-                    <line x1="6.2" y1="15.6" x2="9.5" y2="13.2" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-                    <line x1="17.8" y1="15.6" x2="14.5" y2="13.2" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
-                  </svg>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center border border-edge bg-ground">
+                  <LogoMark size={24} />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <span className="text-xs font-mono uppercase tracking-widest text-primary-light">
+                  <span className="label text-[10px] text-signal">
                     Early access
                   </span>
-                  <h3 className="text-2xl font-semibold tracking-tight">
+                  <h3 className="font-display font-bold text-2xl tracking-display text-ink">
                     Get access first.
                   </h3>
-                  <p className="text-sm text-white/55 leading-relaxed">
+                  <p className="text-sm text-ink-muted copy">
                     Premium features like Graph Intelligence and natural language
                     queries roll out to waitlist members before anyone else. Drop
                     your email and skip the line.
@@ -243,21 +218,21 @@ export default function JoinWaitlist({
                     autoFocus
                     aria-label="Email address"
                     aria-invalid={!!error}
-                    className="w-full px-4 py-3 rounded-md bg-white/[0.04] border border-white/12 text-sm text-white placeholder-white/30 focus:outline-none focus:border-primary/60 transition-colors"
+                    className="w-full px-4 py-3 rounded-md bg-ground border border-edge text-sm text-ink placeholder-ink-dim focus:outline-none focus:border-signal/60 transition-colors"
                   />
                   {error && (
-                    <p className="text-xs text-[#f97316]">{error}</p>
+                    <p className="text-xs text-amber">{error}</p>
                   )}
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="btn-shimmer inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md text-white font-medium text-sm shadow-lg shadow-primary/25 disabled:opacity-70 transition-opacity"
+                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md bg-signal text-ground font-semibold text-sm hover:bg-[#4ae0aa] disabled:opacity-70 transition-colors"
                   >
                     {status === "loading" ? (
                       <>
                         <svg className="animate-spin" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                          <circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
-                          <path d="M14 8A6 6 0 008 2" stroke="white" strokeWidth="2" strokeLinecap="round" />
+                          <circle cx="8" cy="8" r="6" stroke="rgba(11,15,20,0.3)" strokeWidth="2" />
+                          <path d="M14 8A6 6 0 008 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                         </svg>
                         Joining…
                       </>
@@ -267,7 +242,7 @@ export default function JoinWaitlist({
                   </button>
                 </form>
 
-                <p className="text-xs text-white/30 text-center">
+                <p className="text-xs text-ink-dim text-center">
                   No spam. Just one email when your spot opens.
                 </p>
               </div>
