@@ -1,162 +1,127 @@
-import GraphAnimation from "./GraphAnimation";
-import JoinWaitlist from "./JoinWaitlist";
-import Logo from "./Logo";
-import { MARKETPLACE_URL, LANGUAGES } from "@/lib/site";
+import Image from "next/image";
+import CopyCommand from "./CopyCommand";
+import { ArrowRight, ArrowUpRight, ExtensionIcon, GitHubIcon } from "./ui";
+import {
+  CHANGELOG_URL,
+  EXTENSION,
+  GITHUB_URL,
+  INSTALL_COMMAND,
+  MARKETPLACE_URL,
+} from "@/lib/site";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section id="top" className="relative overflow-hidden pt-32 lg:pt-40">
       {/* Dot grid — neutral, because colour here would be decoration */}
-      <div
-        className="absolute inset-0 pointer-events-none bg-dot-grid bg-dot-32"
-      />
-      {/* Vignette settles the grid back into the ground */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 70% at 50% 50%, transparent 25%, #0b0f14 100%)",
-        }}
-      />
+      <div className="pointer-events-none absolute inset-0 bg-dot-grid bg-dot-32 [mask-image:radial-gradient(ellipse_70%_55%_at_50%_20%,black,transparent)]" />
       {/* A single soft signal-green bloom — the 2% */}
       <div
-        className="absolute pointer-events-none"
+        className="pointer-events-none absolute left-1/2 top-[-10%] h-[640px] w-[1100px] -translate-x-1/2"
         style={{
-          top: "38%",
-          left: "38%",
-          width: "720px",
-          height: "480px",
           background:
-            "radial-gradient(ellipse at center, rgba(55,211,155,0.10) 0%, transparent 70%)",
-          transform: "translate(-50%, -50%)",
+            "radial-gradient(ellipse at center, rgba(55,211,155,0.10) 0%, transparent 62%)",
         }}
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-10 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          {/* Left — Text content */}
-          <div className="flex flex-col gap-8">
-            <Logo size={34} />
+      <div className="container-site relative">
+        <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+          {/* Release pill */}
+          <a
+            href={CHANGELOG_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fade-in-up group inline-flex items-center gap-3 rounded-full border border-edge bg-card/70 py-1 pl-1 pr-4 text-xs text-ink-muted transition-colors hover:border-ink-dim hover:text-ink"
+          >
+            <span className="label rounded-full bg-signal/10 px-2.5 py-1 text-[10px] text-signal">
+              v{EXTENSION.version}
+            </span>
+            Free on the VS Code Marketplace
+            <span className="text-ink-dim transition-transform group-hover:translate-x-0.5">
+              <ArrowRight size={14} />
+            </span>
+          </a>
 
-            {/* Headline */}
-            <div className="flex flex-col gap-5">
-              <h1 className="font-display font-bold text-4xl lg:text-[3.4rem] leading-[1.08] tracking-display-tight text-ink">
-                Lost in your AI generated codebase?
-                <br />
-                <span className="text-signal">
-                  Try CoGraph to get back into the driver&apos;s seat.
-                </span>
-              </h1>
-              <p className="text-base lg:text-lg text-ink-muted copy max-w-lg">
-                The AI writes the code. You need to understand it. CoGraph turns
-                your codebase into a living knowledge graph, so you can see how
-                every piece connects, even as AI rewrites it underneath you.{" "}
-                <span className="text-ink-soft font-medium">
-                  Try the demo and join the waitlist.
-                </span>
-              </p>
-            </div>
+          <h1
+            className="fade-in-up mt-8 font-display text-[2.6rem] font-bold leading-[1.02] tracking-display-tight text-ink sm:text-6xl lg:text-[5.2rem]"
+            style={{ animationDelay: "60ms" }}
+          >
+            <span className="block text-balance">Writing code got cheap.</span>
+            <span className="block text-balance text-ink-muted">Reading it did not.</span>
+          </h1>
 
-            {/* CTAs — primary: try the prototype, secondary: see the vision */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href={MARKETPLACE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-md bg-signal text-ground font-semibold text-sm hover:bg-[#4ae0aa] transition-colors"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <rect
-                    x="2"
-                    y="2"
-                    width="6"
-                    height="6"
-                    rx="1"
-                    fill="currentColor"
-                    opacity="0.9"
-                  />
-                  <rect
-                    x="10"
-                    y="2"
-                    width="6"
-                    height="6"
-                    rx="1"
-                    fill="currentColor"
-                    opacity="0.7"
-                  />
-                  <rect
-                    x="2"
-                    y="10"
-                    width="6"
-                    height="6"
-                    rx="1"
-                    fill="currentColor"
-                    opacity="0.7"
-                  />
-                  <rect
-                    x="10"
-                    y="10"
-                    width="6"
-                    height="6"
-                    rx="1"
-                    fill="currentColor"
-                    opacity="0.5"
-                  />
-                </svg>
-                Try VS-Code Extension
-              </a>
-              <JoinWaitlist className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md border border-edge text-ink-muted font-medium text-sm hover:border-ink-dim hover:text-ink transition-colors" />
-            </div>
+          <p
+            className="fade-in-up mt-7 max-w-2xl text-base text-ink-muted copy sm:text-lg lg:text-xl lg:leading-[1.6]"
+            style={{ animationDelay: "120ms" }}
+          >
+            CoGraph derives a call graph from your repository — every function a
+            node, every call an edge — and opens it beside your code in VS Code.{" "}
+            <span className="text-ink-soft">
+              Parsed from the syntax tree: never run, never guessed.
+            </span>
+          </p>
 
-            {/* Social proof */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-2">
-              <div className="flex items-center gap-2 font-mono text-xs text-ink-dim">
-                <svg
-                  width="12"
-                  height="12"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M7 1.5L8.545 5.13L12.5 5.635L9.75 8.315L10.59 12.25L7 10.255L3.41 12.25L4.25 8.315L1.5 5.635L5.455 5.13L7 1.5Z"
-                    fill="#566273"
-                  />
-                </svg>
-                <span>{LANGUAGES.join(" · ")}</span>
-              </div>
-              <span className="text-edge">|</span>
-              <span className="font-mono text-xs text-ink-dim">
-                Free VS Code extension
-              </span>
-            </div>
+          <div
+            className="fade-in-up mt-10 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row"
+            style={{ animationDelay: "180ms" }}
+          >
+            <a
+              href={MARKETPLACE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary w-full px-6 sm:w-auto"
+            >
+              <ExtensionIcon size={16} />
+              Install for VS Code
+            </a>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary w-full px-6 sm:w-auto"
+            >
+              <GitHubIcon size={16} />
+              View the source
+              <ArrowUpRight />
+            </a>
           </div>
 
-          {/* Right — Graph animation */}
-          <div className="relative flex items-center justify-center lg:justify-end">
-            {/* Graph container */}
-            <div className="relative w-full max-w-xl lg:max-w-2xl rounded-lg border border-edge overflow-hidden bg-card">
-              {/* Editor chrome */}
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-edge">
-                <span className="w-2.5 h-2.5 rounded-full bg-edge" />
-                <span className="w-2.5 h-2.5 rounded-full bg-edge" />
-                <span className="w-2.5 h-2.5 rounded-full bg-edge" />
-                <span className="ml-3 font-mono text-xs text-ink-dim">
-                  CoGraph: Call Graph — project
-                </span>
-              </div>
-              <div className="p-4">
-                <GraphAnimation />
-              </div>
-            </div>
+          <div className="fade-in-up mt-6 w-full sm:w-auto" style={{ animationDelay: "240ms" }}>
+            <CopyCommand command={INSTALL_COMMAND} className="w-full sm:w-auto" />
           </div>
         </div>
+
+        {/* Product shot — the real extension, not an illustration */}
+        <figure
+          className="fade-in-up relative mx-auto mt-16 max-w-6xl lg:mt-20"
+          style={{ animationDelay: "320ms" }}
+        >
+          <div
+            className="pointer-events-none absolute -inset-x-16 -top-16 bottom-0"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 55% at 50% 30%, rgba(55,211,155,0.10) 0%, transparent 70%)",
+            }}
+          />
+          <div className="relative overflow-hidden rounded-[14px] border border-edge bg-card shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)] ring-1 ring-white/[0.03]">
+            <Image
+              src="/product/extension-window.png"
+              alt="The CoGraph extension in VS Code: a call graph of the extension's own analyzer scripts, grouped by file, with the layout controls and the chat panel beside it."
+              width={2234}
+              height={1318}
+              priority
+              quality={90}
+              sizes="(max-width: 1200px) 100vw, 1152px"
+              className="block h-auto w-full"
+            />
+          </div>
+          {/* Fade the bottom of the shot into the ground */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-b from-transparent to-ground" />
+          <figcaption className="relative -mt-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-xs text-ink-dim">
+            <span>CoGraph for VS Code</span>
+            <span className="text-edge">·</span>
+            <span>CoGraph&apos;s own analyzers, read as a graph</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

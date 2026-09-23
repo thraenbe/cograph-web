@@ -1,24 +1,58 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LogoMark } from "./Logo";
+import { ArrowRight } from "./ui";
 import { WEB3FORMS_ACCESS_KEY } from "@/lib/site";
 
 type Status = "idle" | "loading" | "success";
+type Variant = "waitlist" | "partner";
+
+const COPY: Record<
+  Variant,
+  { eyebrow: string; title: string; body: string; submit: string; subject: string; done: string }
+> = {
+  waitlist: {
+    eyebrow: "Team version",
+    title: "Hear when the team version opens.",
+    body: "The graph in your repository and in pull requests is in design. Leave an email and we'll write once when there is something you can use.",
+    submit: "Join the waitlist",
+    subject: "New CoGraph waitlist signup",
+    done: "We'll write once, when there is something you can use.",
+  },
+  partner: {
+    eyebrow: "Design partners",
+    title: "Pilot the team version with us.",
+    body: "Four weeks, one repository, no cost. Tell us where to reach you and roughly how big the team is — we'll reply personally.",
+    submit: "Send",
+    subject: "CoGraph design partner application",
+    done: "Thanks — one of us will reply personally.",
+  },
+};
+
+const TEAM_SIZES = ["1–4", "5–15", "16–50", "51+"];
 
 export default function JoinWaitlist({
   className = "",
-  label = "Join the waitlist",
+  label,
+  variant = "waitlist",
+  showArrow = true,
 }: {
   className?: string;
   label?: string;
+  variant?: Variant;
+  showArrow?: boolean;
 }) {
+  const copy = COPY[variant];
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
+  const [teamSize, setTeamSize] = useState("");
+  const [note, setNote] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   // Honeypot — bots fill this; humans never see it.
   const [botcheck, setBotcheck] = useState("");
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   // Lock background scroll + close on Escape while the modal is open.
   useEffect(() => {
@@ -38,10 +72,13 @@ export default function JoinWaitlist({
 
   function close() {
     setOpen(false);
+    triggerRef.current?.focus();
     // Reset shortly after so the success/error state doesn't flash on reopen.
     setTimeout(() => {
       setStatus("idle");
       setEmail("");
+      setTeamSize("");
+      setNote("");
       setError("");
     }, 200);
   }
@@ -55,9 +92,9 @@ export default function JoinWaitlist({
       return;
     }
 
-    // Web3Forms: signups are emailed to the founder inbox on file. The access
-    // key (from site config, env-overridable) is a public routing token — the
-    // destination address lives on Web3Forms' servers, never in this repo.
+    // Web3Forms: submissions are emailed to the founder inbox on file. The
+    // access key (from site config, env-overridable) is a public routing token —
+    // the destination address lives on Web3Forms' servers, never in this repo.
     setError("");
     setStatus("loading");
     try {
@@ -70,8 +107,9 @@ export default function JoinWaitlist({
         body: JSON.stringify({
           access_key: WEB3FORMS_ACCESS_KEY,
           email: trimmed,
-          subject: "New CoGraph waitlist signup",
-          from_name: "CoGraph waitlist",
+          ...(variant === "partner" ? { team_size: teamSize || "not given", note } : {}),
+          subject: copy.subject,
+          from_name: variant === "partner" ? "CoGraph design partners" : "CoGraph waitlist",
           botcheck, // honeypot — real users leave this empty
         }),
       });
@@ -88,19 +126,14 @@ export default function JoinWaitlist({
     }
   }
 
+  const inputClass =
+    "w-full rounded-md border border-edge bg-ground px-4 py-3 text-sm text-ink placeholder-ink-dim transition-colors focus:border-signal/60 focus:outline-none";
+
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} className={className}>
-        {label}
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path
-            d="M2.5 8H13M9.5 4.5L13 8L9.5 11.5"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+      <button ref={triggerRef} type="button" onClick={() => setOpen(true)} className={className}>
+        {label ?? copy.submit}
+        {showArrow && <ArrowRight />}
       </button>
 
       {open && (
@@ -108,7 +141,7 @@ export default function JoinWaitlist({
           className="fixed inset-0 z-[100] flex items-center justify-center p-4"
           role="dialog"
           aria-modal="true"
-          aria-label="Join the CoGraph waitlist"
+          aria-labelledby={`dialog-title-${variant}`}
           onClick={close}
         >
           {/* Backdrop */}
@@ -116,83 +149,52 @@ export default function JoinWaitlist({
 
           {/* Card */}
           <div
-            className="fade-in-up relative w-full max-w-md rounded-lg border border-edge bg-card p-8 shadow-2xl shadow-black/40"
+            className="fade-in-up relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-xl border border-edge bg-card p-8 shadow-2xl shadow-black/40"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Soft top glow */}
-            <div
-              className="absolute inset-x-0 top-0 h-32 pointer-events-none rounded-t-lg"
-              style={{
-                background:
-                  "radial-gradient(ellipse 70% 100% at 50% 0%, rgba(55,211,155,0.12) 0%, transparent 70%)",
-              }}
-            />
-
             {/* Close */}
             <button
               type="button"
               onClick={close}
               aria-label="Close"
-              className="absolute top-4 right-4 w-8 h-8 rounded-md flex items-center justify-center text-ink-dim hover:text-ink hover:bg-edge/60 transition-colors"
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-md text-ink-dim transition-colors hover:bg-edge/60 hover:text-ink"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path
-                  d="M4 4L12 12M12 4L4 12"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                />
+                <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
 
             {status === "success" ? (
-              <div className="relative flex flex-col items-center text-center gap-4 py-2">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center border border-signal/40 bg-signal/10">
+              <div className="relative flex flex-col items-center gap-4 py-2 text-center">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-signal/40 bg-signal/10">
                   <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
-                    <path
-                      d="M8 15.5L13 20.5L22 10"
-                      stroke="#37d39b"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <path d="M8 15.5L13 20.5L22 10" stroke="#37d39b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <h3 className="font-display font-bold text-2xl tracking-display text-ink">
-                  You&apos;re on the list.
+                <h3 id={`dialog-title-${variant}`} className="font-display text-2xl font-bold tracking-display text-ink">
+                  Received.
                 </h3>
-                <p className="text-sm text-ink-muted copy">
-                  We&apos;ll email{" "}
-                  <span className="text-ink-soft font-medium">{email.trim()}</span> the
-                  moment your spot opens. Thanks for being early.
-                </p>
+                <p className="copy text-sm text-ink-muted">{copy.done}</p>
                 <button
                   type="button"
                   onClick={close}
-                  className="mt-2 px-6 py-2.5 rounded-md border border-edge text-ink-muted text-sm font-medium hover:border-ink-dim hover:text-ink transition-colors"
+                  className="mt-2 rounded-md border border-edge px-6 py-2.5 text-sm font-medium text-ink-muted transition-colors hover:border-ink-dim hover:text-ink"
                 >
                   Done
                 </button>
               </div>
             ) : (
               <div className="relative flex flex-col gap-5">
-                {/* Brand mark */}
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center border border-edge bg-ground">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-edge bg-ground">
                   <LogoMark size={24} />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <span className="label text-[10px] text-signal">
-                    Early access
-                  </span>
-                  <h3 className="font-display font-bold text-2xl tracking-display text-ink">
-                    Get access first.
+                  <span className="label text-[10px] text-signal">{copy.eyebrow}</span>
+                  <h3 id={`dialog-title-${variant}`} className="font-display text-2xl font-bold tracking-display text-ink">
+                    {copy.title}
                   </h3>
-                  <p className="text-sm text-ink-muted copy">
-                    Premium features like Graph Intelligence and natural language
-                    queries roll out to waitlist members before anyone else. Drop
-                    your email and skip the line.
-                  </p>
+                  <p className="copy text-sm text-ink-muted">{copy.body}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -207,26 +209,62 @@ export default function JoinWaitlist({
                     onChange={(e) => setBotcheck(e.target.checked ? "1" : "")}
                     style={{ position: "absolute", left: "-9999px", opacity: 0 }}
                   />
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      if (error) setError("");
-                    }}
-                    placeholder="you@company.com"
-                    autoFocus
-                    aria-label="Email address"
-                    aria-invalid={!!error}
-                    className="w-full px-4 py-3 rounded-md bg-ground border border-edge text-sm text-ink placeholder-ink-dim focus:outline-none focus:border-signal/60 transition-colors"
-                  />
-                  {error && (
-                    <p className="text-xs text-amber">{error}</p>
+                  <label className="flex flex-col gap-1.5">
+                    <span className="text-xs text-ink-muted">Work email</span>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (error) setError("");
+                      }}
+                      placeholder="you@company.com"
+                      autoFocus
+                      aria-invalid={!!error}
+                      className={inputClass}
+                    />
+                  </label>
+
+                  {variant === "partner" && (
+                    <>
+                      <fieldset className="flex flex-col gap-1.5">
+                        <legend className="mb-1.5 text-xs text-ink-muted">Engineers on the team (optional)</legend>
+                        <div className="grid grid-cols-4 gap-2">
+                          {TEAM_SIZES.map((size) => (
+                            <button
+                              key={size}
+                              type="button"
+                              aria-pressed={teamSize === size}
+                              onClick={() => setTeamSize(teamSize === size ? "" : size)}
+                              className={`rounded-md border px-2 py-2 font-mono text-xs transition-colors ${
+                                teamSize === size
+                                  ? "border-signal/60 bg-signal/10 text-ink"
+                                  : "border-edge bg-ground text-ink-muted hover:border-ink-dim"
+                              }`}
+                            >
+                              {size}
+                            </button>
+                          ))}
+                        </div>
+                      </fieldset>
+                      <label className="flex flex-col gap-1.5">
+                        <span className="text-xs text-ink-muted">Stack or context (optional)</span>
+                        <textarea
+                          value={note}
+                          onChange={(e) => setNote(e.target.value)}
+                          rows={3}
+                          placeholder="e.g. TypeScript monorepo on GitHub, heavy Copilot use"
+                          className={`${inputClass} resize-none`}
+                        />
+                      </label>
+                    </>
                   )}
+
+                  {error && <p className="text-xs text-amber">{error}</p>}
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-md bg-signal text-ground font-semibold text-sm hover:bg-[#4ae0aa] disabled:opacity-70 transition-colors"
+                    className="btn-primary mt-1 disabled:opacity-70"
                   >
                     {status === "loading" ? (
                       <>
@@ -234,16 +272,17 @@ export default function JoinWaitlist({
                           <circle cx="8" cy="8" r="6" stroke="rgba(11,15,20,0.3)" strokeWidth="2" />
                           <path d="M14 8A6 6 0 008 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                         </svg>
-                        Joining…
+                        Sending…
                       </>
                     ) : (
-                      "Join the waitlist"
+                      copy.submit
                     )}
                   </button>
                 </form>
 
-                <p className="text-xs text-ink-dim text-center">
-                  No spam. Just one email when your spot opens.
+                <p className="text-center text-xs leading-relaxed text-ink-dim">
+                  We use your details only to reply about CoGraph. The form is
+                  delivered to us by Web3Forms.
                 </p>
               </div>
             )}

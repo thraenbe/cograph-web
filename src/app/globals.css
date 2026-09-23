@@ -21,10 +21,14 @@
   --ink-soft: #e8eef5;
   --ink-muted: #9fb0c3;
   --ink-dim: #566273;
+
+  color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
+  /* Anchor jumps land below the sticky header */
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -37,6 +41,12 @@ body {
 ::selection {
   background: rgba(55, 211, 155, 0.25);
   color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* ─── The mono system layer · 05 Typography ──────────────────────────────── */
@@ -54,6 +64,41 @@ body {
 
 .copy {
   line-height: 1.7;
+}
+
+@layer components {
+  /* One primary action per view: signal green, ground-navy type. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-md bg-signal px-5 py-3 text-sm font-semibold text-ground transition-colors hover:bg-[#4ae0aa];
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-md border border-edge bg-card/40 px-5 py-3 text-sm font-medium text-ink-soft transition-colors hover:border-ink-dim hover:bg-card hover:text-ink;
+  }
+
+  .link-quiet {
+    @apply text-ink-muted transition-colors hover:text-ink;
+  }
+
+  .section {
+    @apply relative py-24 lg:py-32;
+  }
+
+  .container-site {
+    @apply mx-auto w-full max-w-6xl px-6 lg:px-8;
+  }
+
+  .h2 {
+    @apply font-display text-3xl font-bold leading-[1.1] tracking-display-tight text-ink sm:text-4xl lg:text-[2.9rem];
+  }
+
+  .lead {
+    @apply text-base leading-[1.7] text-ink-muted lg:text-lg;
+  }
+
+  .card {
+    @apply rounded-xl border border-edge bg-card;
+  }
 }
 
 /* ─── The graph motif · 06 ───────────────────────────────────────────────── */
@@ -89,7 +134,7 @@ body {
 }
 
 .fade-in-up {
-  animation: fadeInUp 0.5s ease forwards;
+  animation: fadeInUp 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 /* ─── Section divider ────────────────────────────────────────────────────── */
@@ -97,6 +142,18 @@ body {
 .section-divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--edge), transparent);
+}
+
+/* ─── FAQ disclosure ─────────────────────────────────────────────────────── */
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .faq-plus {
+  transform: rotate(45deg);
 }
 
 /* ─── Reduced motion ─────────────────────────────────────────────────────── */

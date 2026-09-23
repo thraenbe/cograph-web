@@ -1,85 +1,63 @@
 import Image from "next/image";
-import { FOUNDERS } from "@/lib/site";
+import { GitHubIcon, LinkedInIcon, SectionHeader } from "./ui";
+import { FOUNDERS, GITHUB_URL, INCUBATOR } from "@/lib/site";
 
-// FLAG(founder): bios and roles below are drafts built only from the
-// handover — confirm/replace wording before launch.
-// Profile links come from src/lib/site.ts (Magnus GitHub + Bela LinkedIn TODO).
+// FLAG(founder): bios and roles come from src/lib/site.ts — confirm wording
+// before launch. Portraits are cropped from the originals in public/team/ so
+// the old stage slide behind Bela ("350+ …") is not legible.
+
+const PORTRAIT: Record<string, string> = {
+  "Magnus Hornstein": "/team/magnus-portrait.jpg",
+  "Bela Thrän": "/team/bela-portrait.jpg",
+};
 
 export default function Team() {
   return (
-    <section id="team" className="relative py-24 bg-card">
-      <div className="absolute top-0 left-0 right-0 section-divider" />
+    <section id="team" className="section">
+      <div className="absolute inset-x-0 top-0 section-divider" />
+      <div className="container-site">
+        <SectionHeader
+          number="07"
+          eyebrow="Team"
+          title={
+            <>
+              Two founders{" "}
+              <span className="text-ink-muted">who needed this themselves.</span>
+            </>
+          }
+          lead="CoGraph came out of a working engineer's own problem — Bela started it after a data-science internship at Bosch. We build it in Tübingen, in the open."
+        />
 
-      <div className="max-w-5xl mx-auto px-6 lg:px-10">
-        {/* Header */}
-        <div className="flex flex-col gap-4 mb-12">
-          <div className="flex items-center gap-3">
-            <span className="w-8 h-0.5 bg-signal" />
-            <span className="label text-[10px] text-signal">Team</span>
-          </div>
-          <h2 className="font-display font-bold text-3xl lg:text-4xl tracking-display text-ink">
-            Built by two founders
-            <br />
-            <span className="text-ink-dim">who needed this themselves.</span>
-          </h2>
-          <p className="text-base text-ink-muted copy max-w-2xl">
-            From Tübingen. CoGraph started as the tool we wished we had while
-            trying to read code we hadn&apos;t written by hand.
-          </p>
-        </div>
-
-        {/* Founder cards */}
-        <div className="grid sm:grid-cols-2 gap-6">
+        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:mt-16">
           {FOUNDERS.map((person) => (
-            <div
-              key={person.name}
-              className="relative flex flex-col gap-5 rounded-lg p-7 border border-edge bg-ground"
-            >
-              <div className="flex items-center gap-5">
-                {/* Sized to stay within the crop's native resolution — no upscaling softness */}
-                <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden flex-shrink-0 border border-edge bg-card">
-                  <Image
-                    src={person.photo}
-                    alt={person.name}
-                    fill
-                    sizes="(max-width: 640px) 96px, 112px"
-                    className="object-cover"
-                  />
-                </div>
+            <article key={person.name} className="card group flex flex-col gap-6 p-7 sm:flex-row sm:p-8">
+              <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-lg border border-edge bg-ground sm:h-32 sm:w-32">
+                <Image
+                  src={PORTRAIT[person.name] ?? person.photo}
+                  alt={`Portrait of ${person.name}`}
+                  fill
+                  sizes="128px"
+                  className="object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
+                />
+              </div>
+              <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
-                  <h3 className="font-display font-semibold text-ink text-xl leading-tight">
-                    {person.name}
-                  </h3>
-                  <span className="text-sm text-ink-dim">
-                    {person.role}
-                    <span className="text-edge"> · </span>
-                    <span className="text-ink-muted">{person.focus}</span>
+                  <h3 className="font-display text-xl font-semibold leading-tight text-ink">{person.name}</h3>
+                  <span className="label text-[10px] text-ink-dim">
+                    {person.role} · {person.focus}
                   </span>
                 </div>
-              </div>
-
-              <p className="text-sm text-ink-muted copy">{person.bio}</p>
-
-              {/* Social links — only render the ones that exist */}
-              {(person.linkedin || person.github) && (
-                <div className="flex items-center gap-3 pt-1">
+                <p className="copy text-sm text-ink-muted">{person.bio}</p>
+                <div className="mt-auto flex items-center gap-2 pt-1">
                   {person.linkedin && (
                     <a
                       href={person.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${person.name} on LinkedIn`}
-                      className="w-9 h-9 rounded-md flex items-center justify-center border border-edge text-ink-dim hover:text-signal hover:border-signal/40 transition-colors"
+                      className="flex h-9 w-9 items-center justify-center rounded-md border border-edge text-ink-dim transition-colors hover:border-ink-dim hover:text-ink"
                     >
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                      </svg>
+                      <LinkedInIcon size={15} />
                     </a>
                   )}
                   {person.github && (
@@ -88,23 +66,43 @@ export default function Team() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${person.name} on GitHub`}
-                      className="w-9 h-9 rounded-md flex items-center justify-center border border-edge text-ink-dim hover:text-signal hover:border-signal/40 transition-colors"
+                      className="flex h-9 w-9 items-center justify-center rounded-md border border-edge text-ink-dim transition-colors hover:border-ink-dim hover:text-ink"
                     >
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                      </svg>
+                      <GitHubIcon size={15} />
                     </a>
                   )}
                 </div>
-              )}
-            </div>
+              </div>
+            </article>
           ))}
+        </div>
+
+        {/* Backing and context — approved claims only */}
+        <div className="mt-4 grid gap-px overflow-hidden rounded-xl border border-edge bg-edge sm:grid-cols-3">
+          <div className="flex flex-col gap-1.5 bg-ground p-6">
+            <span className="label text-[10px] text-ink-dim">Incubated at</span>
+            <span className="font-display text-base font-semibold text-ink">
+              {INCUBATOR.name} · {INCUBATOR.batch}
+            </span>
+            <span className="text-xs text-ink-muted">{INCUBATOR.detail}</span>
+          </div>
+          <div className="flex flex-col gap-1.5 bg-ground p-6">
+            <span className="label text-[10px] text-ink-dim">Based in</span>
+            <span className="font-display text-base font-semibold text-ink">Tübingen, Germany</span>
+            <span className="text-xs text-ink-muted">Founders from the University of Tübingen</span>
+          </div>
+          <a
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col gap-1.5 bg-ground p-6 transition-colors hover:bg-card"
+          >
+            <span className="label text-[10px] text-ink-dim">Built in the open</span>
+            <span className="font-display text-base font-semibold text-ink">MIT-licensed on GitHub</span>
+            <span className="text-xs text-ink-muted group-hover:text-ink-soft">
+              Issues and pull requests welcome →
+            </span>
+          </a>
         </div>
       </div>
     </section>
