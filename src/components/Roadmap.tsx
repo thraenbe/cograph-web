@@ -1,4 +1,4 @@
-import { ArrowUpRight, LINE, SectionHeader } from "./ui";
+import { ArrowUpRight, LINE, Section, SectionHeader } from "./ui";
 import { DEMO_URL, EXTENSION } from "@/lib/site";
 
 // What exists, what is designed, what is only a demo — each labelled. Planned
@@ -58,8 +58,8 @@ function GraphDiff() {
       <circle cx="210" cy="160" r={leafR} fill={DIM} />
       <circle cx="350" cy="100" r={leafR} fill={DIM} />
       <circle cx="210" cy="40" r={leafR} fill={B} />
-      <circle cx="90" cy="100" r="9" fill="#131b24" stroke={NODE} strokeWidth={edge * 0.75} />
-      <circle cx="270" cy="100" r="9" fill="#131b24" stroke={NODE} strokeWidth={edge * 0.75} />
+      <circle cx="90" cy="100" r="9" fill="#0b0f14" stroke={NODE} strokeWidth={edge * 0.75} />
+      <circle cx="270" cy="100" r="9" fill="#0b0f14" stroke={NODE} strokeWidth={edge * 0.75} />
 
       <g fontSize="11" fontFamily={MONO}>
         <text x="74" y="104" textAnchor="end" fill="#9fb0c3">checkout</text>
@@ -74,23 +74,13 @@ function GraphDiff() {
 
 export default function Roadmap() {
   return (
-    <section id="roadmap" className="section">
-      <div className="absolute inset-x-0 top-0 section-divider" />
-      <div className="container-site">
+    <Section id="roadmap" number="05" name="Roadmap" line="trace">
         <SectionHeader
-          number="05"
-          eyebrow="Roadmap"
-          line="trace"
-          title={
-            <>
-              One graph.{" "}
-              <span className="text-ink-muted">Three places it belongs.</span>
-            </>
-          }
+          title="One graph. Three places it belongs."
           lead="The editor is the first surface. Because the graph is derived the same way every time, it can also live in the repository and be compared across pull requests. That work is in design, and we are shaping it with design partners."
         />
 
-        <div className="mt-14 grid gap-10 lg:mt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
+        <div className="mt-14 grid gap-12 lg:mt-16 xl:grid-cols-[1fr_1.1fr] xl:gap-12">
           {/* The line */}
           <ol className="relative flex flex-col">
             {STOPS.map((stop, i) => {
@@ -101,10 +91,10 @@ export default function Roadmap() {
               return (
                 <li key={stop.title} className="relative flex gap-6 pb-10 last:pb-0">
                   {/* Station + the segment to the next one */}
-                  <div className="relative flex w-6 shrink-0 justify-center" aria-hidden="true">
-                    {!last && (
-                      <span
-                        className="absolute left-1/2 top-6 bottom-[-4px] w-[3px] -translate-x-1/2 rounded-full"
+                  {!last && (
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-[10.5px] top-[22px] bottom-[-8px] w-[3px]"
                         style={
                           segmentBuilt
                             ? { background: LINE.signal }
@@ -113,9 +103,10 @@ export default function Roadmap() {
                                   "linear-gradient(to bottom, #566273 55%, transparent 55%)",
                                 backgroundSize: "3px 12px",
                               }
-                        }
-                      />
-                    )}
+                      }
+                    />
+                  )}
+                  <div className="relative flex w-6 shrink-0 justify-center" aria-hidden="true">
                     <svg width="24" height="24" viewBox="0 0 24 24" className="relative mt-0.5">
                       {shipped ? (
                         <circle cx="12" cy="12" r="8" fill="#0b0f14" stroke={LINE.signal} strokeWidth="3.2" />
@@ -143,19 +134,19 @@ export default function Roadmap() {
 
           {/* The idea, drawn — plus the demo, labelled as one */}
           <div className="flex flex-col gap-4">
-            <figure className="card overflow-hidden">
+            <figure className="border border-edge">
               <div className="flex items-center justify-between gap-4 border-b border-edge px-5 py-3">
                 <span className="truncate font-mono text-[11px] text-ink-dim">
                   main → feature/retry-payments
                 </span>
-                <span className="label shrink-0 text-[9px] text-ink-dim">Concept</span>
+                <span className="label shrink-0 text-[9px] text-ink-dim">Fig. 4 · Concept</span>
               </div>
               <div className="px-5 py-6 sm:px-8">
                 <GraphDiff />
               </div>
               <figcaption className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-edge px-5 py-3 font-mono text-[11px] text-ink-dim">
                 <span className="flex items-center gap-2">
-                  <span className="h-[3px] w-5 rounded-full bg-trace" /> added
+                  <span className="h-[3px] w-5 bg-trace" /> added
                 </span>
                 <span className="flex items-center gap-2">
                   <span
@@ -168,7 +159,7 @@ export default function Roadmap() {
                   removed
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="h-[3px] w-5 rounded-full bg-ink-dim" /> unchanged
+                  <span className="h-[3px] w-5 bg-ink-dim" /> unchanged
                 </span>
               </figcaption>
             </figure>
@@ -177,7 +168,7 @@ export default function Roadmap() {
               href={DEMO_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="card group flex items-start justify-between gap-6 p-6 transition-colors hover:border-ink-dim/60"
+              className="group flex items-start justify-between gap-6 border border-edge p-6 transition-colors hover:bg-card"
             >
               <div className="flex flex-col gap-2">
                 <span className="label text-[10px] text-ink-dim">Interactive demo · not a product yet</span>
@@ -193,7 +184,6 @@ export default function Roadmap() {
             </a>
           </div>
         </div>
-      </div>
-    </section>
+    </Section>
   );
 }

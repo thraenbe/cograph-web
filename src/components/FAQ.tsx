@@ -1,4 +1,4 @@
-import { SectionHeader } from "./ui";
+import { Section, SectionHeader } from "./ui";
 import { LANGUAGES } from "@/lib/site";
 
 // Objections a careful engineer raises before installing. Answers stay inside
@@ -32,35 +32,33 @@ const FAQS: { q: string; a: string }[] = [
 
 export default function FAQ() {
   return (
-    <section id="faq" className="section">
-      <div className="absolute inset-x-0 top-0 section-divider" />
-      <div className="container-site grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+    <Section id="faq" number="08" name="Questions" line="signal">
+      <div className="grid gap-12 xl:grid-cols-[0.85fr_1.15fr] xl:gap-16">
         <SectionHeader
-          number="08"
-          eyebrow="Questions"
           title="The things engineers ask first."
           lead="Something missing? Open an issue on GitHub or message us — we answer both."
         />
 
-        <div className="flex flex-col divide-y divide-edge border-y border-edge">
-          {FAQS.map((item) => (
-            <details key={item.q} className="group">
-              <summary className="flex cursor-pointer items-center justify-between gap-6 py-5 text-left">
-                <span className="font-display text-base font-semibold text-ink sm:text-lg">{item.q}</span>
-                <span
-                  className="faq-plus flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-edge text-ink-muted transition-transform duration-200 group-hover:border-ink-dim"
-                  aria-hidden="true"
-                >
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                    <path d="M6 1.5V10.5M1.5 6H10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
+        <div className="border-t border-edge">
+          {FAQS.map((item, i) => (
+            <details key={item.q} className="group border-b border-edge">
+              <summary className="flex cursor-pointer items-baseline gap-5 py-5 text-left">
+                <span className="w-6 shrink-0 font-mono text-xs text-ink-dim">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="flex-1 font-display text-base font-semibold text-ink transition-colors group-hover:text-ink-soft sm:text-lg">
+                  {item.q}
+                </span>
+                <span className="w-4 shrink-0 text-right font-mono text-base text-ink-dim" aria-hidden="true">
+                  <span className="faq-plus">+</span>
+                  <span className="faq-minus">−</span>
                 </span>
               </summary>
-              <p className="copy max-w-2xl pb-6 pr-10 text-sm text-ink-muted sm:text-[15px]">{item.a}</p>
+              <p className="copy max-w-2xl pb-6 pl-11 pr-8 text-sm text-ink-muted sm:text-[15px]">{item.a}</p>
             </details>
           ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

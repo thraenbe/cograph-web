@@ -1,4 +1,4 @@
-import { LINE, SectionHeader } from "./ui";
+import { LINE, Section, SectionHeader } from "./ui";
 
 // One worked example, end to end: the source file, the analyzer's actual
 // output shape ({nodes, edges, files}, ids as <file>::<name>::<line>), and
@@ -33,7 +33,7 @@ const TOK_CLASS: Record<Tok[1], string> = {
 
 function CodePane() {
   return (
-    <pre className="overflow-x-auto px-4 py-4 font-mono text-[12.5px] leading-[1.75]">
+    <pre className="overflow-x-auto px-3 py-4 font-mono text-[12px] leading-[1.75]">
       <code>
         {CODE.map((line, i) => (
           <div key={i} className="flex">
@@ -57,7 +57,7 @@ function JsonPane() {
   const id = (s: string) => <span className="text-amber">&quot;{s}&quot;</span>;
   const v = (s: string) => <span className="text-ink-soft">{s}</span>;
   return (
-    <pre className="overflow-x-auto px-4 py-4 font-mono text-[12.5px] leading-[1.75] text-ink-muted">
+    <pre className="overflow-x-auto px-3 py-4 font-mono text-[11.5px] leading-[1.75] text-ink-muted">
       <code>
         {"{\n  "}
         {k("nodes")}
@@ -148,7 +148,7 @@ function GraphPane() {
         ))}
         {inters.map((n) => (
           <g key={n.label}>
-            <circle cx={n.x} cy={n.y} r={interR} fill="#131b24" stroke="#e8eef5" strokeWidth={edge * 0.75} />
+            <circle cx={n.x} cy={n.y} r={interR} fill="#0b0f14" stroke="#e8eef5" strokeWidth={edge * 0.75} />
             <text x={n.lx} y={n.ly} textAnchor={n.anchor} fontSize="11" fill="#9fb0c3" fontFamily="var(--font-mono), ui-monospace, monospace">
               {n.label}
             </text>
@@ -185,55 +185,42 @@ const STEPS = [
 
 export default function HowItWorks() {
   return (
-    <section id="how" className="section">
-      <div className="absolute inset-x-0 top-0 section-divider" />
-      <div className="container-site">
-        <SectionHeader
-          number="02"
-          eyebrow="How it works"
-          line="amber"
-          title={
-            <>
-              Derived from the code.{" "}
-              <span className="text-ink-muted">Not generated about it.</span>
-            </>
-          }
-          lead="There is no model guessing at your architecture. CoGraph reads the syntax tree and records what is there — so the graph you see today is the graph you'll see tomorrow, until the code changes."
-        />
+    <Section id="how" number="02" name="How it works" line="amber">
+      <SectionHeader
+        title="Derived from the code. Not generated about it."
+        lead="There is no model guessing at your architecture. CoGraph reads the syntax tree and records what is there — so the graph you see today is the graph you'll see tomorrow, until the code changes."
+      />
 
-        <ol className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-3 lg:gap-6">
-          {STEPS.map((step, i) => (
-            <li key={step.n} className="flex min-w-0 flex-col">
-              {/* The route: one amber line through three stations */}
-              <div className="mb-6 flex items-center" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 22 22" className="shrink-0">
-                  <circle cx="11" cy="11" r="7.5" fill="#0b0f14" stroke={LINE.amber} strokeWidth="3" />
-                </svg>
-                {i < STEPS.length - 1 && (
-                  <div className="hidden h-[3px] flex-1 rounded-full bg-amber/70 lg:block lg:-mr-6" />
-                )}
-              </div>
+      <ol className="mt-14 grid gap-12 lg:mt-16 xl:grid-cols-3 xl:gap-5">
+        {STEPS.map((step, i) => (
+          <li key={step.n} className="flex min-w-0 flex-col">
+            {/* The route: one amber line through three stations */}
+            <div className="mb-6 flex items-center" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 22 22" className="shrink-0">
+                <circle cx="11" cy="11" r="7.5" fill="#0b0f14" stroke={LINE.amber} strokeWidth="3" />
+              </svg>
+              {i < STEPS.length - 1 && (
+                <div className="hidden h-[3px] flex-1 bg-amber xl:-mr-5 xl:block" />
+              )}
+            </div>
 
-              <div className="flex flex-col gap-3">
-                <span className="label text-[10px] text-amber">
-                  {step.n} · {step.title}
-                </span>
-                <p className="copy text-sm text-ink-muted lg:min-h-[7.5rem]">{step.body}</p>
-              </div>
+            <div className="flex flex-col gap-3">
+              <span className="label text-[10px] text-amber">
+                {step.n} · {step.title}
+              </span>
+              <p className="copy max-w-xl text-sm text-ink-muted xl:min-h-[7.5rem]">{step.body}</p>
+            </div>
 
-              <div className="card mt-6 flex min-h-[300px] flex-1 flex-col overflow-hidden">
-                <div className="flex items-center gap-2 border-b border-edge px-4 py-2.5">
-                  <span className="h-2 w-2 rounded-full bg-edge" />
-                  <span className="h-2 w-2 rounded-full bg-edge" />
-                  <span className="h-2 w-2 rounded-full bg-edge" />
-                  <span className="ml-2 truncate font-mono text-[11px] text-ink-dim">{step.file}</span>
-                </div>
-                <div className="flex-1">{step.pane}</div>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
+            <figure className="mt-6 flex min-h-[300px] flex-1 flex-col border border-edge">
+              <figcaption className="fig-caption border-b border-edge px-3 py-2.5">
+                <span className="truncate text-ink-muted">{step.file}</span>
+                <span className="label shrink-0 text-[9px]">Fig. 2{"abc"[i]}</span>
+              </figcaption>
+              <div className="flex-1">{step.pane}</div>
+            </figure>
+          </li>
+        ))}
+      </ol>
+    </Section>
   );
 }

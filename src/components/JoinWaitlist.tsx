@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { LogoMark } from "./Logo";
-import { ArrowRight } from "./ui";
 import { WEB3FORMS_ACCESS_KEY } from "@/lib/site";
 
 type Status = "idle" | "loading" | "success";
@@ -127,13 +126,13 @@ export default function JoinWaitlist({
   }
 
   const inputClass =
-    "w-full rounded-md border border-edge bg-ground px-4 py-3 text-sm text-ink placeholder-ink-dim transition-colors focus:border-signal/60 focus:outline-none";
+    "w-full rounded-[3px] border border-edge bg-ground px-4 py-3 text-sm text-ink placeholder-ink-dim transition-colors focus:border-signal/60 focus:outline-none";
 
   return (
     <>
       <button ref={triggerRef} type="button" onClick={() => setOpen(true)} className={className}>
         {label ?? copy.submit}
-        {showArrow && <ArrowRight />}
+        {showArrow && <span aria-hidden="true">→</span>}
       </button>
 
       {open && (
@@ -145,11 +144,11 @@ export default function JoinWaitlist({
           onClick={close}
         >
           {/* Backdrop */}
-          <div className="absolute inset-0 bg-ground/80 backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-ground/90" />
 
           {/* Card */}
           <div
-            className="fade-in-up relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-xl border border-edge bg-card p-8 shadow-2xl shadow-black/40"
+            className="relative max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto border border-edge bg-ground p-8"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close */}
@@ -157,7 +156,7 @@ export default function JoinWaitlist({
               type="button"
               onClick={close}
               aria-label="Close"
-              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-md text-ink-dim transition-colors hover:bg-edge/60 hover:text-ink"
+              className="label absolute right-5 top-5 text-[10px] text-ink-dim transition-colors hover:text-ink"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -166,32 +165,30 @@ export default function JoinWaitlist({
 
             {status === "success" ? (
               <div className="relative flex flex-col items-center gap-4 py-2 text-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-signal/40 bg-signal/10">
+                <div className="flex h-14 w-14 items-center justify-center border border-signal/50">
                   <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
                     <path d="M8 15.5L13 20.5L22 10" stroke="#37d39b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <h3 id={`dialog-title-${variant}`} className="font-display text-2xl font-bold tracking-display text-ink">
+                <h3 id={`dialog-title-${variant}`} className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink">
                   Received.
                 </h3>
                 <p className="copy text-sm text-ink-muted">{copy.done}</p>
                 <button
                   type="button"
                   onClick={close}
-                  className="mt-2 rounded-md border border-edge px-6 py-2.5 text-sm font-medium text-ink-muted transition-colors hover:border-ink-dim hover:text-ink"
+                  className="btn-secondary mt-2"
                 >
                   Done
                 </button>
               </div>
             ) : (
               <div className="relative flex flex-col gap-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-edge bg-ground">
-                  <LogoMark size={24} />
-                </div>
+                <LogoMark size={26} />
 
                 <div className="flex flex-col gap-2">
                   <span className="label text-[10px] text-signal">{copy.eyebrow}</span>
-                  <h3 id={`dialog-title-${variant}`} className="font-display text-2xl font-bold tracking-display text-ink">
+                  <h3 id={`dialog-title-${variant}`} className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink">
                     {copy.title}
                   </h3>
                   <p className="copy text-sm text-ink-muted">{copy.body}</p>
@@ -236,7 +233,7 @@ export default function JoinWaitlist({
                               type="button"
                               aria-pressed={teamSize === size}
                               onClick={() => setTeamSize(teamSize === size ? "" : size)}
-                              className={`rounded-md border px-2 py-2 font-mono text-xs transition-colors ${
+                              className={`rounded-[3px] border px-2 py-2 font-mono text-xs transition-colors ${
                                 teamSize === size
                                   ? "border-signal/60 bg-signal/10 text-ink"
                                   : "border-edge bg-ground text-ink-muted hover:border-ink-dim"

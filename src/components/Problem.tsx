@@ -1,4 +1,4 @@
-import { SectionHeader } from "./ui";
+import { Section, SectionHeader } from "./ui";
 
 // Problem-first story. Qualitative on purpose: no market figures here unless
 // they carry a source and date from brain/02-market.md.
@@ -20,35 +20,27 @@ const PROBLEMS = [
   },
 ];
 
+// Laid out like the brand book's "Four habits" spread: a heavy rule over each
+// point instead of a box around it.
 export default function Problem() {
   return (
-    <section id="problem" className="section !pt-20 lg:!pt-24">
-      <div className="container-site">
-        <SectionHeader
-          number="01"
-          eyebrow="The problem"
-          line="magenta"
-          title={
-            <>
-              More code reaches review than{" "}
-              <span className="text-ink-muted">anyone has time to read.</span>
-            </>
-          }
-          lead="Coding assistants changed how fast code gets written. They didn't change how fast a person can understand it — and understanding is still what review, onboarding and every architectural decision depend on."
-        />
+    <Section id="problem" number="01" name="The problem" line="magenta" route="start">
+      <SectionHeader
+        title="More code reaches review than anyone has time to read."
+        lead="Coding assistants changed how fast code gets written. They didn't change how fast a person can understand it — and understanding is still what review, onboarding and every architectural decision depend on."
+      />
 
-        <div className="mt-14 grid gap-4 md:grid-cols-3 lg:mt-16">
-          {PROBLEMS.map((p) => (
-            <article key={p.n} className="card relative flex flex-col gap-4 p-7">
-              <span className="label text-[10px] text-magenta">{p.n}</span>
-              <h3 className="font-display text-xl font-semibold leading-snug tracking-[-0.02em] text-ink">
-                {p.title}
-              </h3>
-              <p className="copy text-sm text-ink-muted">{p.body}</p>
-            </article>
-          ))}
-        </div>
+      <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8 lg:mt-16">
+        {PROBLEMS.map((p) => (
+          <article key={p.n} className="flex flex-col gap-4 border-t-2 border-magenta pt-5">
+            <span className="font-mono text-xs text-ink-dim">{p.n}</span>
+            <h3 className="font-display text-xl font-semibold leading-snug tracking-[-0.02em] text-ink">
+              {p.title}
+            </h3>
+            <p className="copy text-sm text-ink-muted">{p.body}</p>
+          </article>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }

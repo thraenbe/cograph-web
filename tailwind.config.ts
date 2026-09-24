@@ -23,6 +23,14 @@ const config: Config = {
         amber: "#ffb454",
         magenta: "#ff6b9a",
         docblue: "#2a6fdb",
+        // Paper mode (04 · Colour — Application): used for exactly one band
+        paper: {
+          DEFAULT: "#f6f7f9",
+          white: "#ffffff",
+          rule: "#e2e5ea",
+          ink: "#101418",
+          muted: "#6b7280",
+        },
         // Type on ground
         ink: {
           DEFAULT: "#f6f7f9",

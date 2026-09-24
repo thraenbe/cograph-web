@@ -1,7 +1,7 @@
 import { EXTENSION, INCUBATOR, LANGUAGES } from "@/lib/site";
 
 // The approved claims only (brain/07-brand.md · claim register). Installs are
-// installs — never users.
+// installs — never users. Set as a spec-sheet row: rules, not tiles.
 export default function ProofStrip() {
   const items = [
     {
@@ -27,16 +27,21 @@ export default function ProofStrip() {
   ];
 
   return (
-    <section aria-label="CoGraph at a glance" className="relative pb-8 pt-16 lg:pt-20">
+    <section aria-label="CoGraph at a glance" className="pb-20 pt-16 lg:pb-24">
       <div className="container-site">
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-edge bg-edge lg:grid-cols-4">
-          {items.map((item) => (
-            <div key={item.label} className="flex flex-col gap-2 bg-ground px-5 py-6 sm:px-7 sm:py-7">
-              <dt className="label order-2 text-[10px] text-ink-dim">{item.label}</dt>
-              <dd className="order-1 font-display text-3xl font-bold tracking-display text-ink sm:text-[2.1rem]">
+        <dl className="grid grid-cols-2 border-y border-edge lg:grid-cols-4">
+          {items.map((item, i) => (
+            <div
+              key={item.label}
+              className={`flex flex-col gap-3 py-6 pr-4 sm:py-8 ${i % 2 === 1 ? "border-l border-edge pl-5 sm:pl-8" : ""} ${
+                i >= 2 ? "border-t border-edge lg:border-t-0" : ""
+              } ${i === 2 ? "lg:border-l lg:pl-8" : ""}`}
+            >
+              <dt className="label text-[10px] text-ink-dim">{item.label}</dt>
+              <dd className="font-display text-4xl font-light tracking-[-0.03em] text-ink sm:text-5xl">
                 {item.value}
               </dd>
-              <dd className="order-3 text-xs leading-relaxed text-ink-muted">{item.detail}</dd>
+              <dd className="max-w-[16rem] text-xs leading-relaxed text-ink-muted">{item.detail}</dd>
             </div>
           ))}
         </dl>

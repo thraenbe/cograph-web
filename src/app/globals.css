@@ -22,13 +22,16 @@
   --ink-muted: #9fb0c3;
   --ink-dim: #566273;
 
+  /* The page route — one neutral line that every section is a station on */
+  --route: #566273;
+
   color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
   /* Anchor jumps land below the sticky header */
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 4rem;
 }
 
 body {
@@ -46,7 +49,6 @@ body {
 :focus-visible {
   outline: 2px solid var(--signal);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 /* ─── The mono system layer · 05 Typography ──────────────────────────────── */
@@ -66,45 +68,53 @@ body {
   line-height: 1.7;
 }
 
+/* Flat ground, square geometry, hairline rules. No glows, no blur, no soft
+   shadows, no rounded cards: structure comes from the grid and the line. */
 @layer components {
-  /* One primary action per view: signal green, ground-navy type. */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2.5 rounded-md bg-signal px-5 py-3 text-sm font-semibold text-ground transition-colors hover:bg-[#4ae0aa];
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-[3px] bg-signal px-5 text-sm font-medium text-ground transition-colors hover:bg-[#5ce0b1];
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2.5 rounded-md border border-edge bg-card/40 px-5 py-3 text-sm font-medium text-ink-soft transition-colors hover:border-ink-dim hover:bg-card hover:text-ink;
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-[3px] border border-ink-dim/70 px-5 text-sm font-medium text-ink-soft transition-colors hover:border-ink-muted hover:text-ink;
   }
 
   .link-quiet {
     @apply text-ink-muted transition-colors hover:text-ink;
   }
 
-  .section {
-    @apply relative py-24 lg:py-32;
+  /* Inline text link with a real underline — how engineers expect links to look */
+  .link-under {
+    @apply underline decoration-ink-dim decoration-1 underline-offset-[5px] transition-colors hover:decoration-ink-soft;
   }
 
   .container-site {
-    @apply mx-auto w-full max-w-6xl px-6 lg:px-8;
+    @apply mx-auto w-full max-w-[1200px] px-6 lg:px-10;
   }
 
   .h2 {
-    @apply font-display text-3xl font-bold leading-[1.1] tracking-display-tight text-ink sm:text-4xl lg:text-[2.9rem];
+    @apply font-display text-[2rem] font-semibold leading-[1.08] tracking-[-0.03em] text-ink sm:text-[2.5rem] lg:text-[2.75rem];
   }
 
   .lead {
-    @apply text-base leading-[1.7] text-ink-muted lg:text-lg;
+    @apply text-base leading-[1.7] text-ink-muted lg:text-[1.0625rem];
   }
 
-  .card {
-    @apply rounded-xl border border-edge bg-card;
+  /* A ruled grid: cells separated by 1px hairlines, no gaps, no radius. */
+  .ruled {
+    @apply grid gap-px border border-edge bg-edge;
+  }
+
+  /* Figure caption strip, as on a technical drawing */
+  .fig-caption {
+    @apply flex items-center justify-between gap-4 font-mono text-[11px] text-ink-dim;
   }
 }
 
 /* ─── The graph motif · 06 ───────────────────────────────────────────────── */
-/* Routes are drawn solid; a short segment travels along each one so the map
-   reads as live rather than decorated. Paths carry pathLength="100", so the
-   dash values below are percentages of the route. */
+/* A short segment travels along a route so the map reads as live rather than
+   decorated. Paths carry pathLength="100", so the dash values below are
+   percentages of the route. Used once, in the derived-graph figure. */
 
 @keyframes routePulse {
   from {
@@ -120,30 +130,6 @@ body {
   animation: routePulse 5s linear infinite;
 }
 
-/* ─── Fade in up ─────────────────────────────────────────────────────────── */
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.fade-in-up {
-  animation: fadeInUp 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-
-/* ─── Section divider ────────────────────────────────────────────────────── */
-
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--edge), transparent);
-}
-
 /* ─── FAQ disclosure ─────────────────────────────────────────────────────── */
 
 details > summary {
@@ -152,8 +138,14 @@ details > summary {
 details > summary::-webkit-details-marker {
   display: none;
 }
+details .faq-minus {
+  display: none;
+}
+details[open] .faq-minus {
+  display: inline;
+}
 details[open] .faq-plus {
-  transform: rotate(45deg);
+  display: none;
 }
 
 /* ─── Reduced motion ─────────────────────────────────────────────────────── */
@@ -181,7 +173,6 @@ details[open] .faq-plus {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--edge);
-  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ink-dim);

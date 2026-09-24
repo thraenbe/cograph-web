@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { GitHubIcon, LinkedInIcon, SectionHeader } from "./ui";
+import { GitHubIcon, LinkedInIcon, Section, SectionHeader } from "./ui";
 import { FOUNDERS, GITHUB_URL, INCUBATOR } from "@/lib/site";
 
 // FLAG(founder): bios and roles come from src/lib/site.ts — confirm wording
@@ -13,31 +13,22 @@ const PORTRAIT: Record<string, string> = {
 
 export default function Team() {
   return (
-    <section id="team" className="section">
-      <div className="absolute inset-x-0 top-0 section-divider" />
-      <div className="container-site">
+    <Section id="team" number="07" name="Team" line="signal">
         <SectionHeader
-          number="07"
-          eyebrow="Team"
-          title={
-            <>
-              Two founders{" "}
-              <span className="text-ink-muted">who needed this themselves.</span>
-            </>
-          }
+          title="Two founders who needed this themselves."
           lead="CoGraph came out of a working engineer's own problem — Bela started it after a data-science internship at Bosch. We build it in Tübingen, in the open."
         />
 
-        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:mt-16">
+        <div className="ruled mt-14 md:grid-cols-2 lg:mt-16">
           {FOUNDERS.map((person) => (
-            <article key={person.name} className="card group flex flex-col gap-6 p-7 sm:flex-row sm:p-8">
-              <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-lg border border-edge bg-ground sm:h-32 sm:w-32">
+            <article key={person.name} className="flex flex-col gap-6 bg-ground p-7 sm:flex-row sm:p-8">
+              <div className="relative h-32 w-32 shrink-0 overflow-hidden bg-card">
                 <Image
                   src={PORTRAIT[person.name] ?? person.photo}
                   alt={`Portrait of ${person.name}`}
                   fill
                   sizes="128px"
-                  className="object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
+                  className="object-cover grayscale"
                 />
               </div>
               <div className="flex flex-col gap-3">
@@ -55,7 +46,7 @@ export default function Team() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${person.name} on LinkedIn`}
-                      className="flex h-9 w-9 items-center justify-center rounded-md border border-edge text-ink-dim transition-colors hover:border-ink-dim hover:text-ink"
+                      className="flex h-9 w-9 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-ink-dim hover:text-ink"
                     >
                       <LinkedInIcon size={15} />
                     </a>
@@ -66,7 +57,7 @@ export default function Team() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${person.name} on GitHub`}
-                      className="flex h-9 w-9 items-center justify-center rounded-md border border-edge text-ink-dim transition-colors hover:border-ink-dim hover:text-ink"
+                      className="flex h-9 w-9 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-ink-dim hover:text-ink"
                     >
                       <GitHubIcon size={15} />
                     </a>
@@ -78,7 +69,7 @@ export default function Team() {
         </div>
 
         {/* Backing and context — approved claims only */}
-        <div className="mt-4 grid gap-px overflow-hidden rounded-xl border border-edge bg-edge sm:grid-cols-3">
+        <div className="ruled border-t-0 sm:grid-cols-3">
           <div className="flex flex-col gap-1.5 bg-ground p-6">
             <span className="label text-[10px] text-ink-dim">Incubated at</span>
             <span className="font-display text-base font-semibold text-ink">
@@ -104,7 +95,6 @@ export default function Team() {
             </span>
           </a>
         </div>
-      </div>
-    </section>
+    </Section>
   );
 }

@@ -1,10 +1,13 @@
 import JoinWaitlist from "./JoinWaitlist";
-import { LinkedInIcon, SectionHeader } from "./ui";
+import { LinkedInIcon, Section, SectionHeader } from "./ui";
 import { CONTACT_URL } from "@/lib/site";
 
 // The one milestone that matters next: three design partners on the free
 // four-week pilot (brain/05-business-model.md). An invitation to shape
 // something, not a pitch to buy something.
+//
+// The page's single paper-mode band (04 · Colour — two modes, one system):
+// the one ask is set apart by inverting the ground, not by a glow.
 
 const FIT = [
   "5–50 engineers",
@@ -23,68 +26,66 @@ const PILOT = [
 
 export default function DesignPartners() {
   return (
-    <section id="partners" className="section">
-      <div className="absolute inset-x-0 top-0 section-divider" />
-      <div className="container-site">
-        <div className="card relative overflow-hidden">
-          <div
-            className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px]"
-            style={{
-              background: "radial-gradient(circle, rgba(55,211,155,0.09) 0%, transparent 65%)",
-            }}
+    <Section id="partners" number="06" name="Design partners" line="signal" tone="paper">
+      <div className="grid gap-14 xl:grid-cols-[1.1fr_1fr] xl:gap-16">
+        <div className="flex flex-col">
+          <SectionHeader
+            tone="paper"
+            title="Shape the team version with us."
+            lead="We are looking for a few engineering teams to pilot what comes next. It's an invitation to shape something, not a pitch to buy something."
           />
-          <div className="relative grid gap-12 p-8 sm:p-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:p-14">
-            <div className="flex flex-col">
-              <SectionHeader
-                number="06"
-                eyebrow="Design partners"
-                line="signal"
-                title="Shape the team version with us."
-                lead="We are looking for a few engineering teams to pilot what comes next. It's an invitation to shape something, not a pitch to buy something."
-              />
 
-              <div className="mt-10">
-                <span className="label text-[10px] text-ink-dim">A good fit</span>
-                <ul className="mt-4 flex flex-wrap gap-2">
-                  {FIT.map((item) => (
-                    <li key={item} className="rounded-full border border-edge bg-ground/60 px-3.5 py-1.5 text-sm text-ink-soft">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          <div className="mt-10">
+            <span className="label text-[10px] text-paper-muted">A good fit</span>
+            <ul className="mt-4 border-t border-paper-rule">
+              {FIT.map((item) => (
+                <li key={item} className="flex items-center gap-3 border-b border-paper-rule py-3 text-sm text-paper-ink">
+                  <span className="h-2 w-2 rounded-full bg-paper-ink" aria-hidden="true" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-                <JoinWaitlist variant="partner" label="Apply as a design partner" className="btn-primary px-6" />
-                <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer" className="btn-secondary px-6">
-                  <LinkedInIcon size={15} />
-                  Message Magnus
-                </a>
-              </div>
-            </div>
-
-            <div className="flex flex-col">
-              <span className="label text-[10px] text-ink-dim">How a pilot runs · free · one repository</span>
-              <ol className="mt-6 flex flex-col">
-                {PILOT.map((step, i) => (
-                  <li key={step.week} className="relative flex gap-5 pb-7 last:pb-0">
-                    <div className="relative flex w-4 shrink-0 justify-center" aria-hidden="true">
-                      {i < PILOT.length - 1 && (
-                        <span className="absolute left-1/2 top-4 bottom-[-2px] w-[3px] -translate-x-1/2 rounded-full bg-signal/50" />
-                      )}
-                      <span className="relative mt-1 h-3 w-3 rounded-full bg-signal" />
-                    </div>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-sm font-medium text-ink-soft">{step.week}</span>
-                      <p className="copy text-sm text-ink-muted">{step.text}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <JoinWaitlist
+              variant="partner"
+              label="Apply as a design partner"
+              showArrow={false}
+              className="inline-flex h-11 items-center justify-center rounded-[3px] bg-paper-ink px-5 text-sm font-medium text-paper-white transition-colors hover:bg-[#252c35]"
+            />
+            <a
+              href={CONTACT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-[3px] border border-paper-ink/30 px-5 text-sm font-medium text-paper-ink transition-colors hover:border-paper-ink"
+            >
+              <LinkedInIcon size={14} />
+              Message Magnus
+            </a>
           </div>
         </div>
+
+        <div className="flex flex-col xl:pt-2">
+          <span className="label text-[10px] text-paper-muted">How a pilot runs · free · one repository</span>
+          <ol className="mt-6 flex flex-col">
+            {PILOT.map((step, i) => (
+              <li key={step.week} className="relative flex gap-5 pb-8 last:pb-0">
+                {i < PILOT.length - 1 && (
+                  <span aria-hidden="true" className="absolute left-[6.5px] top-4 bottom-[-6px] w-[3px] bg-signal" />
+                )}
+                <div className="relative flex w-4 shrink-0 justify-center" aria-hidden="true">
+                  <span className="relative mt-[3px] h-3.5 w-3.5 rounded-full border-[3px] border-paper-ink bg-paper" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm font-semibold text-paper-ink">{step.week}</span>
+                  <p className="copy text-sm text-paper-muted">{step.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
-    </section>
+    </Section>
   );
 }
