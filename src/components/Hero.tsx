@@ -53,9 +53,10 @@ export default function Hero() {
           </h1>
 
           <p className="copy mt-8 max-w-[40rem] text-base text-ink-muted sm:text-lg">
-            CoGraph derives a call graph from your repository — every function a
-            node, every call an edge — and opens it beside your code in VS Code.{" "}
-            <span className="text-ink-soft">Parsed from the syntax tree: never run, never guessed.</span>
+            CoGraph shows which functions in your repository call which, as a
+            graph next to your code in VS Code. It reads the source and never
+            runs it.{" "}
+            <span className="text-ink-soft">Same code, same graph.</span>
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
