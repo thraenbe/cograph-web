@@ -16,7 +16,7 @@ export default function Hero() {
   return (
     <section id="top" className="relative pt-32 lg:pt-40">
       <div className="container-site">
-        <div className="max-w-[60rem]">
+        <div>
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-ink-muted">
             <span className="h-2 w-2 bg-signal" aria-hidden="true" />
             <a
@@ -47,9 +47,9 @@ export default function Hero() {
             </a>
           </p>
 
-          <h1 className="mt-10 font-display text-[2.75rem] font-light leading-[1.02] tracking-[-0.04em] text-ink sm:text-[4rem] lg:text-[5.25rem]">
-            <span className="block text-balance">Writing code got cheap.</span>
-            <span className="block text-balance">Reading it did not.</span>
+          <h1 className="mt-10 font-display text-[2.75rem] font-light leading-[1.02] tracking-[-0.04em] text-ink sm:text-[3.25rem] lg:text-[3.5rem] xl:text-[4.25rem]">
+            <span className="block text-balance">AI already writes your code.</span>
+            <span className="block text-balance">We make sure you still understand it.</span>
           </h1>
 
           <p className="copy mt-8 max-w-[40rem] text-base text-ink-muted sm:text-lg">

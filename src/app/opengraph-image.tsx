@@ -4,7 +4,7 @@ import { EXTENSION } from "@/lib/site";
 // Social card. Uses the renderer's default sans — brand fonts would need font
 // files bundled with the repo. Until then the card carries the mark only: the
 // wordmark must never be set in another face (03 · Logo).
-export const alt = "CoGraph — Writing code got cheap. Reading it did not.";
+export const alt = "CoGraph — AI already writes your code. We make sure you still understand it.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -36,11 +36,11 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          <div style={{ fontSize: 76, fontWeight: 700, letterSpacing: -3, lineHeight: 1.05 }}>
-            Writing code got cheap.
+          <div style={{ fontSize: 56, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05 }}>
+            AI already writes your code.
           </div>
-          <div style={{ fontSize: 76, fontWeight: 700, letterSpacing: -3, lineHeight: 1.05, color: "#9fb0c3" }}>
-            Reading it did not.
+          <div style={{ fontSize: 56, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05, color: "#9fb0c3" }}>
+            We make sure you still understand it.
           </div>
         </div>
 
