@@ -1,6 +1,6 @@
 import Image from "next/image";
 import CopyCommand from "./CopyCommand";
-import { ArrowUpRight } from "./ui";
+import JoinWaitlist from "./JoinWaitlist";
 import {
   CHANGELOG_URL,
   EXTENSION,
@@ -17,17 +17,35 @@ export default function Hero() {
     <section id="top" className="relative pt-32 lg:pt-40">
       <div className="container-site">
         <div className="max-w-[60rem]">
-          <a
-            href={CHANGELOG_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 font-mono text-xs text-ink-muted transition-colors hover:text-ink"
-          >
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-ink-muted">
             <span className="h-2 w-2 bg-signal" aria-hidden="true" />
-            <span className="text-ink-soft">v{EXTENSION.version}</span>
+            <a
+              href={CHANGELOG_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ink-soft transition-colors hover:text-ink"
+            >
+              v{EXTENSION.version}
+            </a>
             <span className="text-ink-dim">—</span>
-            <span className="link-under">Free on the VS Code Marketplace</span>
-          </a>
+            <a
+              href={MARKETPLACE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-under transition-colors hover:text-ink"
+            >
+              Free on the VS Code Marketplace
+            </a>
+            <span className="hidden text-ink-dim sm:inline">·</span>
+            <a
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-under hidden transition-colors hover:text-ink sm:inline"
+            >
+              Source on GitHub
+            </a>
+          </p>
 
           <h1 className="mt-10 font-display text-[2.75rem] font-light leading-[1.02] tracking-[-0.04em] text-ink sm:text-[4rem] lg:text-[5.25rem]">
             <span className="block text-balance">Writing code got cheap.</span>
@@ -44,10 +62,11 @@ export default function Hero() {
             <a href={MARKETPLACE_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">
               Install for VS Code
             </a>
-            <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              View the source
-              <ArrowUpRight />
-            </a>
+            <JoinWaitlist
+              label="Get notified about the team version"
+              showArrow={false}
+              className="btn-secondary"
+            />
           </div>
 
           <CopyCommand command={INSTALL_COMMAND} className="mt-4 w-full sm:w-auto" />

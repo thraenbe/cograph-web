@@ -3,12 +3,12 @@ import { GitHubIcon, LinkedInIcon, Section, SectionHeader } from "./ui";
 import { FOUNDERS, GITHUB_URL, INCUBATOR } from "@/lib/site";
 
 // FLAG(founder): bios and roles come from src/lib/site.ts — confirm wording
-// before launch. Portraits are cropped from the originals in public/team/ so
-// the old stage slide behind Bela ("350+ …") is not legible.
+// before launch. Portraits are 4:5 crops of the originals in public/team/; the
+// stale stage slide behind Bela ("350+ …") is retouched out of his crop.
 
 const PORTRAIT: Record<string, string> = {
-  "Magnus Hornstein": "/team/magnus-portrait.jpg",
-  "Bela Thrän": "/team/bela-portrait.jpg",
+  "Magnus Hornstein": "/team/magnus-4x5.jpg",
+  "Bela Thrän": "/team/bela-4x5.jpg",
 };
 
 export default function Team() {
@@ -22,12 +22,12 @@ export default function Team() {
         <div className="ruled mt-14 md:grid-cols-2 lg:mt-16">
           {FOUNDERS.map((person) => (
             <article key={person.name} className="flex flex-col gap-6 bg-ground p-7 sm:flex-row sm:p-8">
-              <div className="relative h-32 w-32 shrink-0 overflow-hidden bg-card">
+              <div className="relative aspect-[4/5] w-full max-w-[13rem] shrink-0 overflow-hidden bg-card sm:w-44">
                 <Image
                   src={PORTRAIT[person.name] ?? person.photo}
                   alt={`Portrait of ${person.name}`}
                   fill
-                  sizes="128px"
+                  sizes="208px"
                   className="object-cover grayscale"
                 />
               </div>
@@ -73,9 +73,9 @@ export default function Team() {
           <div className="flex flex-col gap-1.5 bg-ground p-6">
             <span className="label text-[10px] text-ink-dim">Incubated at</span>
             <span className="font-display text-base font-semibold text-ink">
-              {INCUBATOR.name} · {INCUBATOR.batch}
+              {INCUBATOR.name}
             </span>
-            <span className="text-xs text-ink-muted">{INCUBATOR.detail}</span>
+            <span className="text-xs text-ink-muted">Winner of the {INCUBATOR.award}</span>
           </div>
           <div className="flex flex-col gap-1.5 bg-ground p-6">
             <span className="label text-[10px] text-ink-dim">Based in</span>

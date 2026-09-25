@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ArrowUpRight, LINE, Section, SectionHeader } from "./ui";
 import { MARKETPLACE_URL } from "@/lib/site";
 
@@ -10,6 +9,74 @@ const B = LINE.trace;
 const NODE = "#e8eef5";
 const DIM = "#566273";
 const MONO = "var(--font-mono), ui-monospace, monospace";
+
+// The graph grouped by file, with one function selected: its calls light up,
+// everything else stays neutral. Drawn, not captured — the hero already shows
+// the real window, and a crop of it is too small to read.
+function GroupedGraph() {
+  const groups = [
+    { name: "checkout.py", x: 20, y: 50, w: 260, h: 170 },
+    { name: "payments.py", x: 330, y: 50, w: 230, h: 170 },
+    { name: "log.py", x: 240, y: 280, w: 260, h: 100 },
+  ];
+  // [x, y, label, label position, state]
+  const nodes: [number, number, string, "above" | "below", "selected" | "called" | "idle"][] = [
+    [80, 100, "checkout", "above", "selected"],
+    [80, 180, "validate_cart", "below", "called"],
+    [210, 180, "apply_discount", "below", "idle"],
+    [390, 100, "charge_card", "above", "called"],
+    [390, 180, "retry_payment", "below", "idle"],
+    [500, 180, "refund", "below", "idle"],
+    [305, 330, "log_event", "below", "called"],
+    [430, 330, "format_amount", "below", "idle"],
+  ];
+  const idle = ["M80 180H210", "M390 100H620", "M390 180V100", "M500 180H580L620 140V100", "M305 330H430"];
+  const called = ["M80 100V180", "M80 100H390", "M80 100H305V330"];
+  return (
+    <svg
+      viewBox="0 0 680 400"
+      className="h-auto w-full"
+      role="img"
+      aria-label="A call graph grouped by file. The checkout function is selected; its calls to validate_cart, charge_card and log_event are highlighted. Calls into the stripe library meet at one node."
+    >
+      <g fontSize="13" fontFamily={MONO}>
+        {groups.map((g) => (
+          <g key={g.name}>
+            <rect x={g.x} y={g.y} width={g.w} height={g.h} fill="none" stroke="#1e2d3d" strokeWidth="1.5" />
+            <text x={g.x} y={g.y - 12} fill={DIM}>{g.name}</text>
+          </g>
+        ))}
+        {idle.map((d) => (
+          <path key={d} d={d} stroke={DIM} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        ))}
+        {called.map((d) => (
+          <path key={d} d={d} stroke={B} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        ))}
+
+        <circle cx="620" cy="100" r="9" fill="#0b0f14" stroke={DIM} strokeWidth="3" />
+        <text x="620" y="80" textAnchor="middle" fill={DIM}>stripe (4)</text>
+
+        {nodes.map(([x, y, label, pos, state]) => (
+          <g key={label}>
+            {state === "selected" ? (
+              <circle cx={x} cy={y} r="9" fill="#0b0f14" stroke={NODE} strokeWidth="3" />
+            ) : (
+              <circle cx={x} cy={y} r="6.5" fill={state === "called" ? B : DIM} />
+            )}
+            <text
+              x={x}
+              y={pos === "above" ? y - 18 : y + 28}
+              textAnchor="middle"
+              fill={state === "idle" ? DIM : state === "selected" ? NODE : "#9fb0c3"}
+            >
+              {label}
+            </text>
+          </g>
+        ))}
+      </g>
+    </svg>
+  );
+}
 
 // Two changed functions on an otherwise neutral graph.
 function GitMotif() {
@@ -122,18 +189,11 @@ export default function Extension() {
       <div className="ruled mt-14 md:grid-cols-2 lg:mt-16 xl:grid-cols-3">
         {/* Lead cell — the real graph, not an illustration */}
         <article className="flex flex-col bg-ground md:col-span-2 xl:row-span-2">
-          <figure className="border-b border-edge bg-[#131313]">
-            <Image
-              src="/product/graph-panel.png"
-              alt="CoGraph grouping a folder's functions by file: each file is a circle of function nodes, with call edges between them highlighted in blue."
-              width={1044}
-              height={712}
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 640px"
-              className="block h-auto w-full"
-            />
+          <figure className="border-b border-edge px-4 py-8 sm:px-8 sm:py-10">
+            <GroupedGraph />
           </figure>
           <div className="flex flex-col gap-2.5 p-7">
-            <span className="label text-[10px] text-ink-dim">Fig. 3</span>
+            <span className="label text-[10px] text-ink-dim">Fig. 3 · Grouped by file, one function selected</span>
             <h3 className="font-display text-lg font-semibold leading-snug tracking-[-0.015em] text-ink">
               Every function a node. Every call an edge.
             </h3>

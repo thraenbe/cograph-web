@@ -53,8 +53,7 @@ export const EXTENSION = {
 
 export const INCUBATOR = {
   name: "Cyber Valley AI Incubator",
-  batch: "Batch 8",
-  detail: "15 teams selected from 94 applicants",
+  award: "Best Business Award",
 };
 
 // ─── Founders ──────────────────────────────────────────────────────────────

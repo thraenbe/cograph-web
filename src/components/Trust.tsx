@@ -21,11 +21,29 @@ const LOCAL = [
   },
 ];
 
-const LIMITS = [
-  ["Dynamic dispatch", "and calls resolved only at runtime"],
-  ["eval and reflection", "and functions generated at runtime"],
-  ["Macro- and template-heavy C++", "coverage is partial"],
-  ["Installed packages", "not followed, on purpose — library calls collapse into one node"],
+// Where the graph has gaps, each with a line of code a reader recognises.
+// Keep in step with brain/01-product.md · limitations.
+const GAPS = [
+  {
+    code: "handlers[event]()",
+    title: "Calls decided while the program runs",
+    body: "Which function this calls depends on data. Reading the source alone can't know, so the graph draws no edge.",
+  },
+  {
+    code: "eval(src) · getattr(obj, name)",
+    title: "Code built from strings",
+    body: "The function's name only exists at runtime, so there is nothing in the source to connect.",
+  },
+  {
+    code: "#define · template<T>",
+    title: "Heavy C++ macros and templates",
+    body: "Partly resolved. Some calls behind them are missing.",
+  },
+  {
+    code: "import numpy",
+    title: "Libraries you install",
+    body: "Not opened on purpose. All calls into a library meet at one node, so large dependencies don't bury your own code.",
+  },
 ];
 
 export default function Trust() {
@@ -54,23 +72,23 @@ export default function Trust() {
 
         {/* Honest limits */}
         <div className="mt-8 flex flex-col border-t border-edge pt-8 xl:mt-0 xl:border-l xl:border-t-0 xl:pl-10">
-          <span className="label text-[10px] text-ink-dim">What static analysis can&apos;t see</span>
-          <ul className="mt-6 flex flex-col divide-y divide-edge">
-            {LIMITS.map(([title, detail]) => (
-              <li key={title} className="flex gap-4 py-4 first:pt-0">
-                <svg width="14" height="14" viewBox="0 0 14 14" className="mt-1 shrink-0" aria-hidden="true">
-                  <circle cx="7" cy="7" r="5" fill="none" stroke="#566273" strokeWidth="2" strokeDasharray="2.5 2.5" />
-                </svg>
-                <p className="text-sm leading-relaxed">
-                  <span className="font-medium text-ink-soft">{title}</span>{" "}
-                  <span className="text-ink-muted">— {detail}</span>
-                </p>
+          <span className="label text-[10px] text-ink-dim">Where the graph has gaps</span>
+          <p className="copy mt-6 text-sm text-ink-soft">
+            CoGraph reads your code without running it. A call that is only
+            decided at runtime is invisible to it, and gets no edge.
+          </p>
+          <ul className="mt-6 flex flex-col divide-y divide-edge border-t border-edge">
+            {GAPS.map((gap) => (
+              <li key={gap.title} className="flex flex-col gap-1.5 py-5">
+                <code className="font-mono text-xs text-ink-dim">{gap.code}</code>
+                <h3 className="font-display text-base font-semibold text-ink">{gap.title}</h3>
+                <p className="copy text-sm text-ink-muted">{gap.body}</p>
               </li>
             ))}
           </ul>
-          <p className="copy mt-8 border-l-2 border-ink-dim pl-4 text-sm text-ink-soft xl:mt-auto">
-            CoGraph shows statically resolvable calls. We would rather show you a
-            smaller graph that is true than a larger one that is guessed.
+          <p className="copy mt-4 border-l-2 border-ink-dim pl-4 text-sm text-ink-soft xl:mt-auto">
+            We would rather show you a smaller graph that is true than a larger
+            one that is guessed.
           </p>
         </div>
       </div>

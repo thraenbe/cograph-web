@@ -20,9 +20,9 @@ export default function ProofStrip() {
       detail: "Free and open source",
     },
     {
-      value: INCUBATOR.batch,
+      value: "Winner",
       label: "Cyber Valley",
-      detail: `AI Incubator · ${INCUBATOR.detail}`,
+      detail: `${INCUBATOR.award} · ${INCUBATOR.name}`,
     },
   ];
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import JoinWaitlist from "./JoinWaitlist";
 import Logo from "./Logo";
 import { GITHUB_URL, MARKETPLACE_URL, NAV } from "@/lib/site";
 
@@ -36,15 +37,16 @@ export default function Header() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-6 lg:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <a
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="label text-[11px] text-ink-muted transition-colors hover:text-ink"
+            className="label mr-3 text-[11px] text-ink-muted transition-colors hover:text-ink"
           >
             GitHub
           </a>
+          <JoinWaitlist label="Join the waitlist" showArrow={false} className="btn-secondary !h-9 !px-4" />
           <a
             href={MARKETPLACE_URL}
             target="_blank"
@@ -84,8 +86,18 @@ export default function Header() {
               <a href={MARKETPLACE_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">
                 Install free for VS Code
               </a>
-              <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-                View on GitHub
+              <JoinWaitlist
+                label="Get notified about the team version"
+                showArrow={false}
+                className="btn-secondary"
+              />
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="label py-2 text-center text-[11px] text-ink-muted hover:text-ink"
+              >
+                Source on GitHub
               </a>
             </div>
           </nav>
