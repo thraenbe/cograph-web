@@ -46,9 +46,9 @@ export const LANGUAGES = [
 // or teams; there is no telemetry behind it. Re-check both values against the
 // marketplace before each deploy and move the date with them.
 export const EXTENSION = {
-  version: "1.2.0",
-  installs: 667,
-  asOf: "Sep 2026",
+  version: "1.4.0",
+  installs: 784,
+  asOf: "Oct 2026",
 };
 
 export const INCUBATOR = {
