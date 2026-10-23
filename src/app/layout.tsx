@@ -9,6 +9,7 @@ const display = Space_Grotesk({
   weight: ["300", "600", "700"],
   variable: "--font-display",
   display: "swap",
+  preload: true,
 });
 
 const sans = Inter({
@@ -16,6 +17,7 @@ const sans = Inter({
   weight: ["400", "500", "600"],
   variable: "--font-sans",
   display: "swap",
+  preload: true,
 });
 
 const mono = JetBrains_Mono({
@@ -23,6 +25,7 @@ const mono = JetBrains_Mono({
   weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
+  preload: true,
 });
 
 const TITLE = "CoGraph — Read your codebase like a metro map";
