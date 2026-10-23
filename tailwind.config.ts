@@ -31,11 +31,14 @@ const config: Config = {
           ink: "#101418",
           muted: "#6b7280",
         },
-        // Type on ground
+        // Type on ground. `dim` (#566273) is 3.1:1 on ground — lines, idle
+        // nodes and rules only, never text. `faint` is the quietest text tone
+        // that still clears WCAG AA (5.5:1 on ground, 5.0:1 on card).
         ink: {
           DEFAULT: "#f6f7f9",
           soft: "#e8eef5",
           muted: "#9fb0c3",
+          faint: "#7d8b9c",
           dim: "#566273",
         },
       },
@@ -50,13 +53,6 @@ const config: Config = {
         "display-tight": "-0.05em",
         // The mono system layer is always set at 0.16em
         label: "0.16em",
-      },
-      backgroundImage: {
-        "dot-grid":
-          "radial-gradient(circle, rgba(159,176,195,0.10) 1px, transparent 1px)",
-      },
-      backgroundSize: {
-        "dot-32": "32px 32px",
       },
     },
   },

@@ -187,7 +187,7 @@ function StatTile({ label, value, hint }: { label: string; value: string; hint?:
 
 export default function Plan() {
   return (
-    <main className="min-h-screen bg-dot-grid bg-dot-32">
+    <main className="min-h-screen">
       <div className="mx-auto max-w-5xl px-6 py-16">
         {/* Header */}
         <header className="flex flex-wrap items-end justify-between gap-6">

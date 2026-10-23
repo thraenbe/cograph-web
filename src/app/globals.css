@@ -16,10 +16,11 @@
   --amber: #ffb454;
   --magenta: #ff6b9a;
 
-  /* Type on ground */
+  /* Type on ground. --ink-dim fails AA for text — lines and rules only. */
   --ink: #f6f7f9;
   --ink-soft: #e8eef5;
   --ink-muted: #9fb0c3;
+  --ink-faint: #7d8b9c;
   --ink-dim: #566273;
 
   /* The page route — one neutral line that every section is a station on */
@@ -41,6 +42,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Headings even out their lines; paragraphs never end on one word. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd {
+  text-wrap: pretty;
+}
+
 ::selection {
   background: rgba(55, 211, 155, 0.25);
   color: var(--ink);
@@ -52,8 +66,9 @@ body {
 }
 
 /* ─── The mono system layer · 05 Typography ──────────────────────────────── */
-/* Every label, section number and piece of metadata is monospaced, uppercase
-   and tracked at 0.16em. It is what makes a CoGraph page recognisable. */
+/* Labels, figure numbers and metadata are monospaced, uppercase and tracked
+   at 0.16em. Kept short and never below 12px: a label that has to be
+   squinted at isn't doing its job. */
 
 .label {
   font-family: var(--font-mono), ui-monospace, monospace;
@@ -72,11 +87,11 @@ body {
    shadows, no rounded cards: structure comes from the grid and the line. */
 @layer components {
   .btn-primary {
-    @apply inline-flex h-11 items-center justify-center gap-2 rounded-[3px] bg-signal px-5 text-sm font-medium text-ground transition-colors hover:bg-[#5ce0b1];
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-[3px] bg-signal px-5 text-[15px] font-medium text-ground transition-colors hover:bg-[#5ce0b1];
   }
 
   .btn-secondary {
-    @apply inline-flex h-11 items-center justify-center gap-2 rounded-[3px] border border-ink-dim/70 px-5 text-sm font-medium text-ink-soft transition-colors hover:border-ink-muted hover:text-ink;
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-[3px] border border-ink-dim px-5 text-[15px] font-medium text-ink-soft transition-colors hover:border-ink-muted hover:text-ink;
   }
 
   .link-quiet {
@@ -89,45 +104,30 @@ body {
   }
 
   .container-site {
-    @apply mx-auto w-full max-w-[1200px] px-6 lg:px-10;
+    @apply mx-auto w-full max-w-[1200px] px-5 sm:px-6 lg:px-10;
   }
 
   .h2 {
     @apply font-display text-[2rem] font-semibold leading-[1.08] tracking-[-0.03em] text-ink sm:text-[2.5rem] lg:text-[2.75rem];
   }
 
-  .lead {
-    @apply text-base leading-[1.7] text-ink-muted lg:text-[1.0625rem];
+  .h3 {
+    @apply font-display text-xl font-semibold leading-snug tracking-[-0.02em] text-ink;
   }
 
-  /* A ruled grid: cells separated by 1px hairlines, no gaps, no radius. */
-  .ruled {
-    @apply grid gap-px border border-edge bg-edge;
+  .lead {
+    @apply text-[1.0625rem] leading-[1.7] text-ink-muted lg:text-lg;
+  }
+
+  /* Reading size for body copy inside sections */
+  .body {
+    @apply text-[15px] leading-[1.7] text-ink-muted;
   }
 
   /* Figure caption strip, as on a technical drawing */
   .fig-caption {
-    @apply flex items-center justify-between gap-4 font-mono text-[11px] text-ink-dim;
+    @apply flex items-center justify-between gap-4 font-mono text-xs text-ink-faint;
   }
-}
-
-/* ─── The graph motif · 06 ───────────────────────────────────────────────── */
-/* A short segment travels along a route so the map reads as live rather than
-   decorated. Paths carry pathLength="100", so the dash values below are
-   percentages of the route. Used once, in the derived-graph figure. */
-
-@keyframes routePulse {
-  from {
-    stroke-dashoffset: 108;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.route-pulse {
-  stroke-dasharray: 8 100;
-  animation: routePulse 5s linear infinite;
 }
 
 /* ─── FAQ disclosure ─────────────────────────────────────────────────────── */

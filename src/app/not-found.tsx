@@ -14,7 +14,7 @@ export default function NotFound() {
         <circle cx="120" cy="44" r="8" fill="#0b0f14" stroke="#e8eef5" strokeWidth="3" />
         <circle cx="228" cy="14" r="8" fill="#0b0f14" stroke="#566273" strokeWidth="2.5" strokeDasharray="3 3" />
       </svg>
-      <span className="label mt-10 text-[11px] text-ink-dim">404 · No such station</span>
+      <span className="label mt-10 text-xs text-ink-faint">404 · No such station</span>
       <h1 className="mt-4 font-display text-3xl font-bold tracking-display text-ink sm:text-4xl">
         This page isn&apos;t on the map.
       </h1>

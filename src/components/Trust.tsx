@@ -21,26 +21,28 @@ const LOCAL = [
   },
 ];
 
+// Set on the raised card band: three promises, side by side because they are
+// parallel, each opened by a signal-green leaf beside its title.
 export default function Trust() {
   return (
-    <Section id="trust" number="04" name="Your code" line="signal">
+    <Section id="trust" number="04" name="Your code" line="signal" tone="card">
       <SectionHeader title="It runs where your code is." />
 
-      <ul className="mt-14 grid border-t border-edge lg:mt-16 lg:grid-cols-3">
+      <ul className="mt-12 grid grid-cols-1 border-t border-edge lg:mt-14 lg:grid-cols-3">
         {LOCAL.map((item, i) => (
           <li
             key={item.title}
-            className={`flex gap-4 border-b border-edge py-7 lg:border-b-0 lg:py-8 ${
+            className={`flex flex-col gap-3 border-b border-edge py-8 lg:border-b-0 lg:pb-2 lg:pt-8 ${
               i > 0 ? "lg:border-l lg:pl-8" : ""
             } ${i < LOCAL.length - 1 ? "lg:pr-8" : ""}`}
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" className="mt-1.5 shrink-0" aria-hidden="true">
-              <circle cx="7" cy="7" r="5" fill="#37d39b" />
-            </svg>
-            <div className="flex flex-col gap-1.5">
-              <h3 className="font-display text-base font-semibold text-ink">{item.title}</h3>
-              <p className="copy text-sm text-ink-muted">{item.body}</p>
-            </div>
+            <h3 className="flex items-start gap-3">
+              <svg width="14" height="14" viewBox="0 0 14 14" className="mt-[7px] shrink-0" aria-hidden="true">
+                <circle cx="7" cy="7" r="5" fill="#37d39b" />
+              </svg>
+              <span className="h3 text-lg">{item.title}</span>
+            </h3>
+            <p className="body pl-[26px]">{item.body}</p>
           </li>
         ))}
       </ul>

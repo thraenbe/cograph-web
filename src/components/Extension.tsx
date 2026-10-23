@@ -1,13 +1,14 @@
 import { ArrowUpRight, LINE, Section, SectionHeader } from "./ui";
 import { MARKETPLACE_URL } from "@/lib/site";
 
-// What the shipped extension does today — every card maps to a feature in the
+// What the shipped extension does today — every row maps to a feature in the
 // extension's README / CHANGELOG. Trace blue throughout: this section is about
 // navigation (line 02).
 
 const B = LINE.trace;
 const NODE = "#e8eef5";
-const DIM = "#566273";
+const DIM = "#566273"; // lines and idle nodes
+const FAINT = "#7d8b9c"; // idle labels — text needs AA contrast
 const MONO = "var(--font-mono), ui-monospace, monospace";
 
 // The graph grouped by file, with one function selected: its calls light up,
@@ -43,7 +44,7 @@ function GroupedGraph() {
         {groups.map((g) => (
           <g key={g.name}>
             <rect x={g.x} y={g.y} width={g.w} height={g.h} fill="none" stroke="#1e2d3d" strokeWidth="1.5" />
-            <text x={g.x} y={g.y - 12} fill={DIM}>{g.name}</text>
+            <text x={g.x} y={g.y - 12} fill={FAINT}>{g.name}</text>
           </g>
         ))}
         {idle.map((d) => (
@@ -54,7 +55,7 @@ function GroupedGraph() {
         ))}
 
         <circle cx="620" cy="100" r="9" fill="#0b0f14" stroke={DIM} strokeWidth="3" />
-        <text x="620" y="80" textAnchor="middle" fill={DIM}>stripe (4)</text>
+        <text x="620" y="80" textAnchor="middle" fill={FAINT}>stripe (4)</text>
 
         {nodes.map(([x, y, label, pos, state]) => (
           <g key={label}>
@@ -67,7 +68,7 @@ function GroupedGraph() {
               x={x}
               y={pos === "above" ? y - 18 : y + 28}
               textAnchor="middle"
-              fill={state === "idle" ? DIM : state === "selected" ? NODE : "#9fb0c3"}
+              fill={state === "idle" ? FAINT : state === "selected" ? NODE : "#9fb0c3"}
             >
               {label}
             </text>
@@ -114,7 +115,7 @@ function LibraryMotif() {
 
 function SaveMotif() {
   return (
-    <div className="flex items-center gap-2 font-mono text-xs text-ink-dim" aria-hidden="true">
+    <div className="flex items-center gap-2 font-mono text-xs text-ink-faint" aria-hidden="true">
       <span className="border border-edge px-2 py-1 text-ink-soft">⌘S</span>
       <span>→</span>
       <span>re-parse</span>
@@ -141,35 +142,33 @@ function TimelineMotif() {
   );
 }
 
-function Card({
+// A feature as a ruled row: what it does first, then the small drawing of it.
+// The drawing follows the words instead of sitting above them as an icon.
+function Feature({
   title,
   body,
   children,
-  className = "",
 }: {
   title: string;
   body: string;
   children?: React.ReactNode;
-  className?: string;
 }) {
   return (
-    <article className={`flex flex-col gap-6 bg-ground p-7 ${className}`}>
-      {children && <div className="flex min-h-[56px] items-center">{children}</div>}
+    <li className="flex flex-col gap-5 border-b border-edge py-8">
       <div className="flex flex-col gap-2.5">
-        <h3 className="font-display text-lg font-semibold leading-snug tracking-[-0.015em] text-ink">
-          {title}
-        </h3>
-        <p className="copy text-sm text-ink-muted">{body}</p>
+        <h3 className="h3 text-lg">{title}</h3>
+        <p className="body">{body}</p>
       </div>
-    </article>
+      {children && <div className="flex max-w-[280px] items-center">{children}</div>}
+    </li>
   );
 }
 
-// A ruled grid rather than floating cards: cells share hairlines, like a
-// spec table, and nothing lifts on hover.
+// The graph itself stays pinned on the left while the features scroll past on
+// the right — every feature below is something you do to that figure.
 export default function Extension() {
   return (
-    <Section id="extension" number="03" name="The extension" line="trace">
+    <Section id="extension" number="03" name="The extension" line="trace" space="lg">
       <div className="flex flex-col gap-8 xl:flex-row xl:items-end xl:justify-between">
         <SectionHeader
           title="Read your codebase like a metro map."
@@ -186,86 +185,89 @@ export default function Extension() {
         </a>
       </div>
 
-      <div className="ruled mt-14 md:grid-cols-2 lg:mt-16 xl:grid-cols-3">
-        {/* Lead cell — the real graph, not an illustration */}
-        <article className="flex flex-col bg-ground md:col-span-2 xl:row-span-2">
-          <figure className="border-b border-edge px-4 py-8 sm:px-8 sm:py-10">
-            <GroupedGraph />
+      <div className="mt-16 grid grid-cols-1 gap-12 lg:mt-20 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-14">
+        {/* Lead — the real graph, not an illustration */}
+        <div className="flex flex-col gap-8 xl:sticky xl:top-28 xl:self-start">
+          <figure className="border border-edge">
+            <div className="px-4 py-8 sm:px-8 sm:py-10">
+              <GroupedGraph />
+            </div>
+            <figcaption className="fig-caption border-t border-edge px-4 py-3">
+              <span className="label shrink-0 text-ink-muted">Fig. 3</span>
+              <span className="truncate">Grouped by file, one function selected</span>
+            </figcaption>
           </figure>
-          <div className="flex flex-col gap-2.5 p-7">
-            <span className="label text-[10px] text-ink-dim">Fig. 3 · Grouped by file, one function selected</span>
-            <h3 className="font-display text-lg font-semibold leading-snug tracking-[-0.015em] text-ink">
-              Every function a node. Every call an edge.
-            </h3>
-            <p className="copy text-sm text-ink-muted">
+          <div className="flex flex-col gap-3">
+            <h3 className="h3 text-2xl">Every function a node. Every call an edge.</h3>
+            <p className="body max-w-xl">
               Zoom, pan and filter by name. Group by folder, file or class, and
               use the detail slider to fold low-connectivity nodes away until the
               structure is legible.
             </p>
           </div>
-        </article>
+        </div>
 
-        <Card
-          title="Click a node, land on the code."
-          body="Jump to any function's definition, or open its source in a popup you can drag, resize and keep open beside others."
-        >
-          <div className="flex w-full items-center gap-3 font-mono text-xs" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 18 18" className="shrink-0">
-              <circle cx="9" cy="9" r="6" fill="#0b0f14" stroke={NODE} strokeWidth="2.6" />
-            </svg>
-            <span className="h-[3px] flex-1" style={{ background: B }} />
-            <span className="border border-edge px-2 py-1 text-ink-soft">app.py:9</span>
-          </div>
-        </Card>
+        <ul className="border-t border-edge">
+          <Feature
+            title="Click a node, land on the code."
+            body="Jump to any function's definition, or open its source in a popup you can drag, resize and keep open beside others."
+          >
+            <div className="flex w-full items-center gap-3 font-mono text-xs" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 18 18" className="shrink-0">
+                <circle cx="9" cy="9" r="6" fill="#0b0f14" stroke={NODE} strokeWidth="2.6" />
+              </svg>
+              <span className="h-[3px] flex-1" style={{ background: B }} />
+              <span className="border border-edge px-2 py-1 text-ink-soft">app.py:9</span>
+            </div>
+          </Feature>
 
-        <Card
-          title="See what your working tree touched."
-          body="Colour nodes by git status — modified, new, deleted, staged — to see where your uncommitted work sits in the structure and what it's wired to. It refreshes when the git index does."
-        >
-          <GitMotif />
-        </Card>
+          <Feature
+            title="See what your working tree touched."
+            body="Colour nodes by git status — modified, new, deleted, staged — to see where your uncommitted work sits in the structure and what it's wired to. It refreshes when the git index does."
+          >
+            <GitMotif />
+          </Feature>
 
-        <Card
-          title="Derived again on save."
-          body="Save a file and the graph is re-derived. In large repositories only the saved file is re-parsed."
-        >
-          <SaveMotif />
-        </Card>
+          <Feature
+            title="Derived again on save."
+            body="Save a file and the graph is re-derived. In large repositories only the saved file is re-parsed."
+          >
+            <SaveMotif />
+          </Feature>
 
-        <Card
-          title="Sized for real repositories."
-          body="Large-repo mode starts with an instant folder skeleton and parses folders as you open them. External libraries collapse into one node each."
-        >
-          <LibraryMotif />
-        </Card>
+          <Feature
+            title="Sized for real repositories."
+            body="Large-repo mode starts with an instant folder skeleton and parses folders as you open them. External libraries collapse into one node each."
+          >
+            <LibraryMotif />
+          </Feature>
 
-        <Card
-          className="md:col-span-2 xl:col-span-1"
-          title="Replay how it grew."
-          body="Timeline playback builds the graph in commit order, so you can watch an architecture take shape."
-        >
-          <TimelineMotif />
-        </Card>
+          <Feature
+            title="Replay how it grew."
+            body="Timeline playback builds the graph in commit order, so you can watch an architecture take shape."
+          >
+            <TimelineMotif />
+          </Feature>
+        </ul>
+      </div>
 
-        <article className="flex flex-col justify-between gap-6 bg-ground p-7 md:col-span-2 xl:col-span-3 xl:flex-row xl:items-end">
-          <div className="flex flex-col gap-2.5">
-            <span className="label text-[10px] text-ink-dim">Optional · off by default</span>
-            <h3 className="font-display text-lg font-semibold leading-snug tracking-[-0.015em] text-ink">
-              AI only if you ask for it.
-            </h3>
-            <p className="copy max-w-xl text-sm text-ink-muted">
-              An architecture chat and a workflow view can sit on top of the
-              graph. Nothing runs until you enable them; then they use your own
-              Claude Code or Codex CLI, with your own keys and a budget cap per
-              request. The graph never depends on them.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2 font-mono text-[11px] text-ink-dim">
-            <span className="border border-edge px-2 py-1">graphIntelligence.enabled: false</span>
-            <span className="border border-edge px-2 py-1">maxBudgetUsd</span>
-            <span className="border border-edge px-2 py-1">maxTurns</span>
-          </div>
-        </article>
+      {/* The opt-in layer, set apart below both columns */}
+      <div className="mt-16 grid grid-cols-1 gap-6 border-t border-edge pt-10 lg:mt-20 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-14">
+        <div className="flex flex-col gap-3">
+          <h3 className="h3 text-lg">AI only if you ask for it.</h3>
+          <span className="label text-xs text-ink-faint">Optional · off by default</span>
+          <p className="body mt-1 max-w-xl">
+            An architecture chat and a workflow view can sit on top of the
+            graph. Nothing runs until you enable them; then they use your own
+            Claude Code or Codex CLI, with your own keys and a budget cap per
+            request. The graph never depends on them.
+          </p>
+        </div>
+        <div className="flex flex-wrap content-start gap-2 font-mono text-xs text-ink-faint xl:pt-1">
+          <span className="border border-edge px-2.5 py-1.5">graphIntelligence.enabled: false</span>
+          <span className="border border-edge px-2.5 py-1.5">maxBudgetUsd</span>
+          <span className="border border-edge px-2.5 py-1.5">maxTurns</span>
+        </div>
       </div>
     </Section>
   );

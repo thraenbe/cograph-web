@@ -26,7 +26,7 @@ const PILOT = [
 
 export default function DesignPartners() {
   return (
-    <Section id="partners" number="06" name="Design partners" line="signal" tone="paper">
+    <Section id="partners" number="06" name="Design partners" line="signal" tone="paper" space="lg">
       <div className="grid gap-14 xl:grid-cols-[1.1fr_1fr] xl:gap-16">
         <div className="flex flex-col">
           <SectionHeader
@@ -36,10 +36,10 @@ export default function DesignPartners() {
           />
 
           <div className="mt-10">
-            <span className="label text-[10px] text-paper-muted">A good fit</span>
+            <span className="label text-xs text-paper-muted">A good fit</span>
             <ul className="mt-4 border-t border-paper-rule">
               {FIT.map((item) => (
-                <li key={item} className="flex items-center gap-3 border-b border-paper-rule py-3 text-sm text-paper-ink">
+                <li key={item} className="flex items-center gap-3 border-b border-paper-rule py-3.5 text-[15px] text-paper-ink">
                   <span className="h-2 w-2 rounded-full bg-paper-ink" aria-hidden="true" />
                   {item}
                 </li>
@@ -52,13 +52,13 @@ export default function DesignPartners() {
               variant="partner"
               label="Apply as a design partner"
               showArrow={false}
-              className="inline-flex h-11 items-center justify-center rounded-[3px] bg-paper-ink px-5 text-sm font-medium text-paper-white transition-colors hover:bg-[#252c35]"
+              className="inline-flex h-11 items-center justify-center rounded-[3px] bg-paper-ink px-5 text-[15px] font-medium text-paper-white transition-colors hover:bg-[#252c35]"
             />
             <a
               href={CONTACT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-[3px] border border-paper-ink/30 px-5 text-sm font-medium text-paper-ink transition-colors hover:border-paper-ink"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-[3px] border border-paper-ink/30 px-5 text-[15px] font-medium text-paper-ink transition-colors hover:border-paper-ink"
             >
               <LinkedInIcon size={14} />
               Message Magnus
@@ -67,7 +67,7 @@ export default function DesignPartners() {
         </div>
 
         <div className="flex flex-col xl:pt-2">
-          <span className="label text-[10px] text-paper-muted">How a pilot runs · free · one repository</span>
+          <span className="label text-xs text-paper-muted">How a pilot runs · free · one repository</span>
           <ol className="mt-6 flex flex-col">
             {PILOT.map((step, i) => (
               <li key={step.week} className="relative flex gap-5 pb-8 last:pb-0">
@@ -78,8 +78,8 @@ export default function DesignPartners() {
                   <span className="relative mt-[3px] h-3.5 w-3.5 rounded-full border-[3px] border-paper-ink bg-paper" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-semibold text-paper-ink">{step.week}</span>
-                  <p className="copy text-sm text-paper-muted">{step.text}</p>
+                  <span className="text-[15px] font-semibold text-paper-ink">{step.week}</span>
+                  <p className="copy text-[15px] text-paper-muted">{step.text}</p>
                 </div>
               </li>
             ))}

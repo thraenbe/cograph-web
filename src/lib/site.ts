@@ -41,13 +41,16 @@ export const LANGUAGES = [
 ] as const;
 
 // ─── Public numbers ───────────────────────────────────────────────────────
-// Only claims from the approved register (brain/07-brand.md). INSTALLS is an
-// install count from the VS Code Marketplace — never call it users, customers
-// or teams; there is no telemetry behind it. Re-check both values against the
-// marketplace before each deploy and move the date with them.
+// Only claims from the approved register (brain/07-brand.md). Installs are an
+// install count from the VS Code Marketplace — never call them users,
+// customers or teams; there is no telemetry behind them.
+//
+// The site shows live values from src/lib/marketplace.ts, refreshed daily.
+// This is the fallback snapshot for when the Marketplace API can't be reached
+// (last checked 2026-10-23) — keep it roughly current, with its date.
 export const EXTENSION = {
   version: "1.4.0",
-  installs: 784,
+  installs: 813,
   asOf: "Oct 2026",
 };
 

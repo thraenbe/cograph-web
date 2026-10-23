@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function DevPlaceholder() {
   return (
-    <main className="min-h-screen bg-dot-grid bg-dot-32 flex flex-col items-center justify-center gap-8 px-6 text-center">
+    <main className="min-h-screen flex flex-col items-center justify-center gap-8 px-6 text-center">
       <Logo size={40} />
       <div>
         <p className="label text-signal text-xs mb-4">dev.cograph.co</p>

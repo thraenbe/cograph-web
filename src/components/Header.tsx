@@ -5,8 +5,8 @@ import JoinWaitlist from "./JoinWaitlist";
 import Logo from "./Logo";
 import { GITHUB_URL, MARKETPLACE_URL, NAV } from "@/lib/site";
 
-// Solid ground and a hairline — no translucency, no blur. Nav items are set
-// in the mono system layer, like station names on a sign.
+// Solid ground and a hairline — no translucency, no blur. Nav is set in the
+// body face at a size you can read without leaning in.
 export default function Header() {
   const [open, setOpen] = useState(false);
 
@@ -26,10 +26,10 @@ export default function Header() {
         </a>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
+          <ul className="flex items-center gap-7">
             {NAV.map((item) => (
               <li key={item.href}>
-                <a href={item.href} className="label text-[11px] text-ink-muted transition-colors hover:text-ink">
+                <a href={item.href} className="text-sm text-ink-muted transition-colors hover:text-ink">
                   {item.label}
                 </a>
               </li>
@@ -42,16 +42,16 @@ export default function Header() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="label mr-3 text-[11px] text-ink-muted transition-colors hover:text-ink"
+            className="mr-3 text-sm text-ink-muted transition-colors hover:text-ink"
           >
             GitHub
           </a>
-          <JoinWaitlist label="Join the waitlist" showArrow={false} className="btn-secondary !h-9 !px-4" />
+          <JoinWaitlist label="Join the waitlist" showArrow={false} className="btn-secondary !h-9 !px-4 !text-sm" />
           <a
             href={MARKETPLACE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary !h-9 !px-4"
+            className="btn-primary !h-9 !px-4 !text-sm"
           >
             Install free
           </a>
@@ -60,7 +60,7 @@ export default function Header() {
         {/* Mobile toggle */}
         <button
           type="button"
-          className="label inline-flex h-10 items-center text-[11px] text-ink-muted hover:text-ink lg:hidden"
+          className="inline-flex h-10 items-center text-sm text-ink-muted hover:text-ink lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           onClick={() => setOpen((v) => !v)}
@@ -95,7 +95,7 @@ export default function Header() {
                 href={GITHUB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="label py-2 text-center text-[11px] text-ink-muted hover:text-ink"
+                className="py-2 text-center text-sm text-ink-muted hover:text-ink"
               >
                 Source on GitHub
               </a>

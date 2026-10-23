@@ -13,7 +13,7 @@ import {
 // leaves, hollow interchanges, one hue per route.
 function FooterMotif() {
   return (
-    <svg width="100" height="30" viewBox="0 0 100 30" fill="none" aria-hidden="true" className="opacity-70">
+    <svg width="100" height="30" viewBox="0 0 100 30" fill="none" aria-hidden="true">
       <path d="M6 24H34" stroke="#37d39b" strokeWidth="2.3" strokeLinecap="round" />
       <path d="M34 24H76" stroke="#ffb454" strokeWidth="2.3" strokeLinecap="round" />
       <path d="M34 24 52 6" stroke="#4f8cff" strokeWidth="2.3" strokeLinecap="round" />
@@ -60,12 +60,14 @@ const COLUMNS: { title: string; links: FooterLink[] }[] = [
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-edge pb-10 pt-16">
+    <footer className="relative border-t border-edge pb-10 pt-16 lg:pt-20">
       <div className="container-site">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_2fr]">
-          <div className="flex flex-col gap-4">
+        <div className="grid gap-14 md:grid-cols-[1.4fr_2fr]">
+          {/* The line the company is known by, set large enough to be read as
+              the sign-off rather than as fine print */}
+          <div className="flex flex-col gap-6">
             <Logo size={26} />
-            <p className="copy max-w-xs text-sm text-ink-muted">
+            <p className="max-w-sm font-display text-2xl font-light leading-[1.2] tracking-[-0.02em] text-ink-soft sm:text-[1.75rem]">
               Read your codebase like a metro map.
             </p>
             <FooterMotif />
@@ -74,8 +76,8 @@ export default function Footer() {
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
             {COLUMNS.map((col) => (
               <div key={col.title} className="flex flex-col gap-4">
-                <span className="label text-[10px] text-ink-dim">{col.title}</span>
-                <ul className="flex flex-col gap-2.5">
+                <span className="label text-xs text-ink-faint">{col.title}</span>
+                <ul className="flex flex-col gap-3">
                   {col.links.map((link) => (
                     <li key={link.label}>
                       {link.external ? (
@@ -83,12 +85,12 @@ export default function Footer() {
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm link-quiet"
+                          className="text-[15px] link-quiet"
                         >
                           {link.label}
                         </a>
                       ) : (
-                        <Link href={link.href} className="text-sm link-quiet">
+                        <Link href={link.href} className="text-[15px] link-quiet">
                           {link.label}
                         </Link>
                       )}
@@ -101,10 +103,10 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-edge pt-6 sm:flex-row sm:items-center">
-          <p className="font-mono text-xs text-ink-dim">
+          <p className="font-mono text-xs text-ink-faint">
             © {new Date().getFullYear()} CoGraph · Tübingen, Germany
           </p>
-          <p className="font-mono text-xs text-ink-dim">Extension released under the MIT License</p>
+          <p className="font-mono text-xs text-ink-faint">Extension released under the MIT License</p>
         </div>
       </div>
     </footer>

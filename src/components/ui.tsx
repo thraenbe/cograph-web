@@ -18,17 +18,33 @@ export type LineName = keyof typeof LINE;
 // into an inline label above the heading.
 
 type Route = "start" | "through" | "end";
-type Tone = "ground" | "paper";
+// ground: the default surface · card: a raised band for a section that needs
+// setting apart without inverting · paper: the one light band on the page
+type Tone = "ground" | "card" | "paper";
+// Sections don't all breathe the same: the long reads get more room above
+// and below than the short statements between them.
+type Space = "md" | "lg";
 
-// Vertical centre of the station node, measured from the top of the rail.
-// Must match the rail's top padding (lg:pt-28 = 112px) + half the node (11px).
-const STATION_Y = 123;
+const SURFACE: Record<Tone, { bg: string; fill: string; stroke: string }> = {
+  ground: { bg: "border-t border-edge", fill: "#0b0f14", stroke: "#e8eef5" },
+  card: { bg: "border-t border-edge bg-card", fill: "#131b24", stroke: "#e8eef5" },
+  paper: { bg: "bg-paper text-paper-ink", fill: "#f6f7f9", stroke: "#101418" },
+};
 
-function Station({ tone, terminus }: { tone: Tone; terminus?: boolean }) {
-  const fill = tone === "paper" ? "#f6f7f9" : "#0b0f14";
-  const stroke = tone === "paper" ? "#101418" : "#e8eef5";
+// Rail top padding in px on wide screens; content top padding matches it so
+// the station sits level with the section heading.
+const PAD: Record<Space, { px: number; content: string }> = {
+  md: { px: 112, content: "py-20 lg:py-28" },
+  lg: { px: 144, content: "py-24 lg:py-36" },
+};
+
+// Half the station node (22px).
+const NODE_HALF = 11;
+
+function Station({ tone, terminus, size = 22 }: { tone: Tone; terminus?: boolean; size?: number }) {
+  const { fill, stroke } = SURFACE[tone];
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" className="shrink-0">
+    <svg width={size} height={size} viewBox="0 0 22 22" aria-hidden="true" className="shrink-0">
       {terminus ? (
         <circle cx="11" cy="11" r="7" fill={stroke} />
       ) : (
@@ -45,6 +61,7 @@ export function Section({
   line = "signal",
   route = "through",
   tone = "ground",
+  space = "md",
   terminus,
   className = "",
   children,
@@ -55,26 +72,27 @@ export function Section({
   line?: LineName;
   route?: Route;
   tone?: Tone;
+  space?: Space;
   terminus?: boolean;
   className?: string;
   children: ReactNode;
 }) {
   const paper = tone === "paper";
+  const pad = PAD[space];
+  const stationY = pad.px + NODE_HALF;
   const routeStyle =
     route === "start"
-      ? { top: STATION_Y, bottom: 0 }
+      ? { top: stationY, bottom: 0 }
       : route === "end"
-      ? { top: 0, height: STATION_Y }
+      ? { top: 0, height: stationY }
       : { top: 0, bottom: 0 };
+  const numberColor = paper ? "#101418" : LINE[line];
 
   return (
-    <section
-      id={id}
-      className={`relative ${paper ? "bg-paper text-paper-ink" : "border-t border-edge"}`}
-    >
-      <div className="container-site grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-x-6">
+    <section id={id} className={`relative ${SURFACE[tone].bg}`}>
+      <div className="container-site grid lg:grid-cols-[168px_minmax(0,1fr)] lg:gap-x-8">
         {/* Rail */}
-        <div className="relative hidden pt-28 lg:block">
+        <div className="relative hidden lg:block" style={{ paddingTop: pad.px }}>
           <span
             aria-hidden="true"
             className="absolute left-[9.5px] w-[3px] bg-[var(--route)]"
@@ -82,13 +100,13 @@ export function Section({
           />
           <div className={`relative flex items-start gap-3 ${terminus ? "" : "sticky top-[92px]"}`}>
             <Station tone={tone} terminus={terminus} />
-            <div className="flex flex-col gap-1 pt-[3px]">
+            <div className="flex flex-col gap-1.5 pt-[2px]">
               {number && (
-                <span className="label text-[11px]" style={{ color: paper ? "#101418" : LINE[line] }}>
+                <span className="label text-xs" style={{ color: numberColor }}>
                   {number}
                 </span>
               )}
-              <span className={`label max-w-[7rem] text-[11px] leading-[1.6] ${paper ? "text-paper-muted" : "text-ink-dim"}`}>
+              <span className={`label max-w-[8rem] text-xs leading-[1.6] ${paper ? "text-paper-muted" : "text-ink-faint"}`}>
                 {name}
               </span>
             </div>
@@ -96,13 +114,16 @@ export function Section({
         </div>
 
         {/* Content */}
-        <div className={`min-w-0 py-20 lg:py-28 ${className}`}>
-          <div className="mb-8 flex items-center gap-2.5 lg:hidden">
-            <span className="h-2.5 w-2.5 rounded-full" style={{ background: paper ? "#101418" : LINE[line] }} />
-            <span className={`label text-[11px] ${paper ? "text-paper-ink" : "text-ink-muted"}`}>
-              {number ? `${number} · ` : ""}
+        <div className={`min-w-0 ${pad.content} ${className}`}>
+          {/* Small screens: the rail folds into a section divider — a station,
+              its name, and the route running on to the edge. */}
+          <div className="mb-10 flex items-center gap-3 lg:hidden">
+            <Station tone={tone} terminus={terminus} size={18} />
+            <span className={`label shrink-0 text-xs ${paper ? "text-paper-muted" : "text-ink-faint"}`}>
+              {number && <span style={{ color: numberColor }}>{number} </span>}
               {name}
             </span>
+            <span aria-hidden="true" className={`h-px flex-1 ${paper ? "bg-paper-rule" : "bg-edge"}`} />
           </div>
           {children}
         </div>
@@ -124,8 +145,8 @@ export function SectionHeader({
 }) {
   const paper = tone === "paper";
   return (
-    <div className={`flex max-w-3xl flex-col gap-5 ${className}`}>
-      <h2 className={`h2 text-balance ${paper ? "!text-paper-ink" : ""}`}>{title}</h2>
+    <div className={`flex max-w-3xl flex-col gap-6 ${className}`}>
+      <h2 className={`h2 ${paper ? "!text-paper-ink" : ""}`}>{title}</h2>
       {lead && (
         <p className={`lead max-w-2xl ${paper ? "!text-paper-muted" : ""}`}>{lead}</p>
       )}

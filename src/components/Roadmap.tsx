@@ -1,5 +1,6 @@
 import { ArrowUpRight, LINE, Section, SectionHeader } from "./ui";
-import { DEMO_URL, EXTENSION } from "@/lib/site";
+import type { ExtensionStats } from "@/lib/marketplace";
+import { DEMO_URL } from "@/lib/site";
 
 // What exists, what is designed, what is only a demo — each labelled. Planned
 // work is drawn dashed, the way a metro map draws a line under construction.
@@ -12,12 +13,13 @@ type Stop = {
   meta?: string;
 };
 
-const STOPS: Stop[] = [
+// Built per render: the shipped stop carries the live Marketplace version.
+const stopsFor = (version: string): Stop[] => [
   {
     status: "Shipped",
     title: "In the editor",
     body: "CoGraph for VS Code. Read the graph where you write the code.",
-    meta: `v${EXTENSION.version} · Free · MIT`,
+    meta: `v${version} · Free · MIT`,
   },
   {
     status: "In design",
@@ -65,14 +67,15 @@ function GraphDiff() {
         <text x="74" y="104" textAnchor="end" fill="#9fb0c3">checkout</text>
         <text x="210" y="22" textAnchor="middle" fill={B}>+ retry_payment</text>
         <text x="270" y="128" textAnchor="middle" fill="#9fb0c3">charge_card</text>
-        <text x="350" y="126" textAnchor="middle" fill="#566273">gateway</text>
-        <text x="224" y="164" fill="#566273">log_event</text>
+        <text x="350" y="126" textAnchor="middle" fill="#7d8b9c">gateway</text>
+        <text x="224" y="164" fill="#7d8b9c">log_event</text>
       </g>
     </svg>
   );
 }
 
-export default function Roadmap() {
+export default function Roadmap({ stats }: { stats: ExtensionStats }) {
+  const stops = stopsFor(stats.version);
   return (
     <Section id="roadmap" number="05" name="Roadmap" line="trace">
         <SectionHeader
@@ -80,16 +83,16 @@ export default function Roadmap() {
           lead="The editor is the first surface. Because the graph is derived the same way every time, it can also live in the repository and be compared across pull requests. That work is in design, and we are shaping it with design partners."
         />
 
-        <div className="mt-14 grid gap-12 lg:mt-16 xl:grid-cols-[1fr_1.1fr] xl:gap-12">
+        <div className="mt-16 grid gap-14 lg:mt-20 xl:grid-cols-[1fr_1.1fr] xl:gap-14">
           {/* The line */}
           <ol className="relative flex flex-col">
-            {STOPS.map((stop, i) => {
+            {stops.map((stop, i) => {
               const shipped = stop.status === "Shipped";
-              const last = i === STOPS.length - 1;
+              const last = i === stops.length - 1;
               // A segment is built only if the station it leads to is built.
-              const segmentBuilt = !last && STOPS[i + 1].status === "Shipped";
+              const segmentBuilt = !last && stops[i + 1].status === "Shipped";
               return (
-                <li key={stop.title} className="relative flex gap-6 pb-10 last:pb-0">
+                <li key={stop.title} className="relative flex gap-6 pb-12 last:pb-0">
                   {/* Station + the segment to the next one */}
                   {!last && (
                     <span
@@ -115,16 +118,17 @@ export default function Roadmap() {
                       )}
                     </svg>
                   </div>
-                  <div className="flex flex-col gap-2 pt-0.5">
-                    <span className={`label text-[10px] ${shipped ? "text-signal" : "text-ink-dim"}`}>
-                      {stop.status}
-                    </span>
-                    <h3 className="font-display text-xl font-semibold tracking-[-0.015em] text-ink">
-                      {stop.title}
-                    </h3>
-                    <p className="copy max-w-md text-sm text-ink-muted">{stop.body}</p>
+                  <div className="flex min-w-0 flex-1 flex-col gap-2.5">
+                    {/* Status reads as the stop's state, beside its name */}
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                      <h3 className="h3">{stop.title}</h3>
+                      <span className={`label text-xs ${shipped ? "text-signal" : "text-ink-faint"}`}>
+                        {stop.status}
+                      </span>
+                    </div>
+                    <p className="body max-w-md">{stop.body}</p>
                     {stop.meta && (
-                      <span className="mt-1 font-mono text-xs text-ink-dim">{stop.meta}</span>
+                      <span className="mt-1 font-mono text-xs text-ink-faint">{stop.meta}</span>
                     )}
                   </div>
                 </li>
@@ -136,15 +140,15 @@ export default function Roadmap() {
           <div className="flex flex-col gap-4">
             <figure className="border border-edge">
               <div className="flex items-center justify-between gap-4 border-b border-edge px-5 py-3">
-                <span className="truncate font-mono text-[11px] text-ink-dim">
+                <span className="truncate font-mono text-xs text-ink-muted">
                   main → feature/retry-payments
                 </span>
-                <span className="label shrink-0 text-[9px] text-ink-dim">Fig. 4 · Concept</span>
+                <span className="label shrink-0 text-xs text-ink-faint">Fig. 4 · Concept</span>
               </div>
               <div className="px-5 py-6 sm:px-8">
                 <GraphDiff />
               </div>
-              <figcaption className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-edge px-5 py-3 font-mono text-[11px] text-ink-dim">
+              <figcaption className="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-edge px-5 py-3 font-mono text-xs text-ink-faint">
                 <span className="flex items-center gap-2">
                   <span className="h-[3px] w-5 bg-trace" /> added
                 </span>
@@ -171,14 +175,14 @@ export default function Roadmap() {
               className="group flex items-start justify-between gap-6 border border-edge p-6 transition-colors hover:bg-card"
             >
               <div className="flex flex-col gap-2">
-                <span className="label text-[10px] text-ink-dim">Interactive demo · not a product yet</span>
-                <h3 className="font-display text-lg font-semibold text-ink">CoGraph Review</h3>
-                <p className="copy text-sm text-ink-muted">
+                <h3 className="h3 text-lg">CoGraph Review</h3>
+                <span className="label text-xs text-ink-faint">Interactive demo · not a product yet</span>
+                <p className="body mt-1">
                   A pull request page with the change read on the graph. It shows
                   the direction; it is not something you can install.
                 </p>
               </div>
-              <span className="mt-1 shrink-0 text-ink-dim transition-colors group-hover:text-ink">
+              <span className="mt-1 shrink-0 text-ink-faint transition-colors group-hover:text-ink">
                 <ArrowUpRight size={18} />
               </span>
             </a>

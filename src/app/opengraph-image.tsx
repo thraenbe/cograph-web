@@ -1,14 +1,18 @@
 import { ImageResponse } from "next/og";
-import { EXTENSION } from "@/lib/site";
+import { getExtensionStats } from "@/lib/marketplace";
 
-// Social card. Uses the renderer's default sans — brand fonts would need font
+// Social card. Flat ground and one colour of type — no glow, no two-tone
+// headline. Uses the renderer's default sans — brand fonts would need font
 // files bundled with the repo. Until then the card carries the mark only: the
 // wordmark must never be set in another face (03 · Logo).
 export const alt = "CoGraph — AI already writes your code. We make sure you still understand it.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+// The card prints the live Marketplace version; refresh it daily with the page.
+export const revalidate = 86400;
 
-export default function OpengraphImage() {
+export default async function OpengraphImage() {
+  const { version } = await getExtensionStats();
   return new ImageResponse(
     (
       <div
@@ -19,8 +23,6 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           backgroundColor: "#0b0f14",
-          backgroundImage:
-            "radial-gradient(circle at 85% 15%, rgba(55,211,155,0.16), rgba(11,15,20,0) 55%)",
           padding: "72px 80px",
           color: "#f6f7f9",
         }}
@@ -39,7 +41,7 @@ export default function OpengraphImage() {
           <div style={{ fontSize: 56, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05 }}>
             AI already writes your code.
           </div>
-          <div style={{ fontSize: 56, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05, color: "#9fb0c3" }}>
+          <div style={{ fontSize: 56, fontWeight: 700, letterSpacing: -2, lineHeight: 1.05 }}>
             We make sure you still understand it.
           </div>
         </div>
@@ -58,7 +60,7 @@ export default function OpengraphImage() {
           }}
         >
           <span>cograph.co · Call graphs derived from the syntax tree</span>
-          <span style={{ color: "#37d39b" }}>VS Code · v{EXTENSION.version}</span>
+          <span style={{ color: "#37d39b" }}>VS Code · v{version}</span>
         </div>
       </div>
     ),

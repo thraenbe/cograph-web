@@ -35,26 +35,25 @@ export default function FAQ() {
     <Section id="faq" number="08" name="Questions" line="signal">
       <div className="grid gap-12 xl:grid-cols-[0.85fr_1.15fr] xl:gap-16">
         <SectionHeader
+          className="xl:sticky xl:top-28 xl:self-start"
           title="The things engineers ask first."
           lead="Something missing? Open an issue on GitHub or message us — we answer both."
         />
 
+        {/* The questions have no order, so they carry no numbers */}
         <div className="border-t border-edge">
-          {FAQS.map((item, i) => (
+          {FAQS.map((item) => (
             <details key={item.q} className="group border-b border-edge">
-              <summary className="flex cursor-pointer items-baseline gap-5 py-5 text-left">
-                <span className="w-6 shrink-0 font-mono text-xs text-ink-dim">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="flex-1 font-display text-base font-semibold text-ink transition-colors group-hover:text-ink-soft sm:text-lg">
+              <summary className="flex cursor-pointer items-baseline gap-6 py-6 text-left">
+                <span className="flex-1 font-display text-[1.0625rem] font-semibold tracking-[-0.01em] text-ink transition-colors group-hover:text-ink-soft sm:text-lg">
                   {item.q}
                 </span>
-                <span className="w-4 shrink-0 text-right font-mono text-base text-ink-dim" aria-hidden="true">
+                <span className="w-4 shrink-0 text-right font-mono text-lg text-ink-faint" aria-hidden="true">
                   <span className="faq-plus">+</span>
                   <span className="faq-minus">−</span>
                 </span>
               </summary>
-              <p className="copy max-w-2xl pb-6 pl-11 pr-8 text-sm text-ink-muted sm:text-[15px]">{item.a}</p>
+              <p className="body max-w-2xl pb-7 pr-10 sm:text-base">{item.a}</p>
             </details>
           ))}
         </div>

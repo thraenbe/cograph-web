@@ -24,20 +24,20 @@ const CODE: Tok[][] = [
 ];
 
 const TOK_CLASS: Record<Tok[1], string> = {
-  kw: "text-ink-dim",
+  kw: "text-ink-faint",
   fn: "text-amber",
   call: "text-ink",
   txt: "text-ink-muted",
-  dim: "text-ink-dim",
+  dim: "text-ink-faint",
 };
 
 function CodePane() {
   return (
-    <pre className="overflow-x-auto px-3 py-4 font-mono text-[12px] leading-[1.75]">
+    <pre className="overflow-x-auto px-4 py-5 font-mono text-[12.5px] leading-[1.75]">
       <code>
         {CODE.map((line, i) => (
           <div key={i} className="flex">
-            <span className="w-7 shrink-0 select-none pr-3 text-right text-ink-dim/60">{i + 1}</span>
+            <span className="w-7 shrink-0 select-none pr-3 text-right text-ink-dim">{i + 1}</span>
             <span className="whitespace-pre">
               {line.map(([text, kind], j) => (
                 <span key={j} className={TOK_CLASS[kind]}>
@@ -53,11 +53,11 @@ function CodePane() {
 }
 
 function JsonPane() {
-  const k = (s: string) => <span className="text-ink-dim">&quot;{s}&quot;</span>;
+  const k = (s: string) => <span className="text-ink-faint">&quot;{s}&quot;</span>;
   const id = (s: string) => <span className="text-amber">&quot;{s}&quot;</span>;
   const v = (s: string) => <span className="text-ink-soft">{s}</span>;
   return (
-    <pre className="overflow-x-auto px-3 py-4 font-mono text-[11.5px] leading-[1.75] text-ink-muted">
+    <pre className="overflow-x-auto px-4 py-5 font-mono text-[11.5px] leading-[1.75] text-ink-muted">
       <code>
         {"{\n  "}
         {k("nodes")}
@@ -86,7 +86,7 @@ function JsonPane() {
         {": "}
         {v("9")}
         {" },\n    "}
-        <span className="text-ink-dim">…</span>
+        <span className="text-ink-faint">…</span>
         {"\n  ],\n  "}
         {k("edges")}
         {": [\n    { "}
@@ -98,7 +98,7 @@ function JsonPane() {
         {": "}
         {id("app.py::invoice::9")}
         {" },\n    "}
-        <span className="text-ink-dim">…</span>
+        <span className="text-ink-faint">…</span>
         {"\n  ]\n}"}
       </code>
     </pre>
@@ -128,16 +128,6 @@ function GraphPane() {
         <path d="M96 120 176 40" stroke={c} strokeWidth={edge} strokeLinecap="round" fill="none" />
         <path d="M96 120 176 200" stroke={c} strokeWidth={edge} strokeLinecap="round" fill="none" />
         <path d="M96 120H300" stroke={c} strokeWidth={edge} strokeLinecap="round" fill="none" />
-        <path
-          className="route-pulse"
-          d="M96 120H300"
-          pathLength={100}
-          stroke="#f6f7f9"
-          strokeOpacity={0.55}
-          strokeWidth={edge}
-          strokeLinecap="round"
-          fill="none"
-        />
         {leaves.map((n) => (
           <g key={n.label}>
             <circle cx={n.x} cy={n.y} r={leafR} fill="#e8eef5" />
@@ -183,6 +173,9 @@ const STEPS = [
   },
 ];
 
+// One pipeline, read left to right: the three figures share their borders so
+// they read as a single drawing in three panes (Fig. 2a–c), and one amber line
+// runs through the three stations above them. The numbers are a real order.
 export default function HowItWorks() {
   return (
     <Section id="how" number="02" name="How it works" line="amber">
@@ -191,7 +184,7 @@ export default function HowItWorks() {
         lead="There is no model guessing at your architecture. CoGraph reads the syntax tree and records what is there — so the graph you see today is the graph you'll see tomorrow, until the code changes."
       />
 
-      <ol className="mt-14 grid gap-12 lg:mt-16 xl:grid-cols-3 xl:gap-5">
+      <ol className="mt-16 grid grid-cols-1 gap-16 lg:mt-20 xl:grid-cols-3 xl:gap-0">
         {STEPS.map((step, i) => (
           <li key={step.n} className="flex min-w-0 flex-col">
             {/* The route: one amber line through three stations */}
@@ -199,22 +192,25 @@ export default function HowItWorks() {
               <svg width="22" height="22" viewBox="0 0 22 22" className="shrink-0">
                 <circle cx="11" cy="11" r="7.5" fill="#0b0f14" stroke={LINE.amber} strokeWidth="3" />
               </svg>
-              {i < STEPS.length - 1 && (
-                <div className="hidden h-[3px] flex-1 bg-amber xl:-mr-5 xl:block" />
-              )}
+              {i < STEPS.length - 1 && <div className="hidden h-[3px] flex-1 bg-amber xl:block" />}
             </div>
 
-            <div className="flex flex-col gap-3">
-              <span className="label text-[10px] text-amber">
-                {step.n} · {step.title}
-              </span>
-              <p className="copy max-w-xl text-sm text-ink-muted xl:min-h-[7.5rem]">{step.body}</p>
+            <div className="flex flex-col gap-3 xl:pr-10">
+              <h3 className="flex items-baseline gap-3">
+                <span className="font-mono text-sm text-amber">{step.n}</span>
+                <span className="h3">{step.title}</span>
+              </h3>
+              <p className="body max-w-xl xl:min-h-[8.5rem]">{step.body}</p>
             </div>
 
-            <figure className="mt-6 flex min-h-[300px] flex-1 flex-col border border-edge">
-              <figcaption className="fig-caption border-b border-edge px-3 py-2.5">
+            <figure
+              className={`mt-6 flex min-h-[320px] flex-1 flex-col border border-edge ${
+                i > 0 ? "xl:border-l-0" : ""
+              }`}
+            >
+              <figcaption className="fig-caption border-b border-edge px-4 py-3">
                 <span className="truncate text-ink-muted">{step.file}</span>
-                <span className="label shrink-0 text-[9px]">Fig. 2{"abc"[i]}</span>
+                <span className="label shrink-0">Fig. 2{"abc"[i]}</span>
               </figcaption>
               <div className="flex-1">{step.pane}</div>
             </figure>

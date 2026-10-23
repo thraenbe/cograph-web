@@ -8,7 +8,7 @@ import { INSTALL_COMMAND, MARKETPLACE_URL } from "@/lib/site";
 // here — "End of line", as on the last page of the brand book.
 export default function FinalCTA() {
   return (
-    <Section name="End of line" route="end" terminus>
+    <Section name="End of line" route="end" terminus space="lg">
       {/* The full four-line system — allowed here: this is the whole idea */}
       <svg width="132" height="36" viewBox="0 0 132 36" fill="none" aria-hidden="true" className="mb-10">
         <path d="M8 28H44" stroke="#37d39b" strokeWidth="3" strokeLinecap="round" />

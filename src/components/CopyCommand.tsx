@@ -27,7 +27,7 @@ export default function CopyCommand({
     <div
       className={`inline-flex h-11 max-w-full items-center gap-3 border border-edge pl-4 font-mono text-[13px] ${className}`}
     >
-      <span className="select-none text-ink-dim" aria-hidden="true">
+      <span className="select-none text-ink-faint" aria-hidden="true">
         $
       </span>
       <code className="min-w-0 flex-1 truncate text-ink-soft">{command}</code>
@@ -35,8 +35,8 @@ export default function CopyCommand({
         type="button"
         onClick={copy}
         aria-label={copied ? "Copied" : "Copy install command"}
-        className={`label h-full shrink-0 border-l border-edge px-4 text-[10px] transition-colors hover:bg-card hover:text-ink ${
-          copied ? "text-signal" : "text-ink-dim"
+        className={`label h-full shrink-0 border-l border-edge px-4 text-xs transition-colors hover:bg-card hover:text-ink ${
+          copied ? "text-signal" : "text-ink-faint"
         }`}
       >
         {copied ? "Copied" : "Copy"}

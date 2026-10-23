@@ -126,7 +126,7 @@ export default function JoinWaitlist({
   }
 
   const inputClass =
-    "w-full rounded-[3px] border border-edge bg-ground px-4 py-3 text-sm text-ink placeholder-ink-dim transition-colors focus:border-signal/60 focus:outline-none";
+    "w-full rounded-[3px] border border-edge bg-ground px-4 py-3 text-[15px] text-ink placeholder-ink-faint transition-colors focus:border-signal/60 focus:outline-none";
 
   return (
     <>
@@ -156,7 +156,7 @@ export default function JoinWaitlist({
               type="button"
               onClick={close}
               aria-label="Close"
-              className="label absolute right-5 top-5 text-[10px] text-ink-dim transition-colors hover:text-ink"
+              className="absolute right-5 top-5 text-ink-faint transition-colors hover:text-ink"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
@@ -187,7 +187,7 @@ export default function JoinWaitlist({
                 <LogoMark size={26} />
 
                 <div className="flex flex-col gap-2">
-                  <span className="label text-[10px] text-signal">{copy.eyebrow}</span>
+                  <span className="label text-xs text-signal">{copy.eyebrow}</span>
                   <h3 id={`dialog-title-${variant}`} className="font-display text-2xl font-semibold tracking-[-0.03em] text-ink">
                     {copy.title}
                   </h3>
@@ -207,7 +207,7 @@ export default function JoinWaitlist({
                     style={{ position: "absolute", left: "-9999px", opacity: 0 }}
                   />
                   <label className="flex flex-col gap-1.5">
-                    <span className="text-xs text-ink-muted">Work email</span>
+                    <span className="text-sm text-ink-muted">Work email</span>
                     <input
                       type="email"
                       value={email}
@@ -225,7 +225,7 @@ export default function JoinWaitlist({
                   {variant === "partner" && (
                     <>
                       <fieldset className="flex flex-col gap-1.5">
-                        <legend className="mb-1.5 text-xs text-ink-muted">Engineers on the team (optional)</legend>
+                        <legend className="mb-1.5 text-sm text-ink-muted">Engineers on the team (optional)</legend>
                         <div className="grid grid-cols-4 gap-2">
                           {TEAM_SIZES.map((size) => (
                             <button
@@ -245,7 +245,7 @@ export default function JoinWaitlist({
                         </div>
                       </fieldset>
                       <label className="flex flex-col gap-1.5">
-                        <span className="text-xs text-ink-muted">Stack or context (optional)</span>
+                        <span className="text-sm text-ink-muted">Stack or context (optional)</span>
                         <textarea
                           value={note}
                           onChange={(e) => setNote(e.target.value)}
@@ -257,7 +257,7 @@ export default function JoinWaitlist({
                     </>
                   )}
 
-                  {error && <p className="text-xs text-amber">{error}</p>}
+                  {error && <p className="text-sm text-amber">{error}</p>}
                   <button
                     type="submit"
                     disabled={status === "loading"}
@@ -277,7 +277,7 @@ export default function JoinWaitlist({
                   </button>
                 </form>
 
-                <p className="text-center text-xs leading-relaxed text-ink-dim">
+                <p className="text-center text-xs leading-relaxed text-ink-faint">
                   We use your details only to reply about CoGraph. The form is
                   delivered to us by Web3Forms.
                 </p>

@@ -19,10 +19,12 @@ export default function Team() {
           lead="CoGraph came out of a working engineer's own problem — Bela started it after a data-science internship at Bosch. We build it in Tübingen, in the open."
         />
 
-        <div className="ruled mt-14 md:grid-cols-2 lg:mt-16">
+        {/* One founder per row, like a masthead: the bio gets a reading width
+            instead of a sliver beside the portrait. */}
+        <div className="mt-16 grid grid-cols-1 gap-px border border-edge bg-edge lg:mt-20">
           {FOUNDERS.map((person) => (
-            <article key={person.name} className="flex flex-col gap-6 bg-ground p-7 sm:flex-row sm:p-8">
-              <div className="relative aspect-[4/5] w-full max-w-[13rem] shrink-0 overflow-hidden bg-card sm:w-44">
+            <article key={person.name} className="flex flex-col gap-7 bg-ground p-7 sm:flex-row sm:gap-10 sm:p-8">
+              <div className="relative aspect-[4/5] w-full max-w-[13rem] shrink-0 overflow-hidden bg-card sm:w-40">
                 <Image
                   src={PORTRAIT[person.name] ?? person.photo}
                   alt={`Portrait of ${person.name}`}
@@ -31,14 +33,14 @@ export default function Team() {
                   className="object-cover grayscale"
                 />
               </div>
-              <div className="flex flex-col gap-3">
+              <div className="flex max-w-xl flex-col gap-3">
                 <div className="flex flex-col gap-1">
-                  <h3 className="font-display text-xl font-semibold leading-tight text-ink">{person.name}</h3>
-                  <span className="label text-[10px] text-ink-dim">
+                  <h3 className="h3">{person.name}</h3>
+                  <span className="text-sm text-ink-faint">
                     {person.role} · {person.focus}
                   </span>
                 </div>
-                <p className="copy text-sm text-ink-muted">{person.bio}</p>
+                <p className="body">{person.bio}</p>
                 <div className="mt-auto flex items-center gap-2 pt-1">
                   {person.linkedin && (
                     <a
@@ -46,7 +48,7 @@ export default function Team() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${person.name} on LinkedIn`}
-                      className="flex h-9 w-9 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-ink-dim hover:text-ink"
+                      className="flex h-10 w-10 items-center justify-center border border-edge text-ink-faint transition-colors hover:border-ink-dim hover:text-ink"
                     >
                       <LinkedInIcon size={15} />
                     </a>
@@ -57,7 +59,7 @@ export default function Team() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${person.name} on GitHub`}
-                      className="flex h-9 w-9 items-center justify-center border border-edge text-ink-dim transition-colors hover:border-ink-dim hover:text-ink"
+                      className="flex h-10 w-10 items-center justify-center border border-edge text-ink-faint transition-colors hover:border-ink-dim hover:text-ink"
                     >
                       <GitHubIcon size={15} />
                     </a>
@@ -69,18 +71,18 @@ export default function Team() {
         </div>
 
         {/* Backing and context — approved claims only */}
-        <div className="ruled border-t-0 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-px border border-t-0 border-edge bg-edge sm:grid-cols-3">
           <div className="flex flex-col gap-1.5 bg-ground p-6">
-            <span className="label text-[10px] text-ink-dim">Incubated at</span>
+            <span className="label text-xs text-ink-faint">Incubated at</span>
             <span className="font-display text-base font-semibold text-ink">
               {INCUBATOR.name}
             </span>
-            <span className="text-xs text-ink-muted">Winner of the {INCUBATOR.award}</span>
+            <span className="text-sm text-ink-muted">Winner of the {INCUBATOR.award}</span>
           </div>
           <div className="flex flex-col gap-1.5 bg-ground p-6">
-            <span className="label text-[10px] text-ink-dim">Based in</span>
+            <span className="label text-xs text-ink-faint">Based in</span>
             <span className="font-display text-base font-semibold text-ink">Tübingen, Germany</span>
-            <span className="text-xs text-ink-muted">Founders from the University of Tübingen</span>
+            <span className="text-sm text-ink-muted">Founders from the University of Tübingen</span>
           </div>
           <a
             href={GITHUB_URL}
@@ -88,9 +90,9 @@ export default function Team() {
             rel="noopener noreferrer"
             className="group flex flex-col gap-1.5 bg-ground p-6 transition-colors hover:bg-card"
           >
-            <span className="label text-[10px] text-ink-dim">Built in the open</span>
+            <span className="label text-xs text-ink-faint">Built in the open</span>
             <span className="font-display text-base font-semibold text-ink">MIT-licensed on GitHub</span>
-            <span className="text-xs text-ink-muted group-hover:text-ink-soft">
+            <span className="text-sm text-ink-muted group-hover:text-ink-soft">
               Issues and pull requests welcome →
             </span>
           </a>
