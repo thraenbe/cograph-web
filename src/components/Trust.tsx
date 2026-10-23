@@ -16,7 +16,7 @@ const LOCAL = [
     body: "The graph comes from static analysis. CoGraph parses your source files; it never imports, builds or runs your project.",
   },
   {
-    title: "With AI off — the default — nothing leaves.",
+    title: "Nothing leaves while AI is off, and off is the default.",
     body: "The optional AI features are the only part that talks to a model, through your own CLI and account, and only once you switch them on.",
   },
 ];

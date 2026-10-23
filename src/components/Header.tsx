@@ -21,7 +21,7 @@ export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-edge bg-ground">
       <div className="container-site flex h-16 items-center justify-between gap-6">
-        <a href="#top" aria-label="CoGraph — back to top" className="shrink-0">
+        <a href="#top" aria-label="CoGraph, back to top" className="shrink-0">
           <Logo size={26} />
         </a>
 

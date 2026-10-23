@@ -22,10 +22,10 @@ const COPY: Record<
   partner: {
     eyebrow: "Design partners",
     title: "Pilot the team version with us.",
-    body: "Four weeks, one repository, no cost. Tell us where to reach you and roughly how big the team is — we'll reply personally.",
+    body: "Four weeks, one repository, no cost. Tell us where to reach you and roughly how big the team is. We'll reply personally.",
     submit: "Send",
     subject: "CoGraph design partner application",
-    done: "Thanks — one of us will reply personally.",
+    done: "Thanks. One of us will reply personally.",
   },
 };
 
@@ -121,7 +121,7 @@ export default function JoinWaitlist({
       }
     } catch {
       setStatus("idle");
-      setError("Network error — please try again.");
+      setError("Network error. Please try again.");
     }
   }
 

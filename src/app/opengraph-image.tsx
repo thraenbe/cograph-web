@@ -5,7 +5,7 @@ import { getExtensionStats } from "@/lib/marketplace";
 // headline. Uses the renderer's default sans — brand fonts would need font
 // files bundled with the repo. Until then the card carries the mark only: the
 // wordmark must never be set in another face (03 · Logo).
-export const alt = "CoGraph — AI already writes your code. We make sure you still understand it.";
+export const alt = "CoGraph: AI already writes your code. We make sure you still understand it.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 // The card prints the live Marketplace version; refresh it daily with the page.

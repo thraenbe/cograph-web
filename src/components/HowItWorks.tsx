@@ -180,8 +180,8 @@ export default function HowItWorks() {
   return (
     <Section id="how" number="02" name="How it works" line="amber">
       <SectionHeader
-        title="Derived from the code. Not generated about it."
-        lead="There is no model guessing at your architecture. CoGraph reads the syntax tree and records what is there — so the graph you see today is the graph you'll see tomorrow, until the code changes."
+        title="Every node and edge comes from the parser."
+        lead="CoGraph reads the syntax tree and records what is there. No model guesses at your architecture, so the graph you see today is the graph you'll see tomorrow, until the code changes."
       />
 
       <ol className="mt-16 grid grid-cols-1 gap-16 lg:mt-20 xl:grid-cols-3 xl:gap-0">

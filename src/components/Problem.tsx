@@ -4,8 +4,8 @@ import { Section, SectionHeader } from "./ui";
 // they carry a source and date from brain/02-market.md.
 const PROBLEMS = [
   {
-    title: "A diff shows lines, not structure.",
-    body: "It tells you which lines changed. It doesn't tell you what calls them, or what they reach. That part you rebuild in your head, every review.",
+    title: "A diff stops at the changed lines.",
+    body: "It doesn't tell you what calls them, or what they reach. You rebuild that part in your head, every review.",
   },
   {
     title: "Nobody wrote all of it.",
@@ -27,7 +27,7 @@ export default function Problem() {
         <SectionHeader
           className="xl:sticky xl:top-28 xl:self-start"
           title="More code reaches review than anyone has time to read."
-          lead="Coding assistants changed how fast code gets written. They didn't change how fast a person can understand it — and understanding is still what review, onboarding and every architectural decision depend on."
+          lead="Coding assistants changed how fast code gets written. They didn't change how fast a person can understand it. Review, onboarding and every architectural decision still depend on that."
         />
 
         <ul className="border-t-2 border-magenta xl:mt-3">

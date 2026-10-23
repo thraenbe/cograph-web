@@ -46,7 +46,7 @@ export default function Hero({ stats }: { stats: ExtensionStats }) {
               >
                 v{stats.version}
               </a>
-              <span aria-hidden="true">—</span>
+              <span aria-hidden="true">·</span>
               <a
                 href={MARKETPLACE_URL}
                 target="_blank"

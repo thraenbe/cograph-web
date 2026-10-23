@@ -21,7 +21,7 @@ const PILOT = [
   { week: "Before", text: "We reconstruct a baseline from your last 90 days of pull requests." },
   { week: "Week 1", text: "Install on one repository." },
   { week: "Weeks 2–3", text: "Use it in real review, with a direct line to both founders." },
-  { week: "Week 4", text: "We go through the results together — including what didn't work." },
+  { week: "Week 4", text: "We go through the results together, including what didn't work." },
 ];
 
 export default function DesignPartners() {
@@ -32,7 +32,7 @@ export default function DesignPartners() {
           <SectionHeader
             tone="paper"
             title="Shape the team version with us."
-            lead="We are looking for a few engineering teams to pilot what comes next. It's an invitation to shape something, not a pitch to buy something."
+            lead="We are looking for a few engineering teams to pilot what comes next. There is nothing to buy. We want to see where it helps in real review, and where it doesn't."
           />
 
           <div className="mt-10">

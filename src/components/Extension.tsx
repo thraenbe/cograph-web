@@ -223,7 +223,7 @@ export default function Extension() {
 
           <Feature
             title="See what your working tree touched."
-            body="Colour nodes by git status — modified, new, deleted, staged — to see where your uncommitted work sits in the structure and what it's wired to. It refreshes when the git index does."
+            body="Colour nodes by git status (modified, new, deleted or staged) to see where your uncommitted work sits in the structure and what it's wired to. It refreshes when the git index does."
           >
             <GitMotif />
           </Feature>

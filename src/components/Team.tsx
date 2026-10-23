@@ -16,7 +16,7 @@ export default function Team() {
     <Section id="team" number="07" name="Team" line="signal">
         <SectionHeader
           title="Two founders who needed this themselves."
-          lead="CoGraph came out of a working engineer's own problem — Bela started it after a data-science internship at Bosch. We build it in Tübingen, in the open."
+          lead="CoGraph came out of a working engineer's own problem: Bela started it after a data-science internship at Bosch. We build it in Tübingen, in the open."
         />
 
         {/* One founder per row, like a masthead: the bio gets a reading width

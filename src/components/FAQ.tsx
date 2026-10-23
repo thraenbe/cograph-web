@@ -14,11 +14,11 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Is there an LLM in the loop?",
-    a: "Not in the graph. Nodes and edges come from each language's parser, so the same code always produces the same graph. The optional AI features — an architecture chat and a workflow view — sit on top of it and are off by default.",
+    a: "Not in the graph. Nodes and edges come from each language's parser, so the same code always produces the same graph. Two optional AI features sit on top of it, an architecture chat and a workflow view, and both are off by default.",
   },
   {
     q: "Which languages are supported?",
-    a: `${LANGUAGES.slice(0, -1).join(", ")} and ${LANGUAGES[LANGUAGES.length - 1]}. Coverage is strongest in Python and TypeScript. Calls that only resolve at runtime — dynamic dispatch, reflection, eval — are not in the graph, and macro-heavy C++ is covered partially.`,
+    a: `${LANGUAGES.slice(0, -1).join(", ")} and ${LANGUAGES[LANGUAGES.length - 1]}. Coverage is strongest in Python and TypeScript. Calls that only resolve at runtime (dynamic dispatch, reflection, eval) are not in the graph, and macro-heavy C++ is covered partially.`,
   },
   {
     q: "How large a repository can it handle?",
@@ -26,7 +26,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "How is this different from an AI code reviewer?",
-    a: "An AI reviewer writes comments on a pull request. CoGraph writes nothing: it derives a model of the code that you read yourself, and it never comments, approves or blocks. The two sit side by side.",
+    a: "An AI reviewer writes comments on a pull request. CoGraph doesn't comment, approve or block. It derives a model of the code that you read yourself, and the two sit side by side.",
   },
 ];
 
@@ -37,7 +37,7 @@ export default function FAQ() {
         <SectionHeader
           className="xl:sticky xl:top-28 xl:self-start"
           title="The things engineers ask first."
-          lead="Something missing? Open an issue on GitHub or message us — we answer both."
+          lead="Something missing? Open an issue on GitHub or message us. We answer both."
         />
 
         {/* The questions have no order, so they carry no numbers */}

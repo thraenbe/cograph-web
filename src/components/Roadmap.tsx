@@ -24,7 +24,7 @@ const stopsFor = (version: string): Stop[] => [
   {
     status: "In design",
     title: "In the repository",
-    body: "The graph as a file committed next to the code — byte-stable output and a documented schema, versioned like everything else.",
+    body: "The graph as a file committed next to the code, with byte-stable output and a documented schema, versioned like everything else.",
   },
   {
     status: "In design",
